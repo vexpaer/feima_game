@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "created_at": "2026-06-01T15:10:19Z",
+    "last_match_update": "2026-06-01T15:20:02Z",
+    "match_source": "The Odds API：soccer_epl(赔率)",
+    "session_secret": "686ba6fb9145a09407e1fb510326934957dc7ec7be95e85acd855110c8773e5b"
+  },
+  "users": {
+    "vexpaer": {
+      "username": "vexpaer",
+      "password_hash": "pbkdf2_sha256$149282ef1e9e9a8f4d499beaa7aaafa1$79558454dd43fc84268ababfe0ea3a415e48882a7e817d0d5e3b869153e94c00",
+      "role": "admin",
+      "approved": true,
+      "is_negative": false,
+      "owner_username": null,
+      "negative_username": "negative-vexpaer",
+      "balance": 1000000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-01T15:10:19Z",
+      "approved_at": "2026-06-01T15:10:19Z"
+    },
+    "negative-vexpaer": {
+      "username": "negative-vexpaer",
+      "password_hash": "",
+      "role": "negative",
+      "approved": true,
+      "is_negative": true,
+      "owner_username": "vexpaer",
+      "negative_username": null,
+      "balance": 1000000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-01T15:10:19Z",
+      "approved_at": "2026-06-01T15:10:19Z"
+    }
+  },
+  "matches": {
+    "demo-20260530-0": {
+      "id": "demo-20260530-0",
+      "league": "意甲",
+      "home_team": "尤文图斯",
+      "away_team": "那不勒斯",
+      "start_time": "2026-05-30T10:30:00Z",
+      "odds": {
+        "home": 2.63,
+        "draw": 3.91,
+        "away": 3.15
+      },
+      "status": "completed",
+      "result": "draw",
+      "home_score": 0,
+      "away_score": 0,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260530-1": {
+      "id": "demo-20260530-1",
+      "league": "西甲",
+      "home_team": "马德里竞技",
+      "away_team": "塞维利亚",
+      "start_time": "2026-05-30T13:30:00Z",
+      "odds": {
+        "home": 2.08,
+        "draw": 3.14,
+        "away": 1.8
+      },
+      "status": "completed",
+      "result": "home",
+      "home_score": 3,
+      "away_score": 2,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260531-0": {
+      "id": "demo-20260531-0",
+      "league": "西甲",
+      "home_team": "马德里竞技",
+      "away_team": "塞维利亚",
+      "start_time": "2026-05-31T10:30:00Z",
+      "odds": {
+        "home": 2.37,
+        "draw": 3.67,
+        "away": 2.07
+      },
+      "status": "completed",
+      "result": "home",
+      "home_score": 4,
+      "away_score": 1,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260531-1": {
+      "id": "demo-20260531-1",
+      "league": "英超",
+      "home_team": "阿森纳",
+      "away_team": "利物浦",
+      "start_time": "2026-05-31T13:30:00Z",
+      "odds": {
+        "home": 2.08,
+        "draw": 3.62,
+        "away": 2.55
+      },
+      "status": "completed",
+      "result": "home",
+      "home_score": 2,
+      "away_score": 0,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260601-0": {
+      "id": "demo-20260601-0",
+      "league": "英超",
+      "home_team": "阿森纳",
+      "away_team": "利物浦",
+      "start_time": "2026-06-01T10:30:00Z",
+      "odds": {
+        "home": 2.26,
+        "draw": 3.73,
+        "away": 3.17
+      },
+      "status": "completed",
+      "result": "home",
+      "home_score": 1,
+      "away_score": 0,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260601-1": {
+      "id": "demo-20260601-1",
+      "league": "西甲",
+      "home_team": "皇家马德里",
+      "away_team": "巴塞罗那",
+      "start_time": "2026-06-01T13:30:00Z",
+      "odds": {
+        "home": 1.86,
+        "draw": 3.56,
+        "away": 2.62
+      },
+      "status": "in_progress",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260602-0": {
+      "id": "demo-20260602-0",
+      "league": "西甲",
+      "home_team": "皇家马德里",
+      "away_team": "巴塞罗那",
+      "start_time": "2026-06-02T10:30:00Z",
+      "odds": {
+        "home": 2.66,
+        "draw": 3.47,
+        "away": 2.03
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260602-1": {
+      "id": "demo-20260602-1",
+      "league": "德甲",
+      "home_team": "拜仁慕尼黑",
+      "away_team": "多特蒙德",
+      "start_time": "2026-06-02T13:30:00Z",
+      "odds": {
+        "home": 1.77,
+        "draw": 3.61,
+        "away": 3.2
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260603-0": {
+      "id": "demo-20260603-0",
+      "league": "德甲",
+      "home_team": "拜仁慕尼黑",
+      "away_team": "多特蒙德",
+      "start_time": "2026-06-03T10:30:00Z",
+      "odds": {
+        "home": 1.75,
+        "draw": 4.04,
+        "away": 2.59
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260603-1": {
+      "id": "demo-20260603-1",
+      "league": "意甲",
+      "home_team": "国际米兰",
+      "away_team": "AC米兰",
+      "start_time": "2026-06-03T13:30:00Z",
+      "odds": {
+        "home": 2.05,
+        "draw": 2.95,
+        "away": 2.83
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260604-0": {
+      "id": "demo-20260604-0",
+      "league": "意甲",
+      "home_team": "国际米兰",
+      "away_team": "AC米兰",
+      "start_time": "2026-06-04T10:30:00Z",
+      "odds": {
+        "home": 2.07,
+        "draw": 3.93,
+        "away": 2.51
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260604-1": {
+      "id": "demo-20260604-1",
+      "league": "法甲",
+      "home_team": "巴黎圣日耳曼",
+      "away_team": "马赛",
+      "start_time": "2026-06-04T13:30:00Z",
+      "odds": {
+        "home": 1.77,
+        "draw": 3.79,
+        "away": 2.03
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260605-0": {
+      "id": "demo-20260605-0",
+      "league": "法甲",
+      "home_team": "巴黎圣日耳曼",
+      "away_team": "马赛",
+      "start_time": "2026-06-05T10:30:00Z",
+      "odds": {
+        "home": 1.61,
+        "draw": 3.56,
+        "away": 3.22
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    },
+    "demo-20260605-1": {
+      "id": "demo-20260605-1",
+      "league": "英超",
+      "home_team": "曼城",
+      "away_team": "切尔西",
+      "start_time": "2026-06-05T13:30:00Z",
+      "odds": {
+        "home": 1.83,
+        "draw": 3.09,
+        "away": 2.94
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "内置演示源",
+      "updated_at": "2026-06-01T15:11:14Z"
+    }
+  },
+  "bets": {
+    "bet_104139d2db7b": {
+      "id": "bet_104139d2db7b",
+      "username": "vexpaer",
+      "match_id": "demo-20260602-0",
+      "choice": "away",
+      "stake": 4,
+      "odds": 2.03,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-01T15:11:45Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_8d8cbff8505d": {
+      "id": "bet_8d8cbff8505d",
+      "username": "negative-vexpaer",
+      "match_id": "demo-20260602-0",
+      "choice": "home",
+      "stake": 4,
+      "odds": 2.66,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-01T15:11:45Z",
+      "settled_at": null,
+      "mirrored_from": "bet_104139d2db7b"
+    }
+  },
+  "loans": {},
+  "balance_adjustments": {
+    "adjust_707b719b2e4a": {
+      "id": "adjust_707b719b2e4a",
+      "admin_username": "vexpaer",
+      "target_username": "vexpaer",
+      "operation": "add",
+      "amount": 4,
+      "old_balance": 999996,
+      "new_balance": 1000000,
+      "note": "",
+      "created_at": "2026-06-01T15:27:29Z"
+    },
+    "adjust_c42f2fc9ab81": {
+      "id": "adjust_c42f2fc9ab81",
+      "admin_username": "vexpaer",
+      "target_username": "negative-vexpaer",
+      "operation": "add",
+      "amount": 4,
+      "old_balance": 999996,
+      "new_balance": 1000000,
+      "note": "",
+      "created_at": "2026-06-01T15:27:36Z"
+    }
+  }
+}
