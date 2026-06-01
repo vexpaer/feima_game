@@ -15,6 +15,7 @@ SPORT_KEYS = [
     "soccer_italy_serie_a",
     "soccer_france_ligue_one",
     "soccer_uefa_champs_league",
+    "soccer_fifa_world_cup",
 ]
 
 DEMO_TEAMS = [

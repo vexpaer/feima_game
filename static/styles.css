@@ -18,12 +18,27 @@
 }
 
 body {
+  position: relative;
   margin: 0;
   min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
   font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
   letter-spacing: 0;
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/static/feima.png") center / cover no-repeat;
+  opacity: 0.5;
+  transition: opacity 0.18s ease;
+}
+
+.bg-hidden .site-bg {
+  opacity: 0;
 }
 
 a {
@@ -62,12 +77,16 @@ nav form {
 }
 
 main {
+  position: relative;
+  z-index: 1;
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   padding: 32px 0 64px;
 }
 
 .api-status {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   gap: 12px;
@@ -125,6 +144,19 @@ button.ghost {
   background: transparent;
   color: var(--accent-2);
   border: 1px solid var(--line);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+.bg-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  min-width: 104px;
+  box-shadow: 0 10px 24px rgba(23, 33, 27, 0.18);
 }
 
 input,

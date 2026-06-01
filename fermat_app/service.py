@@ -300,6 +300,80 @@ def approve_user(admin_username, target_username):
     write_db(mutate)
 
 
+def delete_user(admin_username, target_username):
+    target_username = (target_username or "").strip()
+    if not target_username:
+        raise AppError("请选择要删除的账号。")
+
+    def mutate(data):
+        admin = data["users"].get(admin_username)
+        target = data["users"].get(target_username)
+        if not admin or admin.get("role") != "admin":
+            raise AppError("需要管理员权限。")
+        if not target:
+            raise AppError("账号不存在。")
+        if target.get("role") == "admin":
+            raise AppError("不能删除管理员账号。")
+
+        usernames = {target_username}
+        if target.get("is_negative"):
+            owner = data["users"].get(target.get("owner_username"))
+            if owner and owner.get("negative_username") == target_username:
+                owner["negative_username"] = None
+        else:
+            negative_username = target.get("negative_username") or f"negative-{target_username}"
+            negative = data["users"].get(negative_username)
+            if negative and negative.get("is_negative") and negative.get("owner_username") == target_username:
+                usernames.add(negative_username)
+            for username, user in data["users"].items():
+                if user.get("is_negative") and user.get("owner_username") == target_username:
+                    usernames.add(username)
+
+        for username in usernames:
+            data["users"].pop(username, None)
+
+        data["bets"] = {
+            bet_id: bet
+            for bet_id, bet in data.get("bets", {}).items()
+            if bet.get("username") not in usernames
+        }
+        data["loans"] = {
+            loan_id: loan
+            for loan_id, loan in data.get("loans", {}).items()
+            if loan.get("username") not in usernames
+        }
+        return sorted(usernames)
+
+    deleted = write_db(mutate)
+    return f"已删除账号：{', '.join(deleted)}。"
+
+
+def delete_demo_matches():
+    def mutate(data):
+        demo_match_ids = {
+            match_id
+            for match_id, match in data.get("matches", {}).items()
+            if match_id.startswith("demo-") or match.get("source") == "内置演示源"
+        }
+        if not demo_match_ids:
+            return 0, 0
+
+        old_bet_count = len(data.get("bets", {}))
+        data["matches"] = {
+            match_id: match
+            for match_id, match in data.get("matches", {}).items()
+            if match_id not in demo_match_ids
+        }
+        data["bets"] = {
+            bet_id: bet
+            for bet_id, bet in data.get("bets", {}).items()
+            if bet.get("match_id") not in demo_match_ids
+        }
+        return len(demo_match_ids), old_bet_count - len(data.get("bets", {}))
+
+    return write_db(mutate)
+
+
 def adjust_balance(admin_username, target_username, operation, amount, note=""):
     operation = (operation or "").strip()
     target_username = (target_username or "").strip()

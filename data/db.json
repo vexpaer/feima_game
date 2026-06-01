@@ -1,8 +1,8 @@
 {
   "meta": {
     "created_at": "2026-06-01T15:10:19Z",
-    "last_match_update": "2026-06-01T15:20:02Z",
-    "match_source": "The Odds API：soccer_epl(赔率)",
+    "last_match_update": "2026-06-01T16:45:19Z",
+    "match_source": "The Odds API：soccer_epl(赔率), soccer_fifa_world_cup(赔率)",
     "session_secret": "686ba6fb9145a09407e1fb510326934957dc7ec7be95e85acd855110c8773e5b"
   },
   "users": {
@@ -31,292 +31,1381 @@
       "balance": 1000000,
       "credit": 100,
       "game_over": false,
-      "created_at": "2026-06-01T15:10:19Z",
-      "approved_at": "2026-06-01T15:10:19Z"
+      "created_at": "2026-06-01T16:36:15Z",
+      "approved_at": "2026-06-01T16:36:15Z"
     }
   },
   "matches": {
-    "demo-20260530-0": {
-      "id": "demo-20260530-0",
-      "league": "意甲",
-      "home_team": "尤文图斯",
-      "away_team": "那不勒斯",
-      "start_time": "2026-05-30T10:30:00Z",
+    "80d82d1113934bfbea4ce8daf37a2433": {
+      "id": "80d82d1113934bfbea4ce8daf37a2433",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Mexico",
+      "away_team": "South Africa",
+      "start_time": "2026-06-11T19:00:00Z",
       "odds": {
-        "home": 2.63,
-        "draw": 3.91,
-        "away": 3.15
+        "home": 1.44,
+        "draw": 4.35,
+        "away": 7.84
       },
-      "status": "completed",
-      "result": "draw",
-      "home_score": 0,
-      "away_score": 0,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260530-1": {
-      "id": "demo-20260530-1",
-      "league": "西甲",
-      "home_team": "马德里竞技",
-      "away_team": "塞维利亚",
-      "start_time": "2026-05-30T13:30:00Z",
-      "odds": {
-        "home": 2.08,
-        "draw": 3.14,
-        "away": 1.8
-      },
-      "status": "completed",
-      "result": "home",
-      "home_score": 3,
-      "away_score": 2,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260531-0": {
-      "id": "demo-20260531-0",
-      "league": "西甲",
-      "home_team": "马德里竞技",
-      "away_team": "塞维利亚",
-      "start_time": "2026-05-31T10:30:00Z",
-      "odds": {
-        "home": 2.37,
-        "draw": 3.67,
-        "away": 2.07
-      },
-      "status": "completed",
-      "result": "home",
-      "home_score": 4,
-      "away_score": 1,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260531-1": {
-      "id": "demo-20260531-1",
-      "league": "英超",
-      "home_team": "阿森纳",
-      "away_team": "利物浦",
-      "start_time": "2026-05-31T13:30:00Z",
-      "odds": {
-        "home": 2.08,
-        "draw": 3.62,
-        "away": 2.55
-      },
-      "status": "completed",
-      "result": "home",
-      "home_score": 2,
-      "away_score": 0,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260601-0": {
-      "id": "demo-20260601-0",
-      "league": "英超",
-      "home_team": "阿森纳",
-      "away_team": "利物浦",
-      "start_time": "2026-06-01T10:30:00Z",
-      "odds": {
-        "home": 2.26,
-        "draw": 3.73,
-        "away": 3.17
-      },
-      "status": "completed",
-      "result": "home",
-      "home_score": 1,
-      "away_score": 0,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260601-1": {
-      "id": "demo-20260601-1",
-      "league": "西甲",
-      "home_team": "皇家马德里",
-      "away_team": "巴塞罗那",
-      "start_time": "2026-06-01T13:30:00Z",
-      "odds": {
-        "home": 1.86,
-        "draw": 3.56,
-        "away": 2.62
-      },
-      "status": "in_progress",
+      "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260602-0": {
-      "id": "demo-20260602-0",
-      "league": "西甲",
-      "home_team": "皇家马德里",
-      "away_team": "巴塞罗那",
-      "start_time": "2026-06-02T10:30:00Z",
+    "384cbb5d76b535896a24fe65f93cfac8": {
+      "id": "384cbb5d76b535896a24fe65f93cfac8",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "South Korea",
+      "away_team": "Czech Republic",
+      "start_time": "2026-06-12T02:00:00Z",
       "odds": {
-        "home": 2.66,
+        "home": 2.7,
+        "draw": 3.14,
+        "away": 2.75
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "d1f4f946c70a0b4e81f5d43e9d32361c": {
+      "id": "d1f4f946c70a0b4e81f5d43e9d32361c",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Canada",
+      "away_team": "Bosnia & Herzegovina",
+      "start_time": "2026-06-12T19:00:00Z",
+      "odds": {
+        "home": 1.82,
+        "draw": 3.63,
+        "away": 4.37
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c12986f447a515fbe641addd786dbb24": {
+      "id": "c12986f447a515fbe641addd786dbb24",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "USA",
+      "away_team": "Paraguay",
+      "start_time": "2026-06-13T01:00:00Z",
+      "odds": {
+        "home": 2.0,
+        "draw": 3.42,
+        "away": 3.84
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "26634922d3f78c146440816023e40de8": {
+      "id": "26634922d3f78c146440816023e40de8",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Qatar",
+      "away_team": "Switzerland",
+      "start_time": "2026-06-13T19:00:00Z",
+      "odds": {
+        "home": 12.26,
+        "draw": 6.13,
+        "away": 1.24
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "f6c8748a16516e0998f95de14235432a": {
+      "id": "f6c8748a16516e0998f95de14235432a",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Brazil",
+      "away_team": "Morocco",
+      "start_time": "2026-06-13T22:00:00Z",
+      "odds": {
+        "home": 1.62,
+        "draw": 3.86,
+        "away": 5.66
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "5ae41a06735c926eeb7f74006933adce": {
+      "id": "5ae41a06735c926eeb7f74006933adce",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Haiti",
+      "away_team": "Scotland",
+      "start_time": "2026-06-14T01:00:00Z",
+      "odds": {
+        "home": 7.0,
+        "draw": 4.67,
+        "away": 1.44
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "564084f52cc9f1abcc18187c168a7cdc": {
+      "id": "564084f52cc9f1abcc18187c168a7cdc",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Australia",
+      "away_team": "Turkey",
+      "start_time": "2026-06-14T04:00:00Z",
+      "odds": {
+        "home": 4.61,
+        "draw": 3.6,
+        "away": 1.79
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "d79edbd6aaeb578d33e313446b18d333": {
+      "id": "d79edbd6aaeb578d33e313446b18d333",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Germany",
+      "away_team": "Curaçao",
+      "start_time": "2026-06-14T17:00:00Z",
+      "odds": {
+        "home": 1.04,
+        "draw": 16.56,
+        "away": 51.59
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "32ec06abda2398ac41501c86eb9aa376": {
+      "id": "32ec06abda2398ac41501c86eb9aa376",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Netherlands",
+      "away_team": "Japan",
+      "start_time": "2026-06-14T20:00:00Z",
+      "odds": {
+        "home": 1.99,
+        "draw": 3.56,
+        "away": 3.67
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "05752bb341e197001387b64f3a06b9b2": {
+      "id": "05752bb341e197001387b64f3a06b9b2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Ivory Coast",
+      "away_team": "Ecuador",
+      "start_time": "2026-06-14T23:00:00Z",
+      "odds": {
+        "home": 3.58,
+        "draw": 2.9,
+        "away": 2.33
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "b55f9569de3f4d731bc5537ff5ff43e4": {
+      "id": "b55f9569de3f4d731bc5537ff5ff43e4",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Sweden",
+      "away_team": "Tunisia",
+      "start_time": "2026-06-15T02:00:00Z",
+      "odds": {
+        "home": 1.93,
+        "draw": 3.38,
+        "away": 4.19
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c54f00b11925751d2b62988775c6c239": {
+      "id": "c54f00b11925751d2b62988775c6c239",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Spain",
+      "away_team": "Cape Verde",
+      "start_time": "2026-06-15T16:00:00Z",
+      "odds": {
+        "home": 1.09,
+        "draw": 10.64,
+        "away": 28.26
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "fbfb95c62003fd6d828b309f96ee1f9b": {
+      "id": "fbfb95c62003fd6d828b309f96ee1f9b",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Belgium",
+      "away_team": "Egypt",
+      "start_time": "2026-06-15T19:00:00Z",
+      "odds": {
+        "home": 1.66,
+        "draw": 4.0,
+        "away": 5.08
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "64b91c5f2db61c7358a4f05459e83c52": {
+      "id": "64b91c5f2db61c7358a4f05459e83c52",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Saudi Arabia",
+      "away_team": "Uruguay",
+      "start_time": "2026-06-15T22:00:00Z",
+      "odds": {
+        "home": 6.95,
+        "draw": 4.3,
+        "away": 1.48
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "ec51b9c44ad5e34552f3ab53f7262813": {
+      "id": "ec51b9c44ad5e34552f3ab53f7262813",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Iran",
+      "away_team": "New Zealand",
+      "start_time": "2026-06-16T01:00:00Z",
+      "odds": {
+        "home": 1.89,
         "draw": 3.47,
+        "away": 4.33
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "73a4fcd14cc9766b9b9bfd50b8ca153a": {
+      "id": "73a4fcd14cc9766b9b9bfd50b8ca153a",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "France",
+      "away_team": "Senegal",
+      "start_time": "2026-06-16T19:00:00Z",
+      "odds": {
+        "home": 1.44,
+        "draw": 4.52,
+        "away": 7.34
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "4d4f2b9b78182b557d4fbf8dcf4f4af2": {
+      "id": "4d4f2b9b78182b557d4fbf8dcf4f4af2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Iraq",
+      "away_team": "Norway",
+      "start_time": "2026-06-16T22:00:00Z",
+      "odds": {
+        "home": 12.68,
+        "draw": 6.27,
+        "away": 1.23
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "f31b2ee9e1cc6f7e641467f8237eaa21": {
+      "id": "f31b2ee9e1cc6f7e641467f8237eaa21",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Argentina",
+      "away_team": "Algeria",
+      "start_time": "2026-06-17T01:00:00Z",
+      "odds": {
+        "home": 1.41,
+        "draw": 4.46,
+        "away": 8.3
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "25161cf6cf0cd9be17ae2e7e224a1f45": {
+      "id": "25161cf6cf0cd9be17ae2e7e224a1f45",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Austria",
+      "away_team": "Jordan",
+      "start_time": "2026-06-17T04:00:00Z",
+      "odds": {
+        "home": 1.33,
+        "draw": 5.3,
+        "away": 9.02
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "6cc871c121a1869b4612d3fb22fa9d55": {
+      "id": "6cc871c121a1869b4612d3fb22fa9d55",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Portugal",
+      "away_team": "DR Congo",
+      "start_time": "2026-06-17T17:00:00Z",
+      "odds": {
+        "home": 1.26,
+        "draw": 5.8,
+        "away": 10.97
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "689096c8cd7e2753b9fec95321943c5d": {
+      "id": "689096c8cd7e2753b9fec95321943c5d",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "England",
+      "away_team": "Croatia",
+      "start_time": "2026-06-17T20:00:00Z",
+      "odds": {
+        "home": 1.74,
+        "draw": 3.74,
+        "away": 4.71
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "87afdb85c977b451e1c00f5e3e632601": {
+      "id": "87afdb85c977b451e1c00f5e3e632601",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Ghana",
+      "away_team": "Panama",
+      "start_time": "2026-06-17T23:00:00Z",
+      "odds": {
+        "home": 2.02,
+        "draw": 3.52,
+        "away": 3.64
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "22083e7a8e5362c711bc05c1e1319a1f": {
+      "id": "22083e7a8e5362c711bc05c1e1319a1f",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Uzbekistan",
+      "away_team": "Colombia",
+      "start_time": "2026-06-18T02:00:00Z",
+      "odds": {
+        "home": 8.03,
+        "draw": 4.57,
+        "away": 1.4
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "66ebb9e3f949caded535d97ce686ca09": {
+      "id": "66ebb9e3f949caded535d97ce686ca09",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Czech Republic",
+      "away_team": "South Africa",
+      "start_time": "2026-06-18T16:00:00Z",
+      "odds": {
+        "home": 2.0,
+        "draw": 3.2,
+        "away": 3.98
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "289bc2e9f5adad8ae4d9a75a7c5461ad": {
+      "id": "289bc2e9f5adad8ae4d9a75a7c5461ad",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Switzerland",
+      "away_team": "Bosnia & Herzegovina",
+      "start_time": "2026-06-18T19:00:00Z",
+      "odds": {
+        "home": 1.56,
+        "draw": 4.02,
+        "away": 5.65
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "fa9502285b257b03e62968d50d9229fc": {
+      "id": "fa9502285b257b03e62968d50d9229fc",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Canada",
+      "away_team": "Qatar",
+      "start_time": "2026-06-18T22:00:00Z",
+      "odds": {
+        "home": 1.34,
+        "draw": 4.84,
+        "away": 9.1
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "0f2aeae6ac8e77223848d23a4ca86b0d": {
+      "id": "0f2aeae6ac8e77223848d23a4ca86b0d",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Mexico",
+      "away_team": "South Korea",
+      "start_time": "2026-06-19T01:00:00Z",
+      "odds": {
+        "home": 1.82,
+        "draw": 3.43,
+        "away": 4.48
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "065b3573e875f8d23803357f73e5b99e": {
+      "id": "065b3573e875f8d23803357f73e5b99e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "USA",
+      "away_team": "Australia",
+      "start_time": "2026-06-19T19:00:00Z",
+      "odds": {
+        "home": 1.73,
+        "draw": 3.69,
+        "away": 4.58
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "4cd769aa7bae0ad9762bd69b80ef2903": {
+      "id": "4cd769aa7bae0ad9762bd69b80ef2903",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Scotland",
+      "away_team": "Morocco",
+      "start_time": "2026-06-19T22:00:00Z",
+      "odds": {
+        "home": 3.84,
+        "draw": 3.17,
         "away": 2.03
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260602-1": {
-      "id": "demo-20260602-1",
-      "league": "德甲",
-      "home_team": "拜仁慕尼黑",
-      "away_team": "多特蒙德",
-      "start_time": "2026-06-02T13:30:00Z",
+    "ef0f74a991d3e35798ae5af77667bce1": {
+      "id": "ef0f74a991d3e35798ae5af77667bce1",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Brazil",
+      "away_team": "Haiti",
+      "start_time": "2026-06-20T01:00:00Z",
       "odds": {
-        "home": 1.77,
-        "draw": 3.61,
-        "away": 3.2
+        "home": 1.05,
+        "draw": 12.91,
+        "away": 36.25
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260603-0": {
-      "id": "demo-20260603-0",
-      "league": "德甲",
-      "home_team": "拜仁慕尼黑",
-      "away_team": "多特蒙德",
-      "start_time": "2026-06-03T10:30:00Z",
+    "f955d4b3395ce6e3b5ac1031ca52ca4e": {
+      "id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Turkey",
+      "away_team": "Paraguay",
+      "start_time": "2026-06-20T03:00:00Z",
       "odds": {
-        "home": 1.75,
-        "draw": 4.04,
-        "away": 2.59
+        "home": 2.23,
+        "draw": 3.1,
+        "away": 3.38
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260603-1": {
-      "id": "demo-20260603-1",
-      "league": "意甲",
-      "home_team": "国际米兰",
-      "away_team": "AC米兰",
-      "start_time": "2026-06-03T13:30:00Z",
+    "4f0c518545b0096c68326daf25bffc1e": {
+      "id": "4f0c518545b0096c68326daf25bffc1e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Netherlands",
+      "away_team": "Sweden",
+      "start_time": "2026-06-20T17:00:00Z",
+      "odds": {
+        "home": 1.65,
+        "draw": 3.88,
+        "away": 5.01
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "f1ab0f69832972a329243522ceaa7804": {
+      "id": "f1ab0f69832972a329243522ceaa7804",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Germany",
+      "away_team": "Ivory Coast",
+      "start_time": "2026-06-20T20:00:00Z",
+      "odds": {
+        "home": 1.54,
+        "draw": 4.22,
+        "away": 5.67
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "681895f294b670b4c7b14495dfb583bc": {
+      "id": "681895f294b670b4c7b14495dfb583bc",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Ecuador",
+      "away_team": "Curaçao",
+      "start_time": "2026-06-21T00:00:00Z",
+      "odds": {
+        "home": 1.26,
+        "draw": 5.79,
+        "away": 10.88
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "dfc5202cf1b8ae002cf952cd04f235b9": {
+      "id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Tunisia",
+      "away_team": "Japan",
+      "start_time": "2026-06-21T04:00:00Z",
+      "odds": {
+        "home": 4.45,
+        "draw": 3.32,
+        "away": 1.85
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "73529a242e319a86bf3d00ddb4accc37": {
+      "id": "73529a242e319a86bf3d00ddb4accc37",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Spain",
+      "away_team": "Saudi Arabia",
+      "start_time": "2026-06-21T16:00:00Z",
+      "odds": {
+        "home": 1.11,
+        "draw": 8.88,
+        "away": 22.45
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "5f92f257386ec5bf7c6e2498a21f3a61": {
+      "id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Belgium",
+      "away_team": "Iran",
+      "start_time": "2026-06-21T19:00:00Z",
+      "odds": {
+        "home": 1.4,
+        "draw": 4.54,
+        "away": 7.46
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "852a3abe6d46820720febc0fedebff9a": {
+      "id": "852a3abe6d46820720febc0fedebff9a",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Uruguay",
+      "away_team": "Cape Verde",
+      "start_time": "2026-06-21T22:00:00Z",
+      "odds": {
+        "home": 1.43,
+        "draw": 4.37,
+        "away": 7.03
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c1ec9a65f4b4cf74477b368a7d6282de": {
+      "id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "New Zealand",
+      "away_team": "Egypt",
+      "start_time": "2026-06-22T01:00:00Z",
+      "odds": {
+        "home": 4.83,
+        "draw": 3.71,
+        "away": 1.73
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "be6c63f416c67bca1300a98f5b89c3af": {
+      "id": "be6c63f416c67bca1300a98f5b89c3af",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Argentina",
+      "away_team": "Austria",
+      "start_time": "2026-06-22T17:00:00Z",
+      "odds": {
+        "home": 1.65,
+        "draw": 3.72,
+        "away": 5.3
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "7ad7a0ce2ef2618bb59b066da5642f70": {
+      "id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "France",
+      "away_team": "Iraq",
+      "start_time": "2026-06-22T21:00:00Z",
+      "odds": {
+        "home": 1.11,
+        "draw": 8.82,
+        "away": 24.6
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "3f48473742ca0fd2a85930554720c75e": {
+      "id": "3f48473742ca0fd2a85930554720c75e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Norway",
+      "away_team": "Senegal",
+      "start_time": "2026-06-23T00:00:00Z",
+      "odds": {
+        "home": 2.09,
+        "draw": 3.39,
+        "away": 3.45
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "fd8533b650e655030f6a7946f8795db2": {
+      "id": "fd8533b650e655030f6a7946f8795db2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Jordan",
+      "away_team": "Algeria",
+      "start_time": "2026-06-23T03:00:00Z",
+      "odds": {
+        "home": 5.19,
+        "draw": 3.78,
+        "away": 1.64
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "8ba93d190f1f934e33862a97a6353a6e": {
+      "id": "8ba93d190f1f934e33862a97a6353a6e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Portugal",
+      "away_team": "Uzbekistan",
+      "start_time": "2026-06-23T17:00:00Z",
+      "odds": {
+        "home": 1.23,
+        "draw": 6.04,
+        "away": 11.86
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "2f49dd8deae3079dc4eb2d634d18a99c": {
+      "id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "England",
+      "away_team": "Ghana",
+      "start_time": "2026-06-23T20:00:00Z",
+      "odds": {
+        "home": 1.31,
+        "draw": 5.16,
+        "away": 9.09
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c1bc8c26480cd42b89a0de5329581314": {
+      "id": "c1bc8c26480cd42b89a0de5329581314",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Panama",
+      "away_team": "Croatia",
+      "start_time": "2026-06-23T23:00:00Z",
+      "odds": {
+        "home": 6.68,
+        "draw": 3.93,
+        "away": 1.51
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "68bfc965eb267508e04d8e8d75c1a0ae": {
+      "id": "68bfc965eb267508e04d8e8d75c1a0ae",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Colombia",
+      "away_team": "DR Congo",
+      "start_time": "2026-06-24T02:00:00Z",
+      "odds": {
+        "home": 1.45,
+        "draw": 4.14,
+        "away": 7.28
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "512ac18beb5aa936a59f7ea3e497ada2": {
+      "id": "512ac18beb5aa936a59f7ea3e497ada2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Bosnia & Herzegovina",
+      "away_team": "Qatar",
+      "start_time": "2026-06-24T19:00:00Z",
+      "odds": {
+        "home": 1.58,
+        "draw": 3.83,
+        "away": 5.68
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c9ef5822ee64fd5275f7c73251bb56c7": {
+      "id": "c9ef5822ee64fd5275f7c73251bb56c7",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Switzerland",
+      "away_team": "Canada",
+      "start_time": "2026-06-24T19:00:00Z",
       "odds": {
         "home": 2.05,
+        "draw": 3.27,
+        "away": 3.55
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "885ba95805db310a7bcc3fb1a7a6dd28": {
+      "id": "885ba95805db310a7bcc3fb1a7a6dd28",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Scotland",
+      "away_team": "Brazil",
+      "start_time": "2026-06-24T22:00:00Z",
+      "odds": {
+        "home": 7.55,
+        "draw": 4.68,
+        "away": 1.37
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "d1279ce7f33136a33e99ad442fc855e8": {
+      "id": "d1279ce7f33136a33e99ad442fc855e8",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Morocco",
+      "away_team": "Haiti",
+      "start_time": "2026-06-24T22:00:00Z",
+      "odds": {
+        "home": 1.28,
+        "draw": 5.3,
+        "away": 9.52
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "5993bd5196ca09f83990f0c3261e442e": {
+      "id": "5993bd5196ca09f83990f0c3261e442e",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Czech Republic",
+      "away_team": "Mexico",
+      "start_time": "2026-06-25T01:00:00Z",
+      "odds": {
+        "home": 3.81,
+        "draw": 3.29,
+        "away": 1.95
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "c0355dfc6e26ec327e379b6ef5824a5f": {
+      "id": "c0355dfc6e26ec327e379b6ef5824a5f",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "South Africa",
+      "away_team": "South Korea",
+      "start_time": "2026-06-25T01:00:00Z",
+      "odds": {
+        "home": 3.71,
+        "draw": 3.29,
+        "away": 1.99
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "a5a0b544a984ab16e564264f3e859b43": {
+      "id": "a5a0b544a984ab16e564264f3e859b43",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Curaçao",
+      "away_team": "Ivory Coast",
+      "start_time": "2026-06-25T20:00:00Z",
+      "odds": {
+        "home": 8.63,
+        "draw": 5.04,
+        "away": 1.31
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "0ec28b84ec399bd4dffbe8d1bc72b3c4": {
+      "id": "0ec28b84ec399bd4dffbe8d1bc72b3c4",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Ecuador",
+      "away_team": "Germany",
+      "start_time": "2026-06-25T20:00:00Z",
+      "odds": {
+        "home": 4.9,
+        "draw": 3.76,
+        "away": 1.65
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "0ed0233bddc4eafc8507f86a9c17b998": {
+      "id": "0ed0233bddc4eafc8507f86a9c17b998",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Japan",
+      "away_team": "Sweden",
+      "start_time": "2026-06-25T23:00:00Z",
+      "odds": {
+        "home": 2.02,
+        "draw": 3.33,
+        "away": 3.48
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "f3c4657daa143a0c5bd62cb370d01ce4": {
+      "id": "f3c4657daa143a0c5bd62cb370d01ce4",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Tunisia",
+      "away_team": "Netherlands",
+      "start_time": "2026-06-25T23:00:00Z",
+      "odds": {
+        "home": 5.98,
+        "draw": 4.02,
+        "away": 1.51
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "22f6ac06dfcc88a847920f62633e6459": {
+      "id": "22f6ac06dfcc88a847920f62633e6459",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Paraguay",
+      "away_team": "Australia",
+      "start_time": "2026-06-26T02:00:00Z",
+      "odds": {
+        "home": 2.14,
+        "draw": 3.14,
+        "away": 3.36
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "f41aeac9a8343a84b4950f15ea25fba2": {
+      "id": "f41aeac9a8343a84b4950f15ea25fba2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Turkey",
+      "away_team": "USA",
+      "start_time": "2026-06-26T02:00:00Z",
+      "odds": {
+        "home": 2.68,
+        "draw": 3.32,
+        "away": 2.49
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "b86b4d60f773e9e3c46c00e9a6496e79": {
+      "id": "b86b4d60f773e9e3c46c00e9a6496e79",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Norway",
+      "away_team": "France",
+      "start_time": "2026-06-26T19:00:00Z",
+      "odds": {
+        "home": 4.8,
+        "draw": 3.64,
+        "away": 1.68
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "7e6aee294ea1a4792c59558791084528": {
+      "id": "7e6aee294ea1a4792c59558791084528",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Senegal",
+      "away_team": "Iraq",
+      "start_time": "2026-06-26T19:00:00Z",
+      "odds": {
+        "home": 1.41,
+        "draw": 4.28,
+        "away": 6.99
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "e07b1926be5a4d515c7eb108dbcee9c5": {
+      "id": "e07b1926be5a4d515c7eb108dbcee9c5",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Cape Verde",
+      "away_team": "Saudi Arabia",
+      "start_time": "2026-06-27T00:00:00Z",
+      "odds": {
+        "home": 2.5,
+        "draw": 3.31,
+        "away": 2.63
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "dcff2e31c0bce001a4db5caaf4fa8822": {
+      "id": "dcff2e31c0bce001a4db5caaf4fa8822",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Uruguay",
+      "away_team": "Spain",
+      "start_time": "2026-06-27T00:00:00Z",
+      "odds": {
+        "home": 5.06,
+        "draw": 3.83,
+        "away": 1.6
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "581691da05dcd75b5c6d3be91ee9d2ab": {
+      "id": "581691da05dcd75b5c6d3be91ee9d2ab",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "New Zealand",
+      "away_team": "Belgium",
+      "start_time": "2026-06-27T03:00:00Z",
+      "odds": {
+        "home": 9.59,
+        "draw": 5.61,
+        "away": 1.27
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "3e3b5fa2b3c963e74cf044c60db0b573": {
+      "id": "3e3b5fa2b3c963e74cf044c60db0b573",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Egypt",
+      "away_team": "Iran",
+      "start_time": "2026-06-27T03:00:00Z",
+      "odds": {
+        "home": 2.3,
         "draw": 2.95,
-        "away": 2.83
+        "away": 3.34
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260604-0": {
-      "id": "demo-20260604-0",
-      "league": "意甲",
-      "home_team": "国际米兰",
-      "away_team": "AC米兰",
-      "start_time": "2026-06-04T10:30:00Z",
+    "537c0997cd899394f47f16545b7068b2": {
+      "id": "537c0997cd899394f47f16545b7068b2",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Croatia",
+      "away_team": "Ghana",
+      "start_time": "2026-06-27T21:00:00Z",
       "odds": {
-        "home": 2.07,
-        "draw": 3.93,
-        "away": 2.51
-      },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260604-1": {
-      "id": "demo-20260604-1",
-      "league": "法甲",
-      "home_team": "巴黎圣日耳曼",
-      "away_team": "马赛",
-      "start_time": "2026-06-04T13:30:00Z",
-      "odds": {
-        "home": 1.77,
-        "draw": 3.79,
-        "away": 2.03
-      },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    },
-    "demo-20260605-0": {
-      "id": "demo-20260605-0",
-      "league": "法甲",
-      "home_team": "巴黎圣日耳曼",
-      "away_team": "马赛",
-      "start_time": "2026-06-05T10:30:00Z",
-      "odds": {
-        "home": 1.61,
+        "home": 1.7,
         "draw": 3.56,
-        "away": 3.22
+        "away": 4.7
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "demo-20260605-1": {
-      "id": "demo-20260605-1",
-      "league": "英超",
-      "home_team": "曼城",
-      "away_team": "切尔西",
-      "start_time": "2026-06-05T13:30:00Z",
+    "4be17c8e1ccfecb0f2a5ef79e045c415": {
+      "id": "4be17c8e1ccfecb0f2a5ef79e045c415",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Panama",
+      "away_team": "England",
+      "start_time": "2026-06-27T21:00:00Z",
       "odds": {
-        "home": 1.83,
-        "draw": 3.09,
-        "away": 2.94
+        "home": 11.14,
+        "draw": 5.94,
+        "away": 1.22
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
-      "source": "内置演示源",
-      "updated_at": "2026-06-01T15:11:14Z"
-    }
-  },
-  "bets": {
-    "bet_104139d2db7b": {
-      "id": "bet_104139d2db7b",
-      "username": "vexpaer",
-      "match_id": "demo-20260602-0",
-      "choice": "away",
-      "stake": 4,
-      "odds": 2.03,
-      "status": "open",
-      "payout": 0,
-      "created_at": "2026-06-01T15:11:45Z",
-      "settled_at": null,
-      "mirrored_from": null
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     },
-    "bet_8d8cbff8505d": {
-      "id": "bet_8d8cbff8505d",
-      "username": "negative-vexpaer",
-      "match_id": "demo-20260602-0",
-      "choice": "home",
-      "stake": 4,
-      "odds": 2.66,
-      "status": "open",
-      "payout": 0,
-      "created_at": "2026-06-01T15:11:45Z",
-      "settled_at": null,
-      "mirrored_from": "bet_104139d2db7b"
+    "67ae5751c401a98409b8566ae4897069": {
+      "id": "67ae5751c401a98409b8566ae4897069",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Colombia",
+      "away_team": "Portugal",
+      "start_time": "2026-06-27T23:30:00Z",
+      "odds": {
+        "home": 3.36,
+        "draw": 3.21,
+        "away": 2.14
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "13eab94a136b9c264ba974cf437a5f71": {
+      "id": "13eab94a136b9c264ba974cf437a5f71",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "DR Congo",
+      "away_team": "Uzbekistan",
+      "start_time": "2026-06-27T23:30:00Z",
+      "odds": {
+        "home": 2.45,
+        "draw": 3.18,
+        "away": 2.77
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "8756200e539155e571557c4f2e0d7f05": {
+      "id": "8756200e539155e571557c4f2e0d7f05",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Algeria",
+      "away_team": "Austria",
+      "start_time": "2026-06-28T02:00:00Z",
+      "odds": {
+        "home": 3.39,
+        "draw": 3.07,
+        "away": 2.2
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
+    },
+    "54697f453437ab26276d773be1d72e9b": {
+      "id": "54697f453437ab26276d773be1d72e9b",
+      "sport_key": "soccer_fifa_world_cup",
+      "league": "FIFA World Cup",
+      "home_team": "Jordan",
+      "away_team": "Argentina",
+      "start_time": "2026-06-28T02:00:00Z",
+      "odds": {
+        "home": 13.53,
+        "draw": 6.9,
+        "away": 1.16
+      },
+      "status": "upcoming",
+      "result": null,
+      "home_score": null,
+      "away_score": null,
+      "source": "The Odds API",
+      "updated_at": "2026-06-01T16:45:19Z"
     }
   },
+  "bets": {},
   "loans": {},
   "balance_adjustments": {
     "adjust_707b719b2e4a": {

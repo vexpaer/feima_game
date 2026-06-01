@@ -9,8 +9,8 @@ CONFIG_PATH = DATA_DIR / "config.json"
 DEFAULT_CONFIG = {
     "the_odds_api_key": "",
     "region": "eu",
-    "sports": ["soccer_epl"],
-    "update_minutes": 60,
+    "sports": ["soccer_epl", "soccer_fifa_world_cup"],
+    "update_minutes": 120,
 }
 
 

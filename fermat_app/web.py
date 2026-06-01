@@ -12,7 +12,7 @@ from . import service
 from .store import ROOT_DIR, parse_iso, read_db, utc_now
 
 
-PORT = int(os.environ.get("PORT", "0308"))
+PORT = int(os.environ.get("PORT", "3008"))
 HOST = os.environ.get("HOST", "0.0.0.0")
 SESSION_DAYS = 7
 STATIC_DIR = ROOT_DIR / "static"
@@ -102,6 +102,10 @@ class FermatHandler(BaseHTTPRequestHandler):
             self.require_admin(user)
             service.approve_user(user["username"], form.get("username", ""))
             return self.redirect("/admin", message="账号已通过。")
+        if path == "/admin/delete-user":
+            self.require_admin(user)
+            msg = service.delete_user(user["username"], form.get("username", ""))
+            return self.redirect("/admin", message=msg)
         if path == "/admin/balance":
             self.require_admin(user)
             msg = service.adjust_balance(
@@ -123,8 +127,8 @@ class FermatHandler(BaseHTTPRequestHandler):
         <section class="auth-panel">
           <div>
             <p class="eyebrow">Fermat Coin</p>
-            <h1>足球模拟投注平台</h1>
-            <p class="muted">仅用于合法娱乐和风险教育。下注、反向账户、借贷和结算全部使用 fermat coin。</p>
+            <h1>费马的游戏</h1>
+            <p class="muted">仅用于风险教育。下注、反向账户、借贷和结算全部使用 fermat coin。</p>
           </div>
           <form method="post" action="/login" class="form-card">
             <label>用户名<input name="username" autocomplete="username" required></label>
@@ -455,9 +459,11 @@ def layout(title, body, user, query):
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>{e(title)} - Fermat Coin</title>
+      <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
       <link rel="stylesheet" href="/static/styles.css">
     </head>
     <body>
+      <div class="site-bg" aria-hidden="true"></div>
       <header class="topbar">
         <a class="brand" href="/">Fermat Coin</a>
         {nav}
@@ -467,6 +473,36 @@ def layout(title, body, user, query):
         {flash}
         {body}
       </main>
+      <button class="bg-toggle" type="button" data-bg-toggle aria-pressed="true">关闭背景</button>
+      <script>
+        (function () {{
+          var key = "fermat-bg-visible";
+          var button = document.querySelector("[data-bg-toggle]");
+          function readVisible() {{
+            try {{
+              return localStorage.getItem(key) !== "off";
+            }} catch (err) {{
+              return true;
+            }}
+          }}
+          function writeVisible(visible) {{
+            try {{
+              localStorage.setItem(key, visible ? "on" : "off");
+            }} catch (err) {{}}
+          }}
+          function applyVisible(visible) {{
+            document.documentElement.classList.toggle("bg-hidden", !visible);
+            button.textContent = visible ? "关闭背景" : "开启背景";
+            button.setAttribute("aria-pressed", visible ? "true" : "false");
+          }}
+          applyVisible(readVisible());
+          button.addEventListener("click", function () {{
+            var visible = document.documentElement.classList.contains("bg-hidden");
+            writeVisible(visible);
+            applyVisible(visible);
+          }});
+        }})();
+      </script>
     </body>
     </html>"""
 
@@ -649,9 +685,24 @@ def account_options(users):
     return "".join(options)
 
 
+def user_delete_action(user):
+    if user.get("role") == "admin":
+        return '<span class="muted">保留</span>'
+    confirm = "确定删除这个反向账号及相关下注记录？"
+    if not user.get("is_negative"):
+        confirm = "确定删除这个账号、关联反向账号及相关下注和借贷记录？"
+    return f"""
+    <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');">
+      <input type="hidden" name="username" value="{e(user['username'])}">
+      <button class="danger" type="submit">删除</button>
+    </form>
+    """
+
+
 def users_table(users):
     rows = []
     for user in users:
+        action = user_delete_action(user)
         rows.append(
             f"""
             <tr>
@@ -661,12 +712,13 @@ def users_table(users):
               <td>{user.get('credit', 0)}</td>
               <td>{'已通过' if user.get('approved') else '待审核'}</td>
               <td>{'Game Over' if user.get('game_over') else '正常'}</td>
+              <td>{action}</td>
             </tr>
             """
         )
     return f"""
     <div class="table-wrap"><table>
-      <thead><tr><th>账户</th><th>类型</th><th>余额</th><th>信用</th><th>审核</th><th>状态</th></tr></thead>
+      <thead><tr><th>账户</th><th>类型</th><th>余额</th><th>信用</th><th>审核</th><th>状态</th><th>操作</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table></div>
     """
