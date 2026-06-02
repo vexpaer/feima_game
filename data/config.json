@@ -1,0 +1,10 @@
+{
+  "odds_api_io_key": "5def36f911f728971ea26b9a3d581352566f8e555ce5fab1b68e5b607c480bd1",
+  "the_odds_api_key": "f56e40433a77881bd1d9337617fce05b",
+  "region": "eu",
+  "sports": [
+    "soccer_epl",
+    "soccer_fifa_world_cup"
+  ],
+  "update_minutes": 60
+}

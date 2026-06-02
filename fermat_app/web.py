@@ -92,6 +92,9 @@ class FermatHandler(BaseHTTPRequestHandler):
         if path == "/bet":
             msg = service.place_bet(user["username"], form.get("match_id", ""), form.get("choice", ""), form.get("stake", ""))
             return self.redirect("/matches", message=msg)
+        if path == "/bet/cancel":
+            msg = service.cancel_bet(user["username"], form.get("bet_id", ""))
+            return self.redirect(self.headers.get("Referer") or "/matches", message=msg)
         if path == "/loan/borrow":
             msg = service.borrow(user["username"], form.get("amount", ""))
             return self.redirect("/loans", message=msg)
@@ -128,7 +131,7 @@ class FermatHandler(BaseHTTPRequestHandler):
           <div>
             <p class="eyebrow">Fermat Coin</p>
             <h1>费马的游戏</h1>
-            <p class="muted">仅用于风险教育。下注、反向账户、借贷和结算全部使用 fermat coin。</p>
+            <p class="muted"></p>
           </div>
           <form method="post" action="/login" class="form-card">
             <label>用户名<input name="username" autocomplete="username" required></label>
@@ -170,7 +173,7 @@ class FermatHandler(BaseHTTPRequestHandler):
             <h1>{e(real['username'])}</h1>
           </div>
           <div class="head-actions">
-            <span class="pill">数据源：{e(snapshot['meta'].get('match_source', '未更新'))}</span>
+            <span class="pill">拉取状态：{e(snapshot['meta'].get('match_source', '未更新'))}</span>
           </div>
         </section>
         <section class="metric-grid">
@@ -181,11 +184,11 @@ class FermatHandler(BaseHTTPRequestHandler):
         </section>
         <section class="two-col">
           <div class="panel">
-            <div class="panel-title"><h2>最近下注</h2><a href="/matches">去下注</a></div>
-            {bets_table(snapshot['recent_bets'], snapshot['matches'])}
+            <div class="panel-title"><h2>最近猜测</h2><a href="/matches">去猜测</a></div>
+            {bets_table(snapshot['recent_bets'], snapshot['matches'], allow_cancel=True)}
           </div>
           <div class="panel">
-            <div class="panel-title"><h2>反向账户最近下注</h2></div>
+            <div class="panel-title"><h2>反向账户最近猜测</h2></div>
             {bets_table(snapshot['negative_recent_bets'], snapshot['matches'])}
           </div>
         </section>
@@ -204,6 +207,8 @@ class FermatHandler(BaseHTTPRequestHandler):
 
     def render_matches(self, user, query):
         matches = service.list_matches()
+        user_bets = service.list_user_bets(user["username"])
+        matches_by_id = {match["id"]: match for match in matches}
         upcoming = [m for m in matches if m["status"] == "upcoming"]
         running = [m for m in matches if m["status"] == "in_progress"]
         completed = [m for m in matches if m["status"] == "completed"]
@@ -211,12 +216,16 @@ class FermatHandler(BaseHTTPRequestHandler):
         <section class="page-head">
           <div>
             <p class="eyebrow">比赛</p>
-            <h1>选择未开赛比赛下注</h1>
+            <h1>选择未开赛比赛猜测</h1>
           </div>
         </section>
+        <section class="panel">
+          <div class="panel-title"><h2>我的猜测</h2></div>
+          {bets_table(user_bets, matches_by_id, allow_cancel=True, show_time=True)}
+        </section>
         <section class="match-list">
-          <h2>可下注</h2>
-          {''.join(match_card(match, allow_bet=True) for match in upcoming) or empty_state('暂无可下注比赛')}
+          <h2>可猜测</h2>
+          {''.join(match_card(match, allow_bet=True) for match in upcoming) or empty_state('暂无可猜测比赛')}
         </section>
         <section class="match-list compact-list">
           <h2>进行中</h2>
@@ -254,12 +263,12 @@ class FermatHandler(BaseHTTPRequestHandler):
         <section class="two-col">
           <form class="panel form-card inline-form" method="post" action="/loan/borrow">
             <h2>借款</h2>
-            <label>金额<input name="amount" type="number" min="1" max="{limit}" value="{limit if limit else 0}" required></label>
+            <label>费马币<input name="amount" type="number" min="1" max="{limit}" value="{limit if limit else 0}" required></label>
             <button type="submit" {'disabled' if active or limit <= 0 else ''}>确认借款</button>
           </form>
           <form class="panel form-card inline-form" method="post" action="/loan/repay">
             <h2>还款</h2>
-            <label>金额<input name="amount" type="number" min="1" required></label>
+            <label>费马币<input name="amount" type="number" min="1" required></label>
             <button type="submit" {'disabled' if not active else ''}>确认还款</button>
           </form>
         </section>
@@ -331,7 +340,7 @@ class FermatHandler(BaseHTTPRequestHandler):
                 <option value="subtract">扣减</option>
               </select>
             </label>
-            <label>金额<input name="amount" type="number" min="0" required></label>
+            <label>费马币<input name="amount" type="number" min="0" required></label>
             <label>备注<input name="note" maxlength="120" placeholder="可选"></label>
             <button type="submit">提交调整</button>
           </form>
@@ -343,6 +352,10 @@ class FermatHandler(BaseHTTPRequestHandler):
         <section class="panel">
           <div class="panel-title"><h2>贷款记录</h2></div>
           {loans_table(snapshot['loans'])}
+        </section>
+        <section class="panel">
+          <div class="panel-title"><h2>猜测记录</h2></div>
+          {admin_bets_table(snapshot['bets'], snapshot['matches'])}
         </section>
         """
         self.send_html(layout("管理后台", body, user, query))
@@ -512,7 +525,7 @@ def api_status_badge():
     last = meta.get("last_match_update")
     last_text = format_time(last) if last else "尚未拉取"
     source = meta.get("match_source") or "未更新"
-    return f"<span>上次 API 拉取：{e(last_text)}</span><span>数据源：{e(source)}</span>"
+    return f"<span>上次 API 检查：{e(last_text)}</span><span>拉取状态：{e(source)}</span>"
 
 
 def metric_card(label, value, sub):
@@ -541,8 +554,8 @@ def match_card(match, allow_bet):
             {choice_radio('draw', '平局', odds.get('draw'))}
             {choice_radio('away', match['away_team'], odds.get('away'))}
           </div>
-          <label class="stake-input">金额<input name="stake" type="number" min="1" required></label>
-          <button type="submit">下注</button>
+          <label class="stake-input">费马币<input name="stake" type="number" min="1" required></label>
+          <button type="submit">猜测</button>
         </form>
         """
     return f"""
@@ -574,26 +587,85 @@ def choice_radio(value, label, odds):
     """
 
 
-def bets_table(bets, matches):
+def bets_table(bets, matches, allow_cancel=False, show_time=False):
     if not bets:
         return empty_state("暂无记录")
+    rows = []
+    for bet in bets:
+        match = matches.get(bet["match_id"], {})
+        cells = []
+        if show_time:
+            cells.append(f"<td>{format_time(bet.get('created_at'))}</td>")
+        cells.extend(
+            [
+                f"<td>{e(match.get('home_team', '?'))} vs {e(match.get('away_team', '?'))}</td>",
+                f"<td>{service.CHOICE_LABELS.get(bet['choice'], bet['choice'])}</td>",
+                f"<td>{money(bet['stake'])}</td>",
+                f"<td>{bet['odds']}</td>",
+                f"<td>{bet_status(bet)}</td>",
+            ]
+        )
+        if allow_cancel:
+            cells.append(f"<td>{cancel_bet_form(bet, match)}</td>")
+        rows.append(
+            f"""
+            <tr>
+              {''.join(cells)}
+            </tr>
+            """
+        )
+    headers = []
+    if show_time:
+        headers.append("<th>时间</th>")
+    headers.extend(["<th>比赛</th>", "<th>选择</th>", "<th>费马币</th>", "<th>赔率</th>", "<th>状态</th>"])
+    if allow_cancel:
+        headers.append("<th>操作</th>")
+    return f"""
+    <div class="table-wrap"><table>
+      <thead><tr>{''.join(headers)}</tr></thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table></div>
+    """
+
+
+def cancel_bet_form(bet, match):
+    if bet.get("status") != "open" or bet.get("mirrored_from"):
+        return '<span class="muted">-</span>'
+    start_time = match.get("start_time")
+    if not start_time or match.get("status") != "upcoming" or parse_iso(start_time) <= utc_now():
+        return '<span class="muted">-</span>'
+    return f"""
+    <form method="post" action="/bet/cancel" onsubmit="return confirm('确定撤回这条猜测？');">
+      <input type="hidden" name="bet_id" value="{e(bet['id'])}">
+      <button class="danger" type="submit">撤回</button>
+    </form>
+    """
+
+
+def admin_bets_table(bets, matches):
+    if not bets:
+        return empty_state("暂无猜测记录")
     rows = []
     for bet in bets:
         match = matches.get(bet["match_id"], {})
         rows.append(
             f"""
             <tr>
+              <td>{format_time(bet.get('created_at'))}</td>
+              <td>{e(bet.get('username', ''))}</td>
+              <td>{'反向' if bet.get('mirrored_from') else '主账户'}</td>
               <td>{e(match.get('home_team', '?'))} vs {e(match.get('away_team', '?'))}</td>
-              <td>{service.CHOICE_LABELS.get(bet['choice'], bet['choice'])}</td>
-              <td>{money(bet['stake'])}</td>
-              <td>{bet['odds']}</td>
+              <td>{service.CHOICE_LABELS.get(bet.get('choice'), bet.get('choice'))}</td>
+              <td>{money(bet.get('stake', 0))}</td>
+              <td>{bet.get('odds')}</td>
               <td>{bet_status(bet)}</td>
+              <td>{e(bet.get('mirrored_from') or '-')}</td>
             </tr>
             """
         )
     return f"""
     <div class="table-wrap"><table>
-      <thead><tr><th>比赛</th><th>选择</th><th>金额</th><th>赔率</th><th>状态</th></tr></thead>
+      <thead><tr><th>时间</th><th>账户</th><th>类型</th><th>比赛</th><th>选择</th><th>费马币</th><th>赔率</th><th>状态</th><th>关联</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table></div>
     """
@@ -688,9 +760,9 @@ def account_options(users):
 def user_delete_action(user):
     if user.get("role") == "admin":
         return '<span class="muted">保留</span>'
-    confirm = "确定删除这个反向账号及相关下注记录？"
+    confirm = "确定删除这个反向账号及相关猜测记录？"
     if not user.get("is_negative"):
-        confirm = "确定删除这个账号、关联反向账号及相关下注和借贷记录？"
+        confirm = "确定删除这个账号、关联反向账号及相关猜测和借贷记录？"
     return f"""
     <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');">
       <input type="hidden" name="username" value="{e(user['username'])}">
@@ -743,7 +815,7 @@ def balance_adjustments_table(adjustments):
         )
     return f"""
     <div class="table-wrap"><table>
-      <thead><tr><th>时间</th><th>账户</th><th>方式</th><th>金额</th><th>变化</th><th>备注</th></tr></thead>
+      <thead><tr><th>时间</th><th>账户</th><th>方式</th><th>费马币</th><th>变化</th><th>备注</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table></div>
     """
@@ -756,7 +828,7 @@ def empty_state(text):
 def bet_status(bet):
     if bet["status"] == "won":
         return f"赢，派彩 {money(bet.get('payout', 0))}"
-    labels = {"open": "待结算", "lost": "输", "void": "作废"}
+    labels = {"open": "待结算", "lost": "输", "void": "作废", "canceled": "已撤回"}
     return labels.get(bet["status"], bet["status"])
 
 

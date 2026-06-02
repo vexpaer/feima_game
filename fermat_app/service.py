@@ -102,31 +102,38 @@ def list_matches():
     return sorted(data["matches"].values(), key=lambda item: item.get("start_time") or "")
 
 
+def list_user_bets(username):
+    run_housekeeping()
+    data = read_db()
+    bets = [bet for bet in data["bets"].values() if bet.get("username") == username]
+    return sorted(bets, key=lambda item: item["created_at"], reverse=True)
+
+
 def place_bet(username, match_id, choice, stake):
     if choice not in CHOICE_LABELS:
-        raise AppError("下注选项无效。")
+        raise AppError("猜测选项无效。")
     try:
         stake = int(stake)
     except (TypeError, ValueError):
-        raise AppError("下注金额必须是整数。")
+        raise AppError("猜测费马币必须是整数。")
     if stake <= 0:
-        raise AppError("下注金额必须大于 0。")
+        raise AppError("猜测费马币必须大于 0")
 
     def mutate(data):
         now = utc_now()
         user = data["users"].get(username)
         if not user or user.get("is_negative"):
-            raise AppError("账号无效。")
+            raise AppError("账号无效")
         if user.get("game_over"):
-            raise AppError("账号已经 game over，不能继续下注。")
+            raise AppError("账号已经费马,不能继续猜测")
         if user.get("balance", 0) < stake:
-            raise AppError("余额不足。")
+            raise AppError("费马币不足")
         match = data["matches"].get(match_id)
         if not match:
-            raise AppError("比赛不存在。")
+            raise AppError("比赛不存在")
         start = parse_iso(match["start_time"])
         if match.get("status") != "upcoming" or start <= now:
-            raise AppError("比赛已经开始或结束，不能下注。")
+            raise AppError("比赛已经开始或结束，不能猜测")
         odds = float(match["odds"][choice])
         user["balance"] -= stake
         bet_id = _new_id("bet")
@@ -147,7 +154,51 @@ def place_bet(username, match_id, choice, stake):
         return bet_id, mirrored
 
     bet_id, mirrored = write_db(mutate)
-    return f"下注成功，注单 {bet_id}；反向账户同步 {mirrored} 笔。"
+    return f"猜测成功，id {bet_id}；反向账户同步 {mirrored} 笔。"
+
+
+def cancel_bet(username, bet_id):
+    def mutate(data):
+        now = utc_now()
+        user = data["users"].get(username)
+        if not user or user.get("is_negative"):
+            raise AppError("账号无效")
+        bet = data["bets"].get(bet_id)
+        if not bet or bet.get("username") != username or bet.get("mirrored_from"):
+            raise AppError("猜测记录不存在或不能撤回")
+        if bet.get("status") != "open":
+            raise AppError("只能撤回待结算猜测")
+        match = data["matches"].get(bet.get("match_id"))
+        if not match:
+            raise AppError("比赛不存在")
+        start = parse_iso(match.get("start_time"))
+        if match.get("status") != "upcoming" or not start or start <= now:
+            raise AppError("比赛已经开始或结束，不能撤回")
+
+        refunded = int(bet.get("stake", 0))
+        user["balance"] += refunded
+        _mark_bet_canceled(bet, now)
+
+        mirrored = 0
+        for mirror in data["bets"].values():
+            if mirror.get("mirrored_from") != bet_id or mirror.get("status") != "open":
+                continue
+            mirror_user = data["users"].get(mirror.get("username"))
+            if mirror_user:
+                mirror_user["balance"] += int(mirror.get("stake", 0))
+            _mark_bet_canceled(mirror, now)
+            mirrored += 1
+        return refunded, mirrored
+
+    refunded, mirrored = write_db(mutate)
+    return f"已撤回猜测，退回 {refunded:,} fermat coin；同步撤回反向账户 {mirrored} 笔。"
+
+
+def _mark_bet_canceled(bet, now):
+    bet["status"] = "canceled"
+    bet["payout"] = 0
+    bet["settled_at"] = to_iso(now)
+    bet["canceled_at"] = to_iso(now)
 
 
 def _place_negative_bets(data, user, match, choice, stake, source_bet_id, now):
@@ -231,7 +282,13 @@ def update_matches_if_due():
 def _update_due():
     data = read_db()
     config = load_config()
-    if config["the_odds_api_key"] and str(data["meta"].get("match_source", "")).startswith("内置演示源"):
+    source = str(data["meta"].get("match_source", ""))
+    configured_source = ""
+    if config.get("odds_api_io_key"):
+        configured_source = "Odds-API.io"
+    elif config.get("the_odds_api_key"):
+        configured_source = "The Odds API"
+    if configured_source and not source.startswith(configured_source):
         return True
     last = data["meta"].get("last_match_update")
     if not last:
@@ -383,11 +440,11 @@ def adjust_balance(admin_username, target_username, operation, amount, note=""):
     try:
         amount = int(amount)
     except (TypeError, ValueError):
-        raise AppError("调整金额必须是整数。")
+        raise AppError("调整费马币必须是整数。")
     if amount < 0:
-        raise AppError("调整金额不能为负数。")
+        raise AppError("调整费马币不能为负数。")
     if operation != "set" and amount == 0:
-        raise AppError("增加或扣减金额必须大于 0。")
+        raise AppError("增加或扣减费马币必须大于 0。")
 
     def mutate(data):
         admin = data["users"].get(admin_username)
@@ -435,9 +492,9 @@ def borrow(username, amount):
     try:
         amount = int(amount)
     except (TypeError, ValueError):
-        raise AppError("借款金额必须是整数。")
+        raise AppError("借款费马币必须是整数。")
     if amount <= 0:
-        raise AppError("借款金额必须大于 0。")
+        raise AppError("借款费马币必须大于 0。")
 
     def mutate(data):
         now = utc_now()
@@ -472,9 +529,9 @@ def repay(username, amount):
     try:
         amount = int(amount)
     except (TypeError, ValueError):
-        raise AppError("还款金额必须是整数。")
+        raise AppError("还款费马币必须是整数。")
     if amount <= 0:
-        raise AppError("还款金额必须大于 0。")
+        raise AppError("还款费马币必须大于 0。")
 
     def mutate(data):
         user = data["users"].get(username)
@@ -544,11 +601,13 @@ def admin_snapshot():
     users = [public_user(user) for user in data["users"].values()]
     loans = [enrich_loan(loan) for loan in data["loans"].values()]
     adjustments = list(data.get("balance_adjustments", {}).values())
+    bets = list(data.get("bets", {}).values())
     return {
         "pending": sorted(pending, key=lambda item: item["created_at"]),
         "users": sorted(users, key=lambda item: item["username"]),
         "loans": sorted(loans, key=lambda item: item["borrowed_at"], reverse=True),
         "adjustments": sorted(adjustments, key=lambda item: item["created_at"], reverse=True)[:20],
+        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
         "meta": data["meta"],
         "matches": data["matches"],
     }
