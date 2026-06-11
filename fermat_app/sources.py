@@ -45,23 +45,69 @@ class MatchSource:
 
     def fetch(self, existing_matches, score_sports=None):
         score_sports = set(score_sports or [])
+        fetched_sources = []
+        failures = []
+
         if self.odds_api_io_key:
             try:
-                return self._fetch_odds_api_io(existing_matches)
+                matches, label = self._fetch_odds_api_io(existing_matches)
+                fetched_sources.append((matches, label))
             except Exception as exc:
-                return {}, (
-                    f"Odds-API.io 拉取失败：{_format_fetch_error(exc)}；"
-                    f"当前仍显示旧比赛：{_source_summary(existing_matches)}"
-                )
-        elif self.api_key:
+                failures.append(f"Odds-API.io 拉取失败：{_format_fetch_error(exc)}")
+
+        if self.api_key:
             try:
-                return self._fetch_odds_api(existing_matches, score_sports)
+                score_sports.update(self.sport_keys)
+                matches, label = self._fetch_odds_api(existing_matches, score_sports)
+                fetched_sources.append((matches, label))
             except Exception as exc:
-                return {}, (
-                    f"The Odds API 拉取失败：{_format_fetch_error(exc)}；"
-                    f"当前仍显示旧比赛：{_source_summary(existing_matches)}"
-                )
+                failures.append(f"The Odds API 拉取失败：{_format_fetch_error(exc)}")
+
+        if fetched_sources:
+            matches = self._merge_provider_matches(existing_matches, fetched_sources)
+            labels = [label for _, label in fetched_sources]
+            if failures:
+                labels.extend(failures)
+            return matches, "双源更新：" + "；".join(labels)
+
+        if failures:
+            return {}, (
+                "；".join(failures)
+                + f"；当前仍显示旧比赛：{_source_summary(existing_matches)}"
+            )
         return self._demo_matches()
+
+    def _merge_provider_matches(self, existing_matches, fetched_sources):
+        merged = {}
+        fingerprints = {}
+        for match_id, match in existing_matches.items():
+            fingerprint = _match_fingerprint(match)
+            if fingerprint:
+                fingerprints[fingerprint] = match_id
+
+        for matches, _label in fetched_sources:
+            for match_id, match in matches.items():
+                target_id = match_id
+                fingerprint = _match_fingerprint(match)
+                if fingerprint and fingerprint in fingerprints:
+                    target_id = fingerprints[fingerprint]
+                elif fingerprint:
+                    fingerprints[fingerprint] = match_id
+
+                old = merged.get(target_id) or existing_matches.get(target_id) or {}
+                combined = dict(old)
+                combined.update(match)
+                combined["id"] = target_id
+                combined["source"] = _combine_sources(old.get("source"), match.get("source"))
+                if not combined.get("odds") and old.get("odds"):
+                    combined["odds"] = old["odds"]
+                if old.get("status") == "completed" and old.get("result") and match.get("status") != "completed":
+                    combined["status"] = old["status"]
+                    combined["result"] = old["result"]
+                    combined["home_score"] = old.get("home_score")
+                    combined["away_score"] = old.get("away_score")
+                merged[target_id] = combined
+        return merged
 
     def _request_json(self, path, params, base_url="https://api.the-odds-api.com/v4"):
         query = urllib.parse.urlencode(params)
@@ -260,8 +306,10 @@ class MatchSource:
                     score_row = scores_by_id.get(match["id"])
                     if score_row:
                         self._apply_score(match, score_row)
-                    elif parse_iso(match["start_time"]) <= now:
-                        match["status"] = "in_progress"
+                    else:
+                        start = parse_iso(match["start_time"])
+                        if start and start <= now:
+                            match["status"] = "in_progress"
                     matches[match["id"]] = match
             for row in scores_rows:
                 match_id = row.get("id")
@@ -354,7 +402,8 @@ class MatchSource:
                 match["result"] = "away"
             else:
                 match["result"] = "draw"
-        elif parse_iso(match["start_time"]) <= utc_now():
+        start = parse_iso(match["start_time"])
+        if start and start <= utc_now():
             match["status"] = "in_progress"
 
     def _demo_matches(self):
@@ -433,6 +482,30 @@ def _source_summary(matches):
         source = match.get("source") or "未知来源"
         counts[source] = counts.get(source, 0) + 1
     return "、".join(f"{source} {count} 场" for source, count in sorted(counts.items()))
+
+
+def _match_fingerprint(match):
+    home = _normalize_team(match.get("home_team"))
+    away = _normalize_team(match.get("away_team"))
+    start = parse_iso(match.get("start_time"))
+    if not home or not away or not start:
+        return None
+    start_slot = start.replace(minute=0, second=0, microsecond=0)
+    return f"{home}|{away}|{to_iso(start_slot)}"
+
+
+def _normalize_team(value):
+    return "".join(ch for ch in str(value or "").casefold() if ch.isalnum())
+
+
+def _combine_sources(*sources):
+    parts = []
+    for source in sources:
+        for part in str(source or "").split("+"):
+            part = part.strip()
+            if part and part not in parts:
+                parts.append(part)
+    return " + ".join(parts) if parts else "未知来源"
 
 
 def _as_rows(payload):

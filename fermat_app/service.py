@@ -283,12 +283,12 @@ def _update_due():
     data = read_db()
     config = load_config()
     source = str(data["meta"].get("match_source", ""))
-    configured_source = ""
+    configured_sources = []
     if config.get("odds_api_io_key"):
-        configured_source = "Odds-API.io"
-    elif config.get("the_odds_api_key"):
-        configured_source = "The Odds API"
-    if configured_source and not source.startswith(configured_source):
+        configured_sources.append("Odds-API.io")
+    if config.get("the_odds_api_key"):
+        configured_sources.append("The Odds API")
+    if configured_sources and not all(item in source for item in configured_sources):
         return True
     last = data["meta"].get("last_match_update")
     if not last:

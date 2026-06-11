@@ -122,7 +122,11 @@ h3 {
   font-size: 20px;
 }
 
-button {
+button,
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 42px;
   padding: 0 18px;
   border: 0;
@@ -132,6 +136,7 @@ button {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
 }
 
 button:disabled {
