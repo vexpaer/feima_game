@@ -1,5 +1,9 @@
 import hashlib
+import json
 import random
+import socket
+import ssl
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -19,6 +23,11 @@ SPORT_KEYS = [
     "soccer_fifa_world_cup",
 ]
 
+REQUEST_TIMEOUT_SECONDS = 15
+REQUEST_RETRIES = 3
+RETRY_DELAY_SECONDS = 1.0
+_SSL_CONTEXT = None
+
 DEMO_TEAMS = [
     ("阿森纳", "利物浦", "英超"),
     ("皇家马德里", "巴塞罗那", "西甲"),
@@ -29,6 +38,28 @@ DEMO_TEAMS = [
     ("尤文图斯", "那不勒斯", "意甲"),
     ("马德里竞技", "塞维利亚", "西甲"),
 ]
+
+
+def _ssl_context():
+    global _SSL_CONTEXT
+    if _SSL_CONTEXT is not None:
+        return _SSL_CONTEXT
+    try:
+        import certifi
+
+        _SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        _SSL_CONTEXT = ssl.create_default_context()
+    return _SSL_CONTEXT
+
+
+def _retryable_url_error(exc):
+    reason = getattr(exc, "reason", exc)
+    if isinstance(reason, (socket.gaierror, TimeoutError, ConnectionError)):
+        return True
+    if isinstance(reason, OSError):
+        return True
+    return False
 
 
 class MatchSource:
@@ -113,10 +144,24 @@ class MatchSource:
         query = urllib.parse.urlencode(params)
         url = f"{base_url.rstrip('/')}/{path.lstrip('/')}?{query}"
         req = urllib.request.Request(url, headers={"User-Agent": "fermat-coin-football/1.0"})
-        with urllib.request.urlopen(req, timeout=12) as resp:
-            import json
-
-            return json.loads(resp.read().decode("utf-8"))
+        last_error = None
+        for attempt in range(REQUEST_RETRIES):
+            try:
+                with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT_SECONDS, context=_ssl_context()) as resp:
+                    return json.loads(resp.read().decode("utf-8"))
+            except urllib.error.HTTPError:
+                raise
+            except urllib.error.URLError as exc:
+                last_error = exc
+                if attempt >= REQUEST_RETRIES - 1 or not _retryable_url_error(exc):
+                    raise
+                time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
+            except TimeoutError as exc:
+                last_error = exc
+                if attempt >= REQUEST_RETRIES - 1:
+                    raise
+                time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
+        raise last_error
 
     def _fetch_odds_api_io(self, existing_matches):
         now = utc_now()
@@ -471,6 +516,12 @@ def _format_fetch_error(exc):
         return "HTTP 429 请求过多，可能已触发接口频率限制或额度限制"
     if isinstance(exc, urllib.error.HTTPError):
         return f"HTTP {exc.code} {exc.reason}"
+    if isinstance(exc, urllib.error.URLError):
+        reason = getattr(exc, "reason", None)
+        if isinstance(reason, ssl.SSLCertVerificationError):
+            return "SSL 证书校验失败，请确认 Python/certifi 证书包可用"
+        if isinstance(reason, socket.gaierror):
+            return "域名解析失败，已重试仍无法连接，请检查 DNS/代理"
     return str(exc)
 
 
