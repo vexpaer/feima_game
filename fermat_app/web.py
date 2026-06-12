@@ -142,6 +142,22 @@ class FermatHandler(BaseHTTPRequestHandler):
                 form.get("away_score", "")
             )
             return self.redirect("/admin", message=msg)
+        if path == "/admin/add-match":
+            self.require_admin(user)
+            msg = service.manual_add_match(
+                user["username"],
+                form.get("home_team", ""),
+                form.get("away_team", ""),
+                form.get("start_time", ""),
+                form.get("home_odds", ""),
+                form.get("draw_odds", ""),
+                form.get("away_odds", "")
+            )
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/delete-match":
+            self.require_admin(user)
+            msg = service.delete_match(user["username"], form.get("match_id", ""))
+            return self.redirect("/admin", message=msg)
         self.send_error(HTTPStatus.NOT_FOUND)
 
     def render_login(self, query):
@@ -384,7 +400,7 @@ class FermatHandler(BaseHTTPRequestHandler):
                 <option value="subtract">扣减</option>
               </select>
             </label>
-            <label>费马币<input name="amount" type="number" min="0" required></label>
+            <label>费马币<input name="amount" type="number" required></label>
             <label>备注<input name="note" maxlength="120" placeholder="可选"></label>
             <button type="submit">提交调整</button>
           </form>
@@ -393,9 +409,25 @@ class FermatHandler(BaseHTTPRequestHandler):
             {balance_adjustments_table(snapshot['adjustments'])}
           </div>
         </section>
-        <section class="panel form-card inline-form">
-          <h2>手动结算比赛</h2>
-          <form method="post" action="/admin/settle-match" onsubmit="return confirm('确定手动结算这场比赛吗？结算后所有开放的该场比赛猜测都将完成发放，操作不可逆！');">
+        
+        <section class="two-col">
+          <form class="panel form-card inline-form" method="post" action="/admin/add-match">
+            <h2>手动添加比赛</h2>
+            <div style="display: flex; gap: 8px;">
+              <label style="flex: 1;">主队名称<input name="home_team" required></label>
+              <label style="flex: 1;">客队名称<input name="away_team" required></label>
+            </div>
+            <label>开赛时间<input name="start_time" type="datetime-local" required></label>
+            <div style="display: flex; gap: 8px;">
+              <label style="flex: 1;">主胜赔率<input name="home_odds" type="number" step="0.01" min="1" required></label>
+              <label style="flex: 1;">平局赔率<input name="draw_odds" type="number" step="0.01" min="1" required></label>
+              <label style="flex: 1;">客胜赔率<input name="away_odds" type="number" step="0.01" min="1" required></label>
+            </div>
+            <button type="submit">添加比赛</button>
+          </form>
+
+          <form class="panel form-card inline-form" method="post" action="/admin/settle-match" onsubmit="return confirm('确定手动结算这场比赛吗？结算后所有开放的该场比赛猜测都将完成发放，操作不可逆！');">
+            <h2>手动结算比赛</h2>
             <label style="flex: 2;">未结束比赛
               <select name="match_id" required>
                 {match_options(snapshot['matches'])}
@@ -408,6 +440,12 @@ class FermatHandler(BaseHTTPRequestHandler):
             <button type="submit">强制结算并派彩</button>
           </form>
         </section>
+
+        <section class="panel">
+          <div class="panel-title"><h2>未结束比赛管理</h2></div>
+          {admin_matches_table(snapshot['matches'])}
+        </section>
+
         <section class="panel">
           <div class="panel-title"><h2>贷款记录</h2></div>
           {loans_table(snapshot['loans'])}
@@ -861,6 +899,36 @@ def user_actions(user):
             </form>
             """)
     return "".join(actions)
+
+
+def admin_matches_table(matches_dict):
+    active = [m for m in matches_dict.values() if m.get("status") != "completed"]
+    active.sort(key=lambda m: m.get("start_time") or "")
+    if not active:
+        return empty_state("暂无未结束的比赛")
+    rows = []
+    for m in active:
+        rows.append(f"""
+        <tr>
+          <td>{format_time(m.get('start_time'))}</td>
+          <td>{e(m.get('home_team'))}</td>
+          <td>{e(m.get('away_team'))}</td>
+          <td>{e(m.get('odds', {}).get('home', '-'))} / {e(m.get('odds', {}).get('draw', '-'))} / {e(m.get('odds', {}).get('away', '-'))}</td>
+          <td>{status_label(m.get('status'))}</td>
+          <td>
+            <form method="post" action="/admin/delete-match" onsubmit="return confirm('确定删除这场比赛吗？会作废相关猜测并退款。');">
+              <input type="hidden" name="match_id" value="{e(m['id'])}">
+              <button class="danger" type="submit">删除</button>
+            </form>
+          </td>
+        </tr>
+        """)
+    return f"""
+    <div class="table-wrap"><table>
+      <thead><tr><th>时间</th><th>主队</th><th>客队</th><th>赔率(主/平/客)</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table></div>
+    """
 
 
 def users_table(users):

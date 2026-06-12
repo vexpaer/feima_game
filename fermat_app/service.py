@@ -206,7 +206,7 @@ def _place_negative_bets(data, user, match, choice, stake, source_bet_id, now):
     negative = data["users"].get(negative_name)
     if not negative:
         return 0
-    mirror_stake = min(stake, int(negative.get("balance", 0)))
+    mirror_stake = stake
     if mirror_stake <= 0:
         return 0
     if choice == "home":
@@ -457,6 +457,79 @@ def manual_settle_match(admin_username, match_id, home_score, away_score):
     return "比赛已手动结算。"
 
 
+def manual_add_match(admin_username, home_team, away_team, start_time, home_odds, draw_odds, away_odds):
+    home_team = (home_team or "").strip()
+    away_team = (away_team or "").strip()
+    if not home_team or not away_team:
+        raise AppError("队名不能为空。")
+    try:
+        home_odds = float(home_odds)
+        draw_odds = float(draw_odds)
+        away_odds = float(away_odds)
+    except (TypeError, ValueError):
+        raise AppError("赔率必须是数字。")
+
+    try:
+        # validate iso format
+        dt = parse_iso(start_time)
+        iso_time = to_iso(dt)
+    except Exception:
+        raise AppError("比赛时间不正确。")
+
+    def mutate(data):
+        admin = data["users"].get(admin_username)
+        if not admin or admin.get("role") != "admin":
+            raise AppError("需要管理员权限。")
+        
+        match_id = _new_id("match")
+        data["matches"][match_id] = {
+            "id": match_id,
+            "home_team": home_team,
+            "away_team": away_team,
+            "start_time": iso_time,
+            "status": "upcoming",
+            "odds": {
+                "home": str(home_odds),
+                "draw": str(draw_odds),
+                "away": str(away_odds)
+            },
+            "sport_key": "manual",
+            "league": "手动添加",
+            "source": "手动添加"
+        }
+        return True
+    
+    write_db(mutate)
+    return "已成功手动添加比赛。"
+
+
+def delete_match(admin_username, match_id):
+    def mutate(data):
+        admin = data["users"].get(admin_username)
+        if not admin or admin.get("role") != "admin":
+            raise AppError("需要管理员权限。")
+        match = data["matches"].get(match_id)
+        if not match:
+            raise AppError("比赛不存在。")
+        
+        now = utc_now()
+        voided = 0
+        for bet in data.get("bets", {}).values():
+            if bet.get("match_id") == match_id and bet.get("status") == "open":
+                user = data["users"].get(bet["username"])
+                if user:
+                    user["balance"] += int(bet.get("stake", 0))
+                bet["status"] = "void"
+                bet["settled_at"] = to_iso(now)
+                voided += 1
+
+        del data["matches"][match_id]
+        return voided
+
+    voided = write_db(mutate)
+    return f"已删除比赛，并作废退款了 {voided} 笔关联且未结算的猜测记录。"
+
+
 def delete_demo_matches():
     def mutate(data):
         demo_match_ids = {
@@ -493,8 +566,8 @@ def adjust_balance(admin_username, target_username, operation, amount, note=""):
         amount = int(amount)
     except (TypeError, ValueError):
         raise AppError("调整费马币必须是整数。")
-    if amount < 0:
-        raise AppError("调整费马币不能为负数。")
+    if amount < 0 and operation != "set":
+        raise AppError("增加或扣减的费马币不能为负数。")
     if operation != "set" and amount == 0:
         raise AppError("增加或扣减费马币必须大于 0。")
 
@@ -512,7 +585,7 @@ def adjust_balance(admin_username, target_username, operation, amount, note=""):
             new_balance = old_balance + amount
         else:
             new_balance = old_balance - amount
-            if new_balance < 0:
+            if new_balance < 0 and not target.get("is_negative"):
                 raise AppError("扣减后余额不能低于 0。")
         target["balance"] = new_balance
         adjustment_id = _new_id("adjust")
