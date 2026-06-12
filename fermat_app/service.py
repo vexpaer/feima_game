@@ -665,6 +665,16 @@ def admin_snapshot():
     }
 
 
+def all_bets_snapshot():
+    update_matches_if_due()
+    data = read_db()
+    bets = list(data.get("bets", {}).values())
+    return {
+        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
+        "matches": data["matches"],
+    }
+
+
 def leaderboard_snapshot():
     run_housekeeping()
     data = read_db()

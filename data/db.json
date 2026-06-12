@@ -1,8 +1,8 @@
 {
   "meta": {
     "created_at": "2026-06-01T15:10:19Z",
-    "last_match_update": "2026-06-12T01:50:41Z",
-    "match_source": "Odds-API.io 拉取失败：HTTP 429 请求过多，可能已触发接口频率限制或额度限制；The Odds API 拉取失败：SSL 证书校验失败，请确认 Python/certifi 证书包可用；当前仍显示旧比赛：The Odds API 72 场、内置演示源 14 场",
+    "last_match_update": "2026-06-12T02:24:32Z",
+    "match_source": "双源更新：The Odds API：soccer_epl(赔率+赛果), soccer_fifa_world_cup(赔率+赛果)；Odds-API.io 拉取失败：HTTP 429 请求过多，可能已触发接口频率限制或额度限制",
     "session_secret": "686ba6fb9145a09407e1fb510326934957dc7ec7be95e85acd855110c8773e5b"
   },
   "users": {
@@ -357,11 +357,11 @@
         "away": 8.61
       },
       "status": "in_progress",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "result": "home",
+      "home_score": 2,
+      "away_score": 0,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:28Z"
     },
     "384cbb5d76b535896a24fe65f93cfac8": {
       "id": "384cbb5d76b535896a24fe65f93cfac8",
@@ -371,16 +371,16 @@
       "away_team": "Czech Republic",
       "start_time": "2026-06-12T02:00:00Z",
       "odds": {
-        "home": 2.68,
-        "draw": 3.06,
-        "away": 2.93
+        "home": 2.58,
+        "draw": 2.63,
+        "away": 3.19
       },
-      "status": "upcoming",
+      "status": "in_progress",
       "result": null,
-      "home_score": null,
-      "away_score": null,
+      "home_score": 0,
+      "away_score": 0,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "d1f4f946c70a0b4e81f5d43e9d32361c": {
       "id": "d1f4f946c70a0b4e81f5d43e9d32361c",
@@ -390,16 +390,16 @@
       "away_team": "Bosnia & Herzegovina",
       "start_time": "2026-06-12T19:00:00Z",
       "odds": {
-        "home": 1.83,
-        "draw": 3.56,
-        "away": 4.62
+        "home": 1.87,
+        "draw": 3.51,
+        "away": 4.52
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c12986f447a515fbe641addd786dbb24": {
       "id": "c12986f447a515fbe641addd786dbb24",
@@ -409,16 +409,16 @@
       "away_team": "Paraguay",
       "start_time": "2026-06-13T01:00:00Z",
       "odds": {
-        "home": 1.94,
-        "draw": 3.44,
-        "away": 4.22
+        "home": 1.95,
+        "draw": 3.45,
+        "away": 4.2
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "26634922d3f78c146440816023e40de8": {
       "id": "26634922d3f78c146440816023e40de8",
@@ -428,8 +428,8 @@
       "away_team": "Switzerland",
       "start_time": "2026-06-13T19:00:00Z",
       "odds": {
-        "home": 13.98,
-        "draw": 6.71,
+        "home": 14.06,
+        "draw": 6.61,
         "away": 1.22
       },
       "status": "upcoming",
@@ -437,7 +437,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f6c8748a16516e0998f95de14235432a": {
       "id": "f6c8748a16516e0998f95de14235432a",
@@ -447,16 +447,16 @@
       "away_team": "Morocco",
       "start_time": "2026-06-13T22:00:00Z",
       "odds": {
-        "home": 1.66,
-        "draw": 3.81,
-        "away": 5.57
+        "home": 1.65,
+        "draw": 3.86,
+        "away": 5.65
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "5ae41a06735c926eeb7f74006933adce": {
       "id": "5ae41a06735c926eeb7f74006933adce",
@@ -466,16 +466,16 @@
       "away_team": "Scotland",
       "start_time": "2026-06-14T01:00:00Z",
       "odds": {
-        "home": 6.02,
-        "draw": 4.26,
-        "away": 1.55
+        "home": 5.88,
+        "draw": 4.24,
+        "away": 1.56
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "564084f52cc9f1abcc18187c168a7cdc": {
       "id": "564084f52cc9f1abcc18187c168a7cdc",
@@ -485,16 +485,16 @@
       "away_team": "Turkey",
       "start_time": "2026-06-14T04:00:00Z",
       "odds": {
-        "home": 5.21,
-        "draw": 3.77,
-        "away": 1.71
+        "home": 5.22,
+        "draw": 3.79,
+        "away": 1.7
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "d79edbd6aaeb578d33e313446b18d333": {
       "id": "d79edbd6aaeb578d33e313446b18d333",
@@ -505,15 +505,15 @@
       "start_time": "2026-06-14T17:00:00Z",
       "odds": {
         "home": 1.04,
-        "draw": 18.39,
-        "away": 43.17
+        "draw": 18.15,
+        "away": 43.46
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "32ec06abda2398ac41501c86eb9aa376": {
       "id": "32ec06abda2398ac41501c86eb9aa376",
@@ -523,16 +523,16 @@
       "away_team": "Japan",
       "start_time": "2026-06-14T20:00:00Z",
       "odds": {
-        "home": 2.03,
-        "draw": 3.54,
-        "away": 3.71
+        "home": 2.01,
+        "draw": 3.57,
+        "away": 3.76
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "05752bb341e197001387b64f3a06b9b2": {
       "id": "05752bb341e197001387b64f3a06b9b2",
@@ -542,8 +542,8 @@
       "away_team": "Ecuador",
       "start_time": "2026-06-14T23:00:00Z",
       "odds": {
-        "home": 3.58,
-        "draw": 2.83,
+        "home": 3.59,
+        "draw": 2.84,
         "away": 2.42
       },
       "status": "upcoming",
@@ -551,7 +551,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "b55f9569de3f4d731bc5537ff5ff43e4": {
       "id": "b55f9569de3f4d731bc5537ff5ff43e4",
@@ -561,16 +561,16 @@
       "away_team": "Tunisia",
       "start_time": "2026-06-15T02:00:00Z",
       "odds": {
-        "home": 1.92,
-        "draw": 3.43,
-        "away": 4.32
+        "home": 1.9,
+        "draw": 3.46,
+        "away": 4.36
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c54f00b11925751d2b62988775c6c239": {
       "id": "c54f00b11925751d2b62988775c6c239",
@@ -581,15 +581,15 @@
       "start_time": "2026-06-15T16:00:00Z",
       "odds": {
         "home": 1.09,
-        "draw": 11.46,
-        "away": 26.92
+        "draw": 11.44,
+        "away": 26.93
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "fbfb95c62003fd6d828b309f96ee1f9b": {
       "id": "fbfb95c62003fd6d828b309f96ee1f9b",
@@ -599,16 +599,16 @@
       "away_team": "Egypt",
       "start_time": "2026-06-15T19:00:00Z",
       "odds": {
-        "home": 1.65,
-        "draw": 3.89,
-        "away": 5.5
+        "home": 1.64,
+        "draw": 3.91,
+        "away": 5.57
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "64b91c5f2db61c7358a4f05459e83c52": {
       "id": "64b91c5f2db61c7358a4f05459e83c52",
@@ -618,16 +618,16 @@
       "away_team": "Uruguay",
       "start_time": "2026-06-15T22:00:00Z",
       "odds": {
-        "home": 7.72,
+        "home": 7.83,
         "draw": 4.44,
-        "away": 1.45
+        "away": 1.44
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "ec51b9c44ad5e34552f3ab53f7262813": {
       "id": "ec51b9c44ad5e34552f3ab53f7262813",
@@ -639,14 +639,14 @@
       "odds": {
         "home": 1.84,
         "draw": 3.51,
-        "away": 4.62
+        "away": 4.63
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "73a4fcd14cc9766b9b9bfd50b8ca153a": {
       "id": "73a4fcd14cc9766b9b9bfd50b8ca153a",
@@ -656,16 +656,16 @@
       "away_team": "Senegal",
       "start_time": "2026-06-16T19:00:00Z",
       "odds": {
-        "home": 1.47,
-        "draw": 4.42,
-        "away": 7.26
+        "home": 1.48,
+        "draw": 4.38,
+        "away": 7.21
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "4d4f2b9b78182b557d4fbf8dcf4f4af2": {
       "id": "4d4f2b9b78182b557d4fbf8dcf4f4af2",
@@ -675,8 +675,8 @@
       "away_team": "Norway",
       "start_time": "2026-06-16T22:00:00Z",
       "odds": {
-        "home": 14.65,
-        "draw": 6.89,
+        "home": 14.72,
+        "draw": 6.91,
         "away": 1.21
       },
       "status": "upcoming",
@@ -684,7 +684,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f31b2ee9e1cc6f7e641467f8237eaa21": {
       "id": "f31b2ee9e1cc6f7e641467f8237eaa21",
@@ -694,16 +694,16 @@
       "away_team": "Algeria",
       "start_time": "2026-06-17T01:00:00Z",
       "odds": {
-        "home": 1.39,
-        "draw": 4.65,
-        "away": 9.03
+        "home": 1.4,
+        "draw": 4.6,
+        "away": 8.92
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "25161cf6cf0cd9be17ae2e7e224a1f45": {
       "id": "25161cf6cf0cd9be17ae2e7e224a1f45",
@@ -715,14 +715,14 @@
       "odds": {
         "home": 1.32,
         "draw": 5.51,
-        "away": 9.41
+        "away": 9.38
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "6cc871c121a1869b4612d3fb22fa9d55": {
       "id": "6cc871c121a1869b4612d3fb22fa9d55",
@@ -734,14 +734,14 @@
       "odds": {
         "home": 1.28,
         "draw": 5.69,
-        "away": 11.05
+        "away": 11.04
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "689096c8cd7e2753b9fec95321943c5d": {
       "id": "689096c8cd7e2753b9fec95321943c5d",
@@ -753,14 +753,14 @@
       "odds": {
         "home": 1.73,
         "draw": 3.8,
-        "away": 4.89
+        "away": 4.92
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "87afdb85c977b451e1c00f5e3e632601": {
       "id": "87afdb85c977b451e1c00f5e3e632601",
@@ -772,14 +772,14 @@
       "odds": {
         "home": 2.13,
         "draw": 3.44,
-        "away": 3.51
+        "away": 3.52
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "22083e7a8e5362c711bc05c1e1319a1f": {
       "id": "22083e7a8e5362c711bc05c1e1319a1f",
@@ -789,8 +789,8 @@
       "away_team": "Colombia",
       "start_time": "2026-06-18T02:00:00Z",
       "odds": {
-        "home": 8.78,
-        "draw": 4.71,
+        "home": 8.85,
+        "draw": 4.7,
         "away": 1.38
       },
       "status": "upcoming",
@@ -798,7 +798,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "66ebb9e3f949caded535d97ce686ca09": {
       "id": "66ebb9e3f949caded535d97ce686ca09",
@@ -808,16 +808,16 @@
       "away_team": "South Africa",
       "start_time": "2026-06-18T16:00:00Z",
       "odds": {
-        "home": 1.96,
-        "draw": 3.31,
-        "away": 4.13
+        "home": 1.67,
+        "draw": 3.86,
+        "away": 5.42
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "289bc2e9f5adad8ae4d9a75a7c5461ad": {
       "id": "289bc2e9f5adad8ae4d9a75a7c5461ad",
@@ -829,14 +829,14 @@
       "odds": {
         "home": 1.59,
         "draw": 3.99,
-        "away": 5.76
+        "away": 5.73
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "fa9502285b257b03e62968d50d9229fc": {
       "id": "fa9502285b257b03e62968d50d9229fc",
@@ -847,15 +847,15 @@
       "start_time": "2026-06-18T22:00:00Z",
       "odds": {
         "home": 1.3,
-        "draw": 5.22,
-        "away": 10.69
+        "draw": 5.23,
+        "away": 10.65
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "0f2aeae6ac8e77223848d23a4ca86b0d": {
       "id": "0f2aeae6ac8e77223848d23a4ca86b0d",
@@ -865,16 +865,16 @@
       "away_team": "South Korea",
       "start_time": "2026-06-19T01:00:00Z",
       "odds": {
-        "home": 1.8,
-        "draw": 3.55,
-        "away": 4.62
+        "home": 1.84,
+        "draw": 3.53,
+        "away": 4.52
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "065b3573e875f8d23803357f73e5b99e": {
       "id": "065b3573e875f8d23803357f73e5b99e",
@@ -884,16 +884,16 @@
       "away_team": "Australia",
       "start_time": "2026-06-19T19:00:00Z",
       "odds": {
-        "home": 1.75,
-        "draw": 3.81,
-        "away": 4.51
+        "home": 1.74,
+        "draw": 3.82,
+        "away": 4.54
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "4cd769aa7bae0ad9762bd69b80ef2903": {
       "id": "4cd769aa7bae0ad9762bd69b80ef2903",
@@ -912,7 +912,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "ef0f74a991d3e35798ae5af77667bce1": {
       "id": "ef0f74a991d3e35798ae5af77667bce1",
@@ -923,15 +923,15 @@
       "start_time": "2026-06-20T01:00:00Z",
       "odds": {
         "home": 1.07,
-        "draw": 11.94,
-        "away": 28.89
+        "draw": 11.98,
+        "away": 29.05
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f955d4b3395ce6e3b5ac1031ca52ca4e": {
       "id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
@@ -942,15 +942,15 @@
       "start_time": "2026-06-20T03:00:00Z",
       "odds": {
         "home": 2.21,
-        "draw": 3.19,
-        "away": 3.41
+        "draw": 3.18,
+        "away": 3.42
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "4f0c518545b0096c68326daf25bffc1e": {
       "id": "4f0c518545b0096c68326daf25bffc1e",
@@ -960,16 +960,16 @@
       "away_team": "Sweden",
       "start_time": "2026-06-20T17:00:00Z",
       "odds": {
-        "home": 1.63,
-        "draw": 3.98,
-        "away": 5.18
+        "home": 1.62,
+        "draw": 4.0,
+        "away": 5.23
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f1ab0f69832972a329243522ceaa7804": {
       "id": "f1ab0f69832972a329243522ceaa7804",
@@ -980,15 +980,15 @@
       "start_time": "2026-06-20T20:00:00Z",
       "odds": {
         "home": 1.54,
-        "draw": 4.27,
-        "away": 5.67
+        "draw": 4.28,
+        "away": 5.69
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "681895f294b670b4c7b14495dfb583bc": {
       "id": "681895f294b670b4c7b14495dfb583bc",
@@ -999,15 +999,15 @@
       "start_time": "2026-06-21T00:00:00Z",
       "odds": {
         "home": 1.19,
-        "draw": 6.86,
-        "away": 14.28
+        "draw": 6.84,
+        "away": 14.54
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "dfc5202cf1b8ae002cf952cd04f235b9": {
       "id": "dfc5202cf1b8ae002cf952cd04f235b9",
@@ -1026,7 +1026,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "73529a242e319a86bf3d00ddb4accc37": {
       "id": "73529a242e319a86bf3d00ddb4accc37",
@@ -1037,15 +1037,15 @@
       "start_time": "2026-06-21T16:00:00Z",
       "odds": {
         "home": 1.1,
-        "draw": 9.74,
-        "away": 23.85
+        "draw": 9.68,
+        "away": 24.0
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "5f92f257386ec5bf7c6e2498a21f3a61": {
       "id": "5f92f257386ec5bf7c6e2498a21f3a61",
@@ -1056,15 +1056,15 @@
       "start_time": "2026-06-21T19:00:00Z",
       "odds": {
         "home": 1.4,
-        "draw": 4.66,
-        "away": 7.89
+        "draw": 4.64,
+        "away": 7.9
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "852a3abe6d46820720febc0fedebff9a": {
       "id": "852a3abe6d46820720febc0fedebff9a",
@@ -1076,14 +1076,14 @@
       "odds": {
         "home": 1.43,
         "draw": 4.46,
-        "away": 7.44
+        "away": 7.47
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c1ec9a65f4b4cf74477b368a7d6282de": {
       "id": "c1ec9a65f4b4cf74477b368a7d6282de",
@@ -1094,7 +1094,7 @@
       "start_time": "2026-06-22T01:00:00Z",
       "odds": {
         "home": 4.8,
-        "draw": 3.69,
+        "draw": 3.67,
         "away": 1.73
       },
       "status": "upcoming",
@@ -1102,7 +1102,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "be6c63f416c67bca1300a98f5b89c3af": {
       "id": "be6c63f416c67bca1300a98f5b89c3af",
@@ -1113,15 +1113,15 @@
       "start_time": "2026-06-22T17:00:00Z",
       "odds": {
         "home": 1.64,
-        "draw": 3.82,
-        "away": 5.39
+        "draw": 3.83,
+        "away": 5.38
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "7ad7a0ce2ef2618bb59b066da5642f70": {
       "id": "7ad7a0ce2ef2618bb59b066da5642f70",
@@ -1132,15 +1132,15 @@
       "start_time": "2026-06-22T21:00:00Z",
       "odds": {
         "home": 1.11,
-        "draw": 8.66,
-        "away": 23.87
+        "draw": 8.64,
+        "away": 24.31
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "3f48473742ca0fd2a85930554720c75e": {
       "id": "3f48473742ca0fd2a85930554720c75e",
@@ -1159,7 +1159,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "fd8533b650e655030f6a7946f8795db2": {
       "id": "fd8533b650e655030f6a7946f8795db2",
@@ -1169,7 +1169,7 @@
       "away_team": "Algeria",
       "start_time": "2026-06-23T03:00:00Z",
       "odds": {
-        "home": 6.32,
+        "home": 6.35,
         "draw": 4.17,
         "away": 1.51
       },
@@ -1178,7 +1178,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "8ba93d190f1f934e33862a97a6353a6e": {
       "id": "8ba93d190f1f934e33862a97a6353a6e",
@@ -1188,16 +1188,16 @@
       "away_team": "Uzbekistan",
       "start_time": "2026-06-23T17:00:00Z",
       "odds": {
-        "home": 1.24,
-        "draw": 6.2,
-        "away": 11.14
+        "home": 1.23,
+        "draw": 6.21,
+        "away": 11.27
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "2f49dd8deae3079dc4eb2d634d18a99c": {
       "id": "2f49dd8deae3079dc4eb2d634d18a99c",
@@ -1208,15 +1208,15 @@
       "start_time": "2026-06-23T20:00:00Z",
       "odds": {
         "home": 1.31,
-        "draw": 5.24,
-        "away": 9.34
+        "draw": 5.25,
+        "away": 9.36
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c1bc8c26480cd42b89a0de5329581314": {
       "id": "c1bc8c26480cd42b89a0de5329581314",
@@ -1226,8 +1226,8 @@
       "away_team": "Croatia",
       "start_time": "2026-06-23T23:00:00Z",
       "odds": {
-        "home": 6.43,
-        "draw": 3.9,
+        "home": 6.45,
+        "draw": 3.89,
         "away": 1.54
       },
       "status": "upcoming",
@@ -1235,7 +1235,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "68bfc965eb267508e04d8e8d75c1a0ae": {
       "id": "68bfc965eb267508e04d8e8d75c1a0ae",
@@ -1247,14 +1247,14 @@
       "odds": {
         "home": 1.46,
         "draw": 4.16,
-        "away": 7.29
+        "away": 7.31
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "512ac18beb5aa936a59f7ea3e497ada2": {
       "id": "512ac18beb5aa936a59f7ea3e497ada2",
@@ -1264,16 +1264,16 @@
       "away_team": "Qatar",
       "start_time": "2026-06-24T19:00:00Z",
       "odds": {
-        "home": 1.59,
-        "draw": 3.75,
-        "away": 5.76
+        "home": 1.6,
+        "draw": 3.73,
+        "away": 5.68
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c9ef5822ee64fd5275f7c73251bb56c7": {
       "id": "c9ef5822ee64fd5275f7c73251bb56c7",
@@ -1284,15 +1284,15 @@
       "start_time": "2026-06-24T19:00:00Z",
       "odds": {
         "home": 2.11,
-        "draw": 3.27,
-        "away": 3.47
+        "draw": 3.28,
+        "away": 3.46
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "885ba95805db310a7bcc3fb1a7a6dd28": {
       "id": "885ba95805db310a7bcc3fb1a7a6dd28",
@@ -1302,16 +1302,16 @@
       "away_team": "Brazil",
       "start_time": "2026-06-24T22:00:00Z",
       "odds": {
-        "home": 6.44,
-        "draw": 4.45,
-        "away": 1.45
+        "home": 6.63,
+        "draw": 4.51,
+        "away": 1.43
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "d1279ce7f33136a33e99ad442fc855e8": {
       "id": "d1279ce7f33136a33e99ad442fc855e8",
@@ -1321,16 +1321,16 @@
       "away_team": "Haiti",
       "start_time": "2026-06-24T22:00:00Z",
       "odds": {
-        "home": 1.31,
-        "draw": 4.99,
-        "away": 9.37
+        "home": 1.3,
+        "draw": 5.08,
+        "away": 9.61
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "5993bd5196ca09f83990f0c3261e442e": {
       "id": "5993bd5196ca09f83990f0c3261e442e",
@@ -1340,16 +1340,16 @@
       "away_team": "Mexico",
       "start_time": "2026-06-25T01:00:00Z",
       "odds": {
-        "home": 4.47,
-        "draw": 3.46,
-        "away": 1.79
+        "home": 4.59,
+        "draw": 3.52,
+        "away": 1.8
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "c0355dfc6e26ec327e379b6ef5824a5f": {
       "id": "c0355dfc6e26ec327e379b6ef5824a5f",
@@ -1359,16 +1359,16 @@
       "away_team": "South Korea",
       "start_time": "2026-06-25T01:00:00Z",
       "odds": {
-        "home": 3.94,
-        "draw": 3.32,
-        "away": 1.93
+        "home": 4.95,
+        "draw": 3.63,
+        "away": 1.73
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "a5a0b544a984ab16e564264f3e859b43": {
       "id": "a5a0b544a984ab16e564264f3e859b43",
@@ -1378,8 +1378,8 @@
       "away_team": "Ivory Coast",
       "start_time": "2026-06-25T20:00:00Z",
       "odds": {
-        "home": 12.62,
-        "draw": 6.06,
+        "home": 12.94,
+        "draw": 6.08,
         "away": 1.21
       },
       "status": "upcoming",
@@ -1387,7 +1387,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "0ec28b84ec399bd4dffbe8d1bc72b3c4": {
       "id": "0ec28b84ec399bd4dffbe8d1bc72b3c4",
@@ -1398,15 +1398,15 @@
       "start_time": "2026-06-25T20:00:00Z",
       "odds": {
         "home": 4.67,
-        "draw": 3.72,
-        "away": 1.7
+        "draw": 3.71,
+        "away": 1.71
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "0ed0233bddc4eafc8507f86a9c17b998": {
       "id": "0ed0233bddc4eafc8507f86a9c17b998",
@@ -1416,8 +1416,8 @@
       "away_team": "Sweden",
       "start_time": "2026-06-25T23:00:00Z",
       "odds": {
-        "home": 2.06,
-        "draw": 3.34,
+        "home": 2.07,
+        "draw": 3.33,
         "away": 3.47
       },
       "status": "upcoming",
@@ -1425,7 +1425,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f3c4657daa143a0c5bd62cb370d01ce4": {
       "id": "f3c4657daa143a0c5bd62cb370d01ce4",
@@ -1435,8 +1435,8 @@
       "away_team": "Netherlands",
       "start_time": "2026-06-25T23:00:00Z",
       "odds": {
-        "home": 6.25,
-        "draw": 4.18,
+        "home": 6.28,
+        "draw": 4.17,
         "away": 1.49
       },
       "status": "upcoming",
@@ -1444,7 +1444,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "22f6ac06dfcc88a847920f62633e6459": {
       "id": "22f6ac06dfcc88a847920f62633e6459",
@@ -1455,15 +1455,15 @@
       "start_time": "2026-06-26T02:00:00Z",
       "odds": {
         "home": 2.14,
-        "draw": 3.16,
-        "away": 3.42
+        "draw": 3.17,
+        "away": 3.43
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "f41aeac9a8343a84b4950f15ea25fba2": {
       "id": "f41aeac9a8343a84b4950f15ea25fba2",
@@ -1473,16 +1473,16 @@
       "away_team": "USA",
       "start_time": "2026-06-26T02:00:00Z",
       "odds": {
-        "home": 2.62,
-        "draw": 3.39,
-        "away": 2.51
+        "home": 2.6,
+        "draw": 3.42,
+        "away": 2.52
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "b86b4d60f773e9e3c46c00e9a6496e79": {
       "id": "b86b4d60f773e9e3c46c00e9a6496e79",
@@ -1492,8 +1492,8 @@
       "away_team": "France",
       "start_time": "2026-06-26T19:00:00Z",
       "odds": {
-        "home": 4.18,
-        "draw": 3.53,
+        "home": 4.2,
+        "draw": 3.54,
         "away": 1.8
       },
       "status": "upcoming",
@@ -1501,7 +1501,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "7e6aee294ea1a4792c59558791084528": {
       "id": "7e6aee294ea1a4792c59558791084528",
@@ -1511,16 +1511,16 @@
       "away_team": "Iraq",
       "start_time": "2026-06-26T19:00:00Z",
       "odds": {
-        "home": 1.41,
-        "draw": 4.36,
-        "away": 7.31
+        "home": 1.4,
+        "draw": 4.39,
+        "away": 7.34
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "e07b1926be5a4d515c7eb108dbcee9c5": {
       "id": "e07b1926be5a4d515c7eb108dbcee9c5",
@@ -1531,15 +1531,15 @@
       "start_time": "2026-06-27T00:00:00Z",
       "odds": {
         "home": 2.54,
-        "draw": 3.22,
-        "away": 2.69
+        "draw": 3.23,
+        "away": 2.7
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "dcff2e31c0bce001a4db5caaf4fa8822": {
       "id": "dcff2e31c0bce001a4db5caaf4fa8822",
@@ -1549,8 +1549,8 @@
       "away_team": "Spain",
       "start_time": "2026-06-27T00:00:00Z",
       "odds": {
-        "home": 5.23,
-        "draw": 3.83,
+        "home": 5.24,
+        "draw": 3.84,
         "away": 1.61
       },
       "status": "upcoming",
@@ -1558,7 +1558,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "581691da05dcd75b5c6d3be91ee9d2ab": {
       "id": "581691da05dcd75b5c6d3be91ee9d2ab",
@@ -1568,8 +1568,8 @@
       "away_team": "Belgium",
       "start_time": "2026-06-27T03:00:00Z",
       "odds": {
-        "home": 9.4,
-        "draw": 5.45,
+        "home": 9.49,
+        "draw": 5.46,
         "away": 1.27
       },
       "status": "upcoming",
@@ -1577,7 +1577,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "3e3b5fa2b3c963e74cf044c60db0b573": {
       "id": "3e3b5fa2b3c963e74cf044c60db0b573",
@@ -1596,7 +1596,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "537c0997cd899394f47f16545b7068b2": {
       "id": "537c0997cd899394f47f16545b7068b2",
@@ -1608,14 +1608,14 @@
       "odds": {
         "home": 1.63,
         "draw": 3.69,
-        "away": 5.31
+        "away": 5.33
       },
       "status": "upcoming",
       "result": null,
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "4be17c8e1ccfecb0f2a5ef79e045c415": {
       "id": "4be17c8e1ccfecb0f2a5ef79e045c415",
@@ -1625,8 +1625,8 @@
       "away_team": "England",
       "start_time": "2026-06-27T21:00:00Z",
       "odds": {
-        "home": 9.17,
-        "draw": 5.7,
+        "home": 9.24,
+        "draw": 5.71,
         "away": 1.27
       },
       "status": "upcoming",
@@ -1634,7 +1634,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "67ae5751c401a98409b8566ae4897069": {
       "id": "67ae5751c401a98409b8566ae4897069",
@@ -1645,7 +1645,7 @@
       "start_time": "2026-06-27T23:30:00Z",
       "odds": {
         "home": 3.46,
-        "draw": 3.25,
+        "draw": 3.24,
         "away": 2.1
       },
       "status": "upcoming",
@@ -1653,7 +1653,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "13eab94a136b9c264ba974cf437a5f71": {
       "id": "13eab94a136b9c264ba974cf437a5f71",
@@ -1672,7 +1672,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "8756200e539155e571557c4f2e0d7f05": {
       "id": "8756200e539155e571557c4f2e0d7f05",
@@ -1691,7 +1691,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "54697f453437ab26276d773be1d72e9b": {
       "id": "54697f453437ab26276d773be1d72e9b",
@@ -1701,8 +1701,8 @@
       "away_team": "Argentina",
       "start_time": "2026-06-28T02:00:00Z",
       "odds": {
-        "home": 13.58,
-        "draw": 6.64,
+        "home": 13.61,
+        "draw": 6.66,
         "away": 1.18
       },
       "status": "upcoming",
@@ -1710,7 +1710,7 @@
       "home_score": null,
       "away_score": null,
       "source": "The Odds API",
-      "updated_at": "2026-06-11T14:58:36Z"
+      "updated_at": "2026-06-12T02:24:32Z"
     },
     "demo-20260531-0": {
       "id": "demo-20260531-0",

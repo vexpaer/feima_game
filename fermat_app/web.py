@@ -72,6 +72,9 @@ class FermatHandler(BaseHTTPRequestHandler):
         if path == "/leaderboard":
             self.require_user(user)
             return self.render_leaderboard(user, query)
+        if path == "/all-bets":
+            self.require_user(user)
+            return self.render_all_bets(user, query)
         if path == "/admin":
             self.require_admin(user)
             return self.render_admin(user, query)
@@ -310,6 +313,9 @@ class FermatHandler(BaseHTTPRequestHandler):
             <p class="eyebrow">富豪排行榜</p>
             <h1>Fermat Coin 余额排行</h1>
           </div>
+          <div class="head-actions">
+            <a class="button-link" href="/all-bets">全站猜测记录</a>
+          </div>
         </section>
         <section class="metric-grid podium-grid">
           {cards}
@@ -320,6 +326,25 @@ class FermatHandler(BaseHTTPRequestHandler):
         </section>
         """
         self.send_html(layout("富豪排行榜", body, user, query))
+
+    def render_all_bets(self, user, query):
+        snapshot = service.all_bets_snapshot()
+        body = f"""
+        <section class="page-head">
+          <div>
+            <p class="eyebrow">全站记录</p>
+            <h1>全站猜测记录</h1>
+          </div>
+          <div class="head-actions">
+            <a class="button-link" href="/leaderboard">返回排行榜</a>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-title"><h2>所有猜测</h2></div>
+          {admin_bets_table(snapshot['bets'], snapshot['matches'])}
+        </section>
+        """
+        self.send_html(layout("全站猜测记录", body, user, query))
 
     def render_admin(self, user, query):
         snapshot = service.admin_snapshot()
