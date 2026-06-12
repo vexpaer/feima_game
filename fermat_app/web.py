@@ -126,6 +126,19 @@ class FermatHandler(BaseHTTPRequestHandler):
             self.require_admin(user)
             service.update_matches(force=True)
             return self.redirect("/admin", message="已手动刷新 API 数据。")
+        if path == "/admin/set-admin":
+            self.require_admin(user)
+            msg = service.set_admin(user["username"], form.get("username", ""))
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/settle-match":
+            self.require_admin(user)
+            msg = service.manual_settle_match(
+                user["username"],
+                form.get("match_id", ""),
+                form.get("home_score", ""),
+                form.get("away_score", "")
+            )
+            return self.redirect("/admin", message=msg)
         self.send_error(HTTPStatus.NOT_FOUND)
 
     def render_login(self, query):
@@ -354,6 +367,21 @@ class FermatHandler(BaseHTTPRequestHandler):
             <div class="panel-title"><h2>最近余额调整</h2></div>
             {balance_adjustments_table(snapshot['adjustments'])}
           </div>
+        </section>
+        <section class="panel form-card inline-form">
+          <h2>手动结算比赛</h2>
+          <form method="post" action="/admin/settle-match" onsubmit="return confirm('确定手动结算这场比赛吗？结算后所有开放的该场比赛猜测都将完成发放，操作不可逆！');">
+            <label style="flex: 2;">未结束比赛
+              <select name="match_id" required>
+                {match_options(snapshot['matches'])}
+              </select>
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <label style="flex: 1;">主队得分<input name="home_score" type="number" min="0" required></label>
+              <label style="flex: 1;">客队得分<input name="away_score" type="number" min="0" required></label>
+            </div>
+            <button type="submit">强制结算并派彩</button>
+          </form>
         </section>
         <section class="panel">
           <div class="panel-title"><h2>贷款记录</h2></div>
@@ -773,24 +801,47 @@ def account_options(users):
     return "".join(options)
 
 
-def user_delete_action(user):
+def match_options(matches_dict):
+    options = []
+    # only list non-completed or maybe we want to allow re-settling? Usually just non-completed.
+    active_matches = [m for m in matches_dict.values() if m.get("status") != "completed"]
+    sorted_matches = sorted(active_matches, key=lambda m: m.get("start_time") or "")
+    for m in sorted_matches:
+        time_str = format_time(m.get("start_time"))
+        label = f"{m.get('home_team')} vs {m.get('away_team')} ({time_str})"
+        options.append(f'<option value="{e(m["id"])}">{e(label)}</option>')
+    
+    if not options:
+        options.append(f'<option value="" disabled selected>暂无可结算比赛</option>')
+    return "".join(options)
+
+
+def user_actions(user):
+    actions = []
     if user.get("role") == "admin":
-        return '<span class="muted">保留</span>'
-    confirm = "确定删除这个反向账号及相关猜测记录？"
-    if not user.get("is_negative"):
-        confirm = "确定删除这个账号、关联反向账号及相关猜测和借贷记录？"
-    return f"""
-    <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');">
-      <input type="hidden" name="username" value="{e(user['username'])}">
-      <button class="danger" type="submit">删除</button>
-    </form>
-    """
+        actions.append('<span class="muted">保留</span>')
+    else:
+        confirm = "确定删除这个反向账号及相关猜测记录？" if user.get("is_negative") else "确定删除这个账号、关联反向账号及相关猜测和借贷记录？"
+        actions.append(f"""
+        <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');" style="display:inline-block; margin-right:4px;">
+          <input type="hidden" name="username" value="{e(user['username'])}">
+          <button class="danger" type="submit">删除</button>
+        </form>
+        """)
+        if not user.get("is_negative"):
+            actions.append(f"""
+            <form method="post" action="/admin/set-admin" onsubmit="return confirm('确定将这个账号设置为管理员？');" style="display:inline-block;">
+              <input type="hidden" name="username" value="{e(user['username'])}">
+              <button type="submit">设为管理</button>
+            </form>
+            """)
+    return "".join(actions)
 
 
 def users_table(users):
     rows = []
     for user in users:
-        action = user_delete_action(user)
+        action = user_actions(user)
         rows.append(
             f"""
             <tr>

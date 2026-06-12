@@ -405,6 +405,58 @@ def delete_user(admin_username, target_username):
     return f"已删除账号：{', '.join(deleted)}。"
 
 
+def set_admin(admin_username, target_username):
+    target_username = (target_username or "").strip()
+    if not target_username:
+        raise AppError("请选择目标账号。")
+
+    def mutate(data):
+        admin = data["users"].get(admin_username)
+        target = data["users"].get(target_username)
+        if not admin or admin.get("role") != "admin":
+            raise AppError("需要管理员权限。")
+        if not target or target.get("is_negative"):
+            raise AppError("目标账号无效。")
+        target["role"] = "admin"
+        return True
+
+    write_db(mutate)
+    return f"已设置 {target_username} 为管理员。"
+
+
+def manual_settle_match(admin_username, match_id, home_score, away_score):
+    try:
+        home_score = int(home_score)
+        away_score = int(away_score)
+    except (TypeError, ValueError):
+        raise AppError("比分必须是整数。")
+        
+    def mutate(data):
+        admin = data["users"].get(admin_username)
+        if not admin or admin.get("role") != "admin":
+            raise AppError("需要管理员权限。")
+        match = data["matches"].get(match_id)
+        if not match:
+            raise AppError("比赛不存在。")
+        
+        match["home_score"] = home_score
+        match["away_score"] = away_score
+        if home_score > away_score:
+            match["result"] = "home"
+        elif home_score < away_score:
+            match["result"] = "away"
+        else:
+            match["result"] = "draw"
+        
+        match["status"] = "completed"
+        
+        settle_open_bets(data)
+        return True
+
+    write_db(mutate)
+    return "比赛已手动结算。"
+
+
 def delete_demo_matches():
     def mutate(data):
         demo_match_ids = {
