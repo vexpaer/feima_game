@@ -1,5 +1,6 @@
 import html
 import hmac
+import json
 import mimetypes
 import os
 import urllib.parse
@@ -75,6 +76,9 @@ class FermatHandler(BaseHTTPRequestHandler):
         if path == "/all-bets":
             self.require_user(user)
             return self.render_all_bets(user, query)
+        if path == "/poster":
+            self.require_user(user)
+            return self.render_poster(user, query)
         if path == "/admin":
             self.require_admin(user)
             return self.render_admin(user, query)
@@ -315,33 +319,80 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.send_html(layout("借贷", body, user, query))
 
     def render_leaderboard(self, user, query):
-        users = service.leaderboard_snapshot()
-        top_three = users[:3]
-        cards = "".join(
+        by_balance, by_net = service.leaderboard_snapshot()
+        tab = first_query(query, "tab") or "balance"
+        bal_active = "active" if tab != "net" else ""
+        net_active = "active" if tab == "net" else ""
+
+        top_bal = by_balance[:3]
+        bal_cards = "".join(
             metric_card(f"第 {idx} 名", item["username"], f"{money(item['balance'])} fermat coin")
-            for idx, item in enumerate(top_three, 1)
-        )
-        if not cards:
-            cards = metric_card("排行榜", "暂无账户", "等待用户注册")
+            for idx, item in enumerate(top_bal, 1)
+        ) or metric_card("富豪榜", "暂无账户", "等待用户注册")
+
+        top_net = by_net[:3]
+        net_cards = "".join(
+            metric_card(f"第 {idx} 名", item["username"], f"净资产 {money(item['net_asset'])} fermat coin")
+            for idx, item in enumerate(top_net, 1)
+        ) or metric_card("净资产榜", "暂无账户", "等待用户注册")
+
         body = f"""
         <section class="page-head">
           <div>
-            <p class="eyebrow">富豪排行榜</p>
-            <h1>Fermat Coin 余额排行</h1>
+            <p class="eyebrow">排行榜</p>
+            <h1>Fermat Coin 排行</h1>
           </div>
           <div class="head-actions">
             <a class="button-link" href="/all-bets">全站猜测记录</a>
           </div>
         </section>
-        <section class="metric-grid podium-grid">
-          {cards}
+        <div class="tab-bar">
+          <button class="tab-item {bal_active}" data-tab="balance">富豪榜（余额）</button>
+          <button class="tab-item {net_active}" data-tab="net">净资产榜</button>
+        </div>
+        <section class="tab-content {bal_active}" data-tab-content="balance">
+          <section class="metric-grid podium-grid">
+            {bal_cards}
+          </section>
+          <section class="panel">
+            <div class="panel-title"><h2>完整榜单</h2></div>
+            {standings_table(by_balance)}
+          </section>
         </section>
-        <section class="panel">
-          <div class="panel-title"><h2>完整榜单</h2></div>
-          {standings_table(users)}
+        <section class="tab-content {net_active}" data-tab-content="net">
+          <section class="metric-grid podium-grid">
+            {net_cards}
+          </section>
+          <section class="panel">
+            <div class="panel-title"><h2>完整榜单</h2></div>
+            {net_asset_standings_table(by_net)}
+          </section>
         </section>
+        <script>
+        (function () {{
+          var tabs = document.querySelectorAll('.tab-item');
+          var contents = {{
+            balance: document.querySelector('[data-tab-content="balance"]'),
+            net: document.querySelector('[data-tab-content="net"]')
+          }};
+          function activate(name) {{
+            tabs.forEach(function (t) {{ t.classList.remove('active'); }});
+            Object.keys(contents).forEach(function (k) {{
+              if (contents[k]) contents[k].classList.remove('active');
+            }});
+            var btn = document.querySelector('.tab-item[data-tab="' + name + '"]');
+            if (btn) btn.classList.add('active');
+            if (contents[name]) contents[name].classList.add('active');
+          }}
+          tabs.forEach(function (tab) {{
+            tab.addEventListener('click', function () {{
+              activate(this.getAttribute('data-tab'));
+            }});
+          }});
+        }})();
+        </script>
         """
-        self.send_html(layout("富豪排行榜", body, user, query))
+        self.send_html(layout("排行榜", body, user, query))
 
     def render_all_bets(self, user, query):
         snapshot = service.all_bets_snapshot()
@@ -361,6 +412,251 @@ class FermatHandler(BaseHTTPRequestHandler):
         </section>
         """
         self.send_html(layout("全站猜测记录", body, user, query))
+
+    def render_poster(self, user, query):
+        data = service.get_poster_data(user["username"])
+        hist_json = json.dumps(data["history"])
+        current = data["current_net_asset"]
+        username = data["username"]
+
+        body = f"""
+        <section class="page-head">
+          <div>
+            <p class="eyebrow">我的报告</p>
+            <h1>资产海报</h1>
+          </div>
+          <div class="head-actions">
+            <button class="button-link" onclick="downloadPoster()" id="dl-btn">下载图片</button>
+            <a class="button-link" href="/dashboard">返回总览</a>
+          </div>
+        </section>
+        <div class="poster-wrap">
+          <div class="poster" id="poster-container">
+            <canvas id="poster-canvas" width="1200" height="675"></canvas>
+          </div>
+        </div>
+        <script>
+        (function () {{
+          var canvas = document.getElementById('poster-canvas');
+          var ctx = canvas.getContext('2d');
+          var W = 1200, H = 675;
+
+          var history = {hist_json};
+          var username = {json.dumps(username)};
+          var currentNet = {current};
+
+          // sort by time
+          history.sort(function (a, b) {{ return a.t.localeCompare(b.t); }});
+
+          function fmtMoney(v) {{
+            return v.toLocaleString('zh-CN');
+          }}
+
+          function fmtDate(iso) {{
+            var d = new Date(iso);
+            return (d.getMonth()+1) + '/' + d.getDate();
+          }}
+
+          var bg = new Image();
+          bg.crossOrigin = 'anonymous';
+          bg.onload = drawPoster;
+          bg.onerror = drawPoster;
+          bg.src = '/static/feima.png';
+
+          function drawPoster() {{
+            // --- background ---
+            ctx.drawImage(bg, 0, 0, W, H);
+
+            // --- dark overlay (50% opacity) ---
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.50)';
+            ctx.fillRect(0, 0, W, H);
+
+            // --- top border accent ---
+            var grad = ctx.createLinearGradient(0, 0, W, 0);
+            grad.addColorStop(0, 'rgba(15, 123, 99, 0)');
+            grad.addColorStop(0.15, 'rgba(15, 123, 99, 0.8)');
+            grad.addColorStop(0.85, 'rgba(15, 123, 99, 0.8)');
+            grad.addColorStop(1, 'rgba(15, 123, 99, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, 4);
+
+            // --- username (top-left) ---
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 40px "Microsoft YaHei", "PingFang SC", sans-serif';
+            ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            ctx.shadowBlur = 14;
+            ctx.fillText(username, 44, 36);
+            ctx.shadowBlur = 0;
+
+            // --- net asset value + Fermat Coin (top-right, 2 big lines) ---
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 44px "Microsoft YaHei", "PingFang SC", sans-serif';
+            ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            ctx.shadowBlur = 14;
+            ctx.fillText(fmtMoney(currentNet), W - 44, 36);
+            ctx.shadowBlur = 0;
+
+            ctx.font = 'bold 32px "Microsoft YaHei", "PingFang SC", sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            ctx.shadowBlur = 10;
+            ctx.fillText('Fermat Coin', W - 44, 88);
+            ctx.shadowBlur = 0;
+
+            // --- chart area ---
+            var chartX = 80, chartY = 150, chartW = 1040, chartH = 420;
+
+            if (history.length < 2) {{
+              // not enough data
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillStyle = 'rgba(255,255,255,0.5)';
+              ctx.font = '22px "Microsoft YaHei", "PingFang SC", sans-serif';
+              ctx.fillText('等待更多数据以绘制趋势图', W/2, chartY + chartH/2);
+              return;
+            }}
+
+            // values
+            var values = history.map(function (h) {{ return h.v; }});
+            var minVal = Math.min.apply(null, values);
+            var maxVal = Math.max.apply(null, values);
+            var range = maxVal - minVal || 1;
+            var pad = range * 0.1;
+            var yMin = minVal - pad;
+            var yMax = maxVal + pad;
+            var yRange = yMax - yMin || 1;
+
+            function xPos(i) {{
+              if (history.length === 1) return chartX + chartW / 2;
+              return chartX + (i / (history.length - 1)) * chartW;
+            }}
+            function yPos(v) {{
+              return chartY + chartH - ((v - yMin) / yRange) * chartH;
+            }}
+
+            // --- subtle grid lines ---
+            ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 6]);
+            for (var row = 0; row <= 4; row++) {{
+              var yy = chartY + (chartH / 4) * row;
+              ctx.beginPath();
+              ctx.moveTo(chartX, yy);
+              ctx.lineTo(chartX + chartW, yy);
+              ctx.stroke();
+            }}
+            ctx.setLineDash([]);
+
+            // --- Y axis labels ---
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.font = '14px sans-serif';
+            for (var row = 0; row <= 4; row++) {{
+              var v = yMax - (yRange / 4) * row;
+              var yy = chartY + (chartH / 4) * row;
+              ctx.fillText(fmtMoney(Math.round(v)), chartX - 14, yy);
+            }}
+
+            // --- line area fill gradient ---
+            var grad = ctx.createLinearGradient(0, chartY, 0, chartY + chartH);
+            grad.addColorStop(0, 'rgba(220, 53, 69, 0.5)');
+            grad.addColorStop(1, 'rgba(220, 53, 69, 0.02)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(xPos(0), chartY + chartH);
+            for (var i = 0; i < history.length; i++) {{
+              ctx.lineTo(xPos(i), yPos(values[i]));
+            }}
+            ctx.lineTo(xPos(history.length - 1), chartY + chartH);
+            ctx.closePath();
+            ctx.fill();
+
+            // --- line ---
+            ctx.strokeStyle = '#dc3545';
+            ctx.lineWidth = 3.5;
+            ctx.shadowColor = 'rgba(220, 53, 69, 0.5)';
+            ctx.shadowBlur = 18;
+            ctx.beginPath();
+            for (var i = 0; i < history.length; i++) {{
+              if (i === 0) ctx.moveTo(xPos(i), yPos(values[i]));
+              else ctx.lineTo(xPos(i), yPos(values[i]));
+            }}
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // --- dots (turning points only) ---
+            function isTurning(i) {{
+                if (i === 0 || i === history.length - 1) return true;
+                var prev = values[i] - values[i-1];
+                var next = values[i+1] - values[i];
+                return (prev > 0 && next < 0) || (prev < 0 && next > 0) || (prev === 0 && next !== 0) || (prev !== 0 && next === 0);
+            }}
+            ctx.fillStyle = '#ffffff';
+            for (var i = 0; i < history.length; i++) {{
+                if (!isTurning(i)) continue;
+                ctx.beginPath();
+                ctx.arc(xPos(i), yPos(values[i]), 4, 0, Math.PI * 2);
+                ctx.fill();
+            }}
+
+            // --- current value dot (larger, red) ---
+            var lastIdx = history.length - 1;
+            ctx.fillStyle = '#dc3545';
+            ctx.beginPath();
+            ctx.arc(xPos(lastIdx), yPos(values[lastIdx]), 7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(xPos(lastIdx), yPos(values[lastIdx]), 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // --- X axis labels (first + last) ---
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.font = '13px sans-serif';
+            ctx.fillText(fmtDate(history[0].t), chartX, chartY + chartH + 10);
+            if (history.length > 1) {{
+              ctx.fillText(fmtDate(history[history.length-1].t), chartX + chartW, chartY + chartH + 10);
+            }}
+
+            // --- bottom accent ---
+            var grad2 = ctx.createLinearGradient(0, 0, W, 0);
+            grad2.addColorStop(0, 'rgba(15, 123, 99, 0)');
+            grad2.addColorStop(0.15, 'rgba(15, 123, 99, 0.6)');
+            grad2.addColorStop(0.85, 'rgba(15, 123, 99, 0.6)');
+            grad2.addColorStop(1, 'rgba(15, 123, 99, 0)');
+            ctx.fillStyle = grad2;
+            ctx.fillRect(0, H - 3, W, 3);
+          }}
+        }})();
+
+        function downloadPoster() {{
+          var canvas = document.getElementById('poster-canvas');
+          var btn = document.getElementById('dl-btn');
+          btn.textContent = '生成中…';
+          btn.disabled = true;
+          canvas.toBlob(function (blob) {{
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'fermat_poster_' + {json.dumps(username)} + '.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            btn.textContent = '下载图片';
+            btn.disabled = false;
+          }}, 'image/png');
+        }}
+        </script>
+        """
+        self.send_html(layout("资产海报", body, user, query))
 
     def render_admin(self, user, query):
         snapshot = service.admin_snapshot()
@@ -564,6 +860,7 @@ def layout(title, body, user, query):
           <a href="/matches">比赛</a>
           <a href="/loans">借贷</a>
           <a href="/leaderboard">富豪榜</a>
+          <a href="/poster">海报</a>
           {admin}
           <form method="post" action="/logout"><button class="ghost" type="submit">退出</button></form>
         </nav>
@@ -794,6 +1091,30 @@ def standings_table(users):
     return f"""
     <div class="table-wrap"><table>
       <thead><tr><th>#</th><th>账户</th><th>余额</th><th>类型</th></tr></thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table></div>
+    """
+
+
+def net_asset_standings_table(users):
+    rows = []
+    for idx, user in enumerate(users, 1):
+        rows.append(
+            f"""
+            <tr>
+              <td>{idx}</td>
+              <td>{e(user['username'])}</td>
+              <td>{money(user['balance'])}</td>
+              <td>{money(-user.get('loan_due', 0))}</td>
+              <td>+{money(user.get('open_stakes', 0))}</td>
+              <td><strong>{money(user['net_asset'])}</strong></td>
+              <td>{'反向' if user.get('is_negative') else user.get('role', 'user')}</td>
+            </tr>
+            """
+        )
+    return f"""
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>账户</th><th>余额</th><th>贷款</th><th>未结算下注</th><th>净资产</th><th>类型</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table></div>
     """

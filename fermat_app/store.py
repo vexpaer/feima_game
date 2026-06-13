@@ -66,6 +66,7 @@ def default_db():
         "bets": {},
         "loans": {},
         "balance_adjustments": {},
+        "net_asset_history": {},
     }
 
 

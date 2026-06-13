@@ -271,6 +271,7 @@ def update_matches(force=False):
             return True
 
         write_db(mutate)
+        _record_all_nets()
     finally:
         _UPDATE_LOCK.release()
 
@@ -340,6 +341,7 @@ def run_housekeeping():
         audit_loans(data)
 
     write_db(mutate)
+    _record_all_nets()
 
 
 def approve_user(admin_username, target_username):
@@ -454,6 +456,7 @@ def manual_settle_match(admin_username, match_id, home_score, away_score):
         return True
 
     write_db(mutate)
+    _record_all_nets()
     return "比赛已手动结算。"
 
 
@@ -603,6 +606,7 @@ def adjust_balance(admin_username, target_username, operation, amount, note=""):
         return adjustment_id
 
     adjustment_id = write_db(mutate)
+    _record_net_for(target_username)
     return f"余额已调整，记录编号 {adjustment_id}。"
 
 
@@ -647,6 +651,7 @@ def borrow(username, amount):
         return loan_id
 
     loan_id = write_db(mutate)
+    _record_net_for(username)
     return f"借款成功，贷款编号 {loan_id}。"
 
 
@@ -683,6 +688,7 @@ def repay(username, amount):
         return pay_amount
 
     paid = write_db(mutate)
+    _record_net_for(username)
     return f"还款成功，已还 {paid:,} fermat coin。"
 
 
@@ -751,8 +757,100 @@ def all_bets_snapshot():
 def leaderboard_snapshot():
     run_housekeeping()
     data = read_db()
-    users = [public_user(user) for user in data["users"].values()]
-    return sorted(users, key=lambda item: item.get("balance", 0), reverse=True)
+
+    # 统计每个用户活跃贷款应还总额
+    user_loan_due = {}
+    for loan in data.get("loans", {}).values():
+        if loan.get("status") == "active":
+            username = loan["username"]
+            user_loan_due[username] = user_loan_due.get(username, 0) + current_loan_due(loan)
+
+    # 统计每个用户未结算下注总额（open 状态的 bet）
+    user_open_bets = {}
+    for bet in data.get("bets", {}).values():
+        if bet.get("status") == "open":
+            username = bet["username"]
+            user_open_bets[username] = user_open_bets.get(username, 0) + int(bet.get("stake", 0))
+
+    users = []
+    for u in data["users"].values():
+        item = public_user(u)
+        username = item["username"]
+        loan_due = user_loan_due.get(username, 0)
+        open_stakes = user_open_bets.get(username, 0)
+        item["loan_due"] = loan_due
+        item["open_stakes"] = open_stakes
+        # 净资产 = 当前余额 - 贷款应还 + 未结算下注
+        item["net_asset"] = item["balance"] - loan_due + open_stakes
+        users.append(item)
+
+    by_balance = sorted(users, key=lambda it: it.get("balance", 0), reverse=True)
+    by_net = sorted(users, key=lambda it: it.get("net_asset", 0), reverse=True)
+    return by_balance, by_net
+
+
+def compute_net_asset(username, data):
+    """计算用户当前净资产 = 余额 - 贷款应还 + 未结算下注"""
+    balance = data["users"].get(username, {}).get("balance", 0)
+    loan_due = 0
+    for loan in data.get("loans", {}).values():
+        if loan.get("username") == username and loan.get("status") == "active":
+            loan_due += current_loan_due(loan)
+    open_stakes = 0
+    for bet in data.get("bets", {}).values():
+        if bet.get("username") == username and bet.get("status") == "open":
+            open_stakes += int(bet.get("stake", 0))
+    return balance - loan_due + open_stakes
+
+
+def record_net_asset_snapshot(username, current_net):
+    """记录净资产快照（值变化时才记录），最多保留 200 条"""
+    def mutate(data):
+        history = data.setdefault("net_asset_history", {}).setdefault(username, [])
+        if not history or history[-1]["v"] != current_net:
+            history.append({"t": to_iso(utc_now()), "v": current_net})
+            if len(history) > 200:
+                history[:] = history[-200:]
+            return True
+        return False
+    return write_db(mutate)
+
+
+def get_poster_data(username):
+    """获取用户海报所需数据"""
+    run_housekeeping()
+    data = read_db()
+    user = data["users"].get(username)
+    if not user:
+        raise AppError("用户不存在")
+    current_net = compute_net_asset(username, data)
+    record_net_asset_snapshot(username, current_net)
+    # 重新读取获取最新 history
+    data = read_db()
+    history = data.get("net_asset_history", {}).get(username, [])
+    return {
+        "username": username,
+        "current_net_asset": current_net,
+        "balance": user["balance"],
+        "history": history,
+    }
+
+
+def _record_net_for(username):
+    """记录单个用户的净资产快照（值变化时才写入）"""
+    data = read_db()
+    current_net = compute_net_asset(username, data)
+    record_net_asset_snapshot(username, current_net)
+
+
+def _record_all_nets():
+    """记录所有非负向用户的净资产快照（值变化时才写入）"""
+    data = read_db()
+    for username, user in data["users"].items():
+        if user.get("is_negative"):
+            continue
+        current_net = compute_net_asset(username, data)
+        record_net_asset_snapshot(username, current_net)
 
 
 def _new_id(prefix):
