@@ -14,6 +14,7 @@ CHOICE_LABELS = {"home": "主胜", "draw": "平局", "away": "客胜"}
 BALANCE_OPERATIONS = {"set": "设为", "add": "增加", "subtract": "扣减"}
 LOAN_WEEKLY_RATE = 0.10
 LOAN_DUE_DAYS = 14
+COIN_NAME = "Fermat Coin"
 _UPDATE_LOCK = threading.Lock()
 
 
@@ -816,24 +817,64 @@ def record_net_asset_snapshot(username, current_net):
     return write_db(mutate)
 
 
+def build_poster_data(username, data, current_amount=None):
+    """构建海报数据，排名只统计非反向用户。"""
+    user = data["users"].get(username)
+    if not user:
+        raise AppError("用户不存在")
+
+    current = compute_net_asset(username, data) if current_amount is None else int(current_amount)
+    ranked_players = []
+    for player_name, player in data["users"].items():
+        if player.get("is_negative"):
+            continue
+        ranked_players.append((player_name, compute_net_asset(player_name, data)))
+    ranked_players.sort(key=lambda item: (item[1], item[0]), reverse=True)
+
+    rank = next(
+        (index + 1 for index, item in enumerate(ranked_players) if item[0] == username),
+        len(ranked_players) + 1,
+    )
+    history = _poster_history(data.get("net_asset_history", {}).get(username, []))
+
+    return {
+        "nickname": username,
+        "currentAmount": current,
+        "coinName": COIN_NAME,
+        "history": history,
+        "rank": rank,
+        "totalPlayers": len(ranked_players),
+        # Legacy fields kept for current callers and older templates.
+        "username": username,
+        "current_net_asset": current,
+        "balance": user["balance"],
+    }
+
+
+def _poster_history(raw_history):
+    history = []
+    for item in raw_history:
+        date = item.get("date") or item.get("t")
+        amount = item.get("amount")
+        if amount is None:
+            amount = item.get("v")
+        if not date or amount is None:
+            continue
+        history.append({"date": date, "amount": int(amount)})
+    return sorted(history, key=lambda item: item["date"])
+
+
 def get_poster_data(username):
     """获取用户海报所需数据"""
     run_housekeeping()
     data = read_db()
-    user = data["users"].get(username)
-    if not user:
+    if username not in data["users"]:
         raise AppError("用户不存在")
     current_net = compute_net_asset(username, data)
     record_net_asset_snapshot(username, current_net)
     # 重新读取获取最新 history
     data = read_db()
-    history = data.get("net_asset_history", {}).get(username, [])
-    return {
-        "username": username,
-        "current_net_asset": current_net,
-        "balance": user["balance"],
-        "history": history,
-    }
+    return build_poster_data(username, data, current_net)
 
 
 def _record_net_for(username):

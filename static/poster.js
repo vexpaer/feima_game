@@ -1,0 +1,654 @@
+(function () {
+  var canvas = document.getElementById('poster-canvas');
+  var dataNode = document.getElementById('poster-data');
+  if (!canvas || !dataNode) return;
+
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width;
+  var H = canvas.height;
+  var posterData = JSON.parse(dataNode.textContent);
+  var bg = new Image();
+
+  var palette = {
+    navy: '#071426',
+    panel: 'rgba(7, 15, 32, 0.52)',
+    panelStrong: 'rgba(8, 17, 38, 0.72)',
+    border: 'rgba(255, 255, 255, 0.18)',
+    gold: '#f7c84b',
+    goldSoft: 'rgba(247, 200, 75, 0.24)',
+    red: '#ff416d',
+    redDark: '#a81735',
+    danger: '#ff344f',
+    text: '#f8fbff',
+    muted: 'rgba(226, 236, 255, 0.68)',
+    grid: 'rgba(255, 255, 255, 0.10)',
+  };
+
+  bg.crossOrigin = 'anonymous';
+  bg.onload = drawPoster;
+  bg.onerror = drawPoster;
+  bg.src = '/static/feima.png';
+
+  function font(weight, size) {
+    return weight + ' ' + size + 'px "Microsoft YaHei", "PingFang SC", Arial, sans-serif';
+  }
+
+  function formatAmount(value) {
+    var numeric = Math.round(Number(value) || 0);
+    var sign = numeric < 0 ? '-' : '';
+    var absolute = Math.abs(numeric).toString();
+    return sign + absolute.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function formatDate(value) {
+    var d = new Date(value);
+    if (Number.isNaN(d.getTime())) return '';
+    return (d.getMonth() + 1) + '/' + d.getDate();
+  }
+
+  function roundRect(x, y, w, h, r) {
+    var radius = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.closePath();
+  }
+
+  function drawCoverImage(image, x, y, w, h) {
+    if (!image || !image.naturalWidth || !image.naturalHeight) return false;
+    var imageRatio = image.naturalWidth / image.naturalHeight;
+    var boxRatio = w / h;
+    var sw = image.naturalWidth;
+    var sh = image.naturalHeight;
+    var sx = 0;
+    var sy = 0;
+    if (imageRatio > boxRatio) {
+      sw = sh * boxRatio;
+      sx = (image.naturalWidth - sw) / 2;
+    } else {
+      sh = sw / boxRatio;
+      sy = (image.naturalHeight - sh) / 2;
+    }
+    ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+    return true;
+  }
+
+  function drawBackground() {
+    var loaded = drawCoverImage(bg, 0, 0, W, H);
+    if (!loaded) {
+      var fallback = ctx.createLinearGradient(0, 0, W, H);
+      fallback.addColorStop(0, '#10223e');
+      fallback.addColorStop(0.52, '#061326');
+      fallback.addColorStop(1, '#0d0b16');
+      ctx.fillStyle = fallback;
+      ctx.fillRect(0, 0, W, H);
+    } else {
+      ctx.save();
+      ctx.globalAlpha = 0.36;
+      ctx.filter = 'blur(18px) saturate(1.08)';
+      drawCoverImage(bg, -18, -18, W + 36, H + 36);
+      ctx.restore();
+    }
+
+    var veil = ctx.createLinearGradient(0, 0, W, H);
+    veil.addColorStop(0, 'rgba(5, 14, 31, 0.46)');
+    veil.addColorStop(0.34, 'rgba(4, 11, 24, 0.66)');
+    veil.addColorStop(0.66, 'rgba(5, 13, 31, 0.76)');
+    veil.addColorStop(1, 'rgba(3, 8, 19, 0.84)');
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, W, H);
+
+    var frost = ctx.createLinearGradient(0, 0, 0, H);
+    frost.addColorStop(0, 'rgba(255, 255, 255, 0.13)');
+    frost.addColorStop(0.28, 'rgba(255, 255, 255, 0.04)');
+    frost.addColorStop(0.72, 'rgba(255, 255, 255, 0.02)');
+    frost.addColorStop(1, 'rgba(255, 255, 255, 0.08)');
+    ctx.fillStyle = frost;
+    ctx.fillRect(0, 0, W, H);
+
+    var spotlight = ctx.createRadialGradient(1010, 88, 0, 1010, 88, 560);
+    spotlight.addColorStop(0, 'rgba(247, 200, 75, 0.20)');
+    spotlight.addColorStop(0.48, 'rgba(247, 200, 75, 0.05)');
+    spotlight.addColorStop(1, 'rgba(247, 200, 75, 0)');
+    ctx.fillStyle = spotlight;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawGlassCard(x, y, w, h, radius, options) {
+    var opts = options || {};
+    ctx.save();
+    ctx.shadowColor = opts.shadow || 'rgba(0, 0, 0, 0.34)';
+    ctx.shadowBlur = opts.blur || 26;
+    ctx.shadowOffsetY = opts.offsetY || 14;
+    roundRect(x, y, w, h, radius);
+    ctx.fillStyle = opts.fill || palette.panel;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = opts.border || palette.border;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    var shine = ctx.createLinearGradient(x, y, x, y + h);
+    shine.addColorStop(0, 'rgba(255, 255, 255, 0.16)');
+    shine.addColorStop(0.22, 'rgba(255, 255, 255, 0.04)');
+    shine.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    roundRect(x + 1, y + 1, w - 2, h - 2, Math.max(0, radius - 1));
+    ctx.fillStyle = shine;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawFittedText(text, x, y, maxWidth, weight, size, minSize, align, color) {
+    var fontSize = size;
+    ctx.textAlign = align || 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = color || palette.text;
+    do {
+      ctx.font = font(weight, fontSize);
+      if (ctx.measureText(text).width <= maxWidth || fontSize <= minSize) break;
+      fontSize -= 1;
+    } while (fontSize > minSize);
+    ctx.fillText(text, x, y);
+    return fontSize;
+  }
+
+  function drawHeader(currentAmount, coinName, nickname) {
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = palette.gold;
+    ctx.font = font('700', 13);
+    ctx.fillText('FERMAT COIN SEASON RECAP', 48, 32);
+
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.48)';
+    ctx.shadowBlur = 18;
+    drawFittedText(nickname, 48, 51, 330, '800', 42, 26, 'left', palette.text);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = palette.muted;
+    ctx.font = font('500', 15);
+    ctx.fillText('Investment match summary', 50, 98);
+    ctx.restore();
+
+    ctx.save();
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(226, 236, 255, 0.74)';
+    ctx.font = font('700', 14);
+    ctx.fillText('Current Amount', W - 48, 30);
+    ctx.shadowColor = currentAmount < 0 ? 'rgba(255, 65, 109, 0.44)' : 'rgba(247, 200, 75, 0.34)';
+    ctx.shadowBlur = 22;
+    drawFittedText(formatAmount(currentAmount), W - 48, 51, 500, '900', 56, 34, 'right', palette.text);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = palette.gold;
+    ctx.font = font('800', 24);
+    ctx.fillText(coinName, W - 48, 111);
+    ctx.restore();
+
+    var accent = ctx.createLinearGradient(40, 0, W - 40, 0);
+    accent.addColorStop(0, 'rgba(247, 200, 75, 0)');
+    accent.addColorStop(0.22, 'rgba(247, 200, 75, 0.72)');
+    accent.addColorStop(0.72, 'rgba(255, 65, 109, 0.48)');
+    accent.addColorStop(1, 'rgba(255, 65, 109, 0)');
+    ctx.fillStyle = accent;
+    ctx.fillRect(40, 146, W - 80, 2);
+  }
+
+  function drawTrophy(x, y, scale) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    var cup = ctx.createLinearGradient(0, 0, 0, 42);
+    cup.addColorStop(0, '#ffe58a');
+    cup.addColorStop(0.52, palette.gold);
+    cup.addColorStop(1, '#a96f13');
+    ctx.fillStyle = cup;
+    roundRect(9, 5, 30, 26, 5);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(8, 15, 9, Math.PI * 0.5, Math.PI * 1.55);
+    ctx.arc(50, 15, 9, Math.PI * 1.45, Math.PI * 0.5);
+    ctx.strokeStyle = palette.gold;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+    ctx.fillStyle = palette.gold;
+    ctx.fillRect(22, 31, 5, 10);
+    ctx.fillRect(31, 31, 5, 10);
+    roundRect(15, 41, 28, 7, 3);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawRankBadge(x, y, w, h, rank, totalPlayers) {
+    var safeTotal = Math.max(0, Number(totalPlayers) || 0);
+    var safeRank = Math.max(0, Number(rank) || 0);
+    var rankPercent = safeTotal ? Math.max(0, Math.min(100, (1 - safeRank / safeTotal) * 100)) : 0;
+    var topPercent = safeTotal ? Math.max(0, Math.min(100, (safeRank / safeTotal) * 100)) : 0;
+
+    drawGlassCard(x, y, w, h, 8, {
+      fill: 'rgba(8, 16, 34, 0.62)',
+      border: 'rgba(247, 200, 75, 0.36)',
+      blur: 30,
+    });
+    drawTrophy(x + 22, y + 22, 0.78);
+
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = palette.gold;
+    ctx.font = font('800', 14);
+    ctx.fillText('Rank', x + 78, y + 24);
+    drawFittedText('#' + safeRank + ' / ' + safeTotal, x + 78, y + 45, w - 104, '900', 34, 24, 'left', palette.text);
+
+    ctx.fillStyle = palette.muted;
+    ctx.font = font('700', 15);
+    ctx.fillText('Top ' + topPercent.toFixed(1) + '%', x + 28, y + 104);
+
+    var trackX = x + 28;
+    var trackY = y + 136;
+    var trackW = w - 56;
+    var trackH = 12;
+    roundRect(trackX, trackY, trackW, trackH, 6);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+    ctx.fill();
+    var fillW = Math.max(8, trackW * rankPercent / 100);
+    var rankGrad = ctx.createLinearGradient(trackX, 0, trackX + trackW, 0);
+    rankGrad.addColorStop(0, palette.red);
+    rankGrad.addColorStop(0.62, palette.gold);
+    rankGrad.addColorStop(1, '#fff1a8');
+    roundRect(trackX, trackY, fillW, trackH, 6);
+    ctx.fillStyle = rankGrad;
+    ctx.fill();
+
+    ctx.fillStyle = 'rgba(226, 236, 255, 0.56)';
+    ctx.font = font('600', 12);
+    ctx.fillText('Percentile momentum', trackX, trackY + 24);
+  }
+
+  function drawMetricCard(x, y, w, h, title, value, accent) {
+    drawGlassCard(x, y, w, h, 8, {
+      fill: 'rgba(7, 15, 32, 0.58)',
+      border: accent === palette.red ? 'rgba(255, 65, 109, 0.32)' : 'rgba(255, 255, 255, 0.17)',
+      blur: 20,
+      offsetY: 10,
+    });
+    ctx.fillStyle = accent;
+    roundRect(x + 16, y + 17, 4, h - 34, 2);
+    ctx.fill();
+    ctx.fillStyle = palette.muted;
+    ctx.font = font('800', 13);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(title, x + 30, y + 15);
+    drawFittedText(value, x + 30, y + 39, w - 46, '900', 25, 17, 'left', palette.text);
+  }
+
+  function pointAt(history, values, index, plot) {
+    var denom = Math.max(1, history.length - 1);
+    return {
+      x: plot.x + (index / denom) * plot.w,
+      y: plot.y + plot.h - ((values[index] - plot.yMin) / plot.yRange) * plot.h,
+    };
+  }
+
+  function rectsOverlap(a, b, gap) {
+    return !(
+      a.x + a.w + gap < b.x ||
+      b.x + b.w + gap < a.x ||
+      a.y + a.h + gap < b.y ||
+      b.y + b.h + gap < a.y
+    );
+  }
+
+  function placeLabel(px, py, w, h, bounds, preferred, occupied) {
+    var offsets = {
+      above: [{ x: -w / 2, y: -76 }, { x: -w - 18, y: -50 }, { x: 18, y: -50 }],
+      below: [{ x: -w / 2, y: 26 }, { x: 18, y: 24 }, { x: -w - 18, y: 24 }],
+      right: [{ x: 20, y: -h / 2 }, { x: 20, y: -70 }, { x: 20, y: 26 }],
+      left: [{ x: -w - 20, y: -h / 2 }, { x: -w - 20, y: -70 }, { x: -w - 20, y: 26 }],
+    };
+    var candidates = (offsets[preferred] || []).concat(offsets.above, offsets.below, offsets.right, offsets.left);
+    for (var i = 0; i < candidates.length; i++) {
+      var c = candidates[i];
+      var rect = {
+        x: Math.max(bounds.x + 12, Math.min(bounds.x + bounds.w - w - 12, px + c.x)),
+        y: Math.max(bounds.y + 12, Math.min(bounds.y + bounds.h - h - 12, py + c.y)),
+        w: w,
+        h: h,
+      };
+      var blocked = false;
+      for (var j = 0; j < occupied.length; j++) {
+        if (rectsOverlap(rect, occupied[j], 8)) {
+          blocked = true;
+          break;
+        }
+      }
+      if (!blocked) {
+        occupied.push(rect);
+        return rect;
+      }
+    }
+    var fallback = {
+      x: Math.max(bounds.x + 12, Math.min(bounds.x + bounds.w - w - 12, px - w / 2)),
+      y: Math.max(bounds.y + 12, Math.min(bounds.y + bounds.h - h - 12, py + 28)),
+      w: w,
+      h: h,
+    };
+    occupied.push(fallback);
+    return fallback;
+  }
+
+  function drawFloatingLabel(label, value, point, bounds, preferred, accent, occupied) {
+    var w = 178;
+    var h = 56;
+    var rect = placeLabel(point.x, point.y, w, h, bounds, preferred, occupied);
+    ctx.save();
+    ctx.strokeStyle = accent;
+    ctx.globalAlpha = 0.68;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y);
+    ctx.lineTo(rect.x + rect.w / 2, rect.y + rect.h / 2);
+    ctx.stroke();
+    ctx.restore();
+
+    drawGlassCard(rect.x, rect.y, rect.w, rect.h, 8, {
+      fill: 'rgba(6, 14, 30, 0.76)',
+      border: accent === palette.gold ? 'rgba(247, 200, 75, 0.44)' : 'rgba(255, 65, 109, 0.42)',
+      blur: 16,
+      offsetY: 8,
+    });
+    ctx.fillStyle = accent;
+    ctx.font = font('900', 12);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(label, rect.x + 14, rect.y + 10);
+    drawFittedText(formatAmount(value), rect.x + 14, rect.y + 28, rect.w - 28, '900', 20, 15, 'left', palette.text);
+  }
+
+  function drawHighestPoint(point) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(247, 200, 75, 0.9)';
+    ctx.shadowBlur = 24;
+    ctx.fillStyle = palette.gold;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawLowestPoint(point) {
+    ctx.save();
+    ctx.translate(point.x, point.y);
+    ctx.rotate(Math.PI / 4);
+    ctx.shadowColor = 'rgba(255, 52, 79, 0.86)';
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = palette.danger;
+    roundRect(-8, -8, 16, 16, 3);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.84)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawLineChart(x, y, w, h, history) {
+    drawGlassCard(x, y, w, h, 8, {
+      fill: 'rgba(7, 15, 32, 0.54)',
+      border: 'rgba(255, 255, 255, 0.18)',
+      blur: 28,
+    });
+
+    ctx.fillStyle = palette.text;
+    ctx.font = font('900', 18);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('Capital Curve', x + 26, y + 22);
+    ctx.fillStyle = palette.muted;
+    ctx.font = font('600', 12);
+    ctx.fillText('Net asset history', x + 26, y + 47);
+
+    if (history.length < 2) {
+      ctx.fillStyle = 'rgba(226, 236, 255, 0.58)';
+      ctx.font = font('700', 20);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Waiting for more data points', x + w / 2, y + h / 2 + 10);
+      return null;
+    }
+
+    var values = history.map(function (item) { return Number(item.amount) || 0; });
+    var minVal = Math.min.apply(null, values);
+    var maxVal = Math.max.apply(null, values);
+    var range = Math.max(1, maxVal - minVal);
+    var pad = Math.max(range * 0.14, Math.abs(maxVal || minVal || 1) * 0.03, 1);
+    var yMin = minVal - pad;
+    var yMax = maxVal + pad;
+    var yRange = Math.max(1, yMax - yMin);
+    var plot = {
+      x: x + 92,
+      y: y + 74,
+      w: w - 132,
+      h: h - 124,
+      yMin: yMin,
+      yMax: yMax,
+      yRange: yRange,
+    };
+
+    ctx.save();
+    ctx.strokeStyle = palette.grid;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 7]);
+    for (var row = 0; row <= 4; row++) {
+      var yy = plot.y + (plot.h / 4) * row;
+      ctx.beginPath();
+      ctx.moveTo(plot.x, yy);
+      ctx.lineTo(plot.x + plot.w, yy);
+      ctx.stroke();
+    }
+    for (var col = 0; col <= 4; col++) {
+      var xx = plot.x + (plot.w / 4) * col;
+      ctx.beginPath();
+      ctx.moveTo(xx, plot.y);
+      ctx.lineTo(xx, plot.y + plot.h);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    if (yMin < 0 && yMax > 0) {
+      var zeroY = plot.y + plot.h - ((0 - yMin) / yRange) * plot.h;
+      ctx.strokeStyle = 'rgba(247, 200, 75, 0.32)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(plot.x, zeroY);
+      ctx.lineTo(plot.x + plot.w, zeroY);
+      ctx.stroke();
+    }
+
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(226, 236, 255, 0.62)';
+    ctx.font = font('600', 12);
+    for (var labelRow = 0; labelRow <= 4; labelRow++) {
+      var labelValue = yMax - (yRange / 4) * labelRow;
+      var labelY = plot.y + (plot.h / 4) * labelRow;
+      ctx.fillText(formatAmount(labelValue), plot.x - 12, labelY);
+    }
+
+    var areaGrad = ctx.createLinearGradient(0, plot.y, 0, plot.y + plot.h);
+    areaGrad.addColorStop(0, 'rgba(255, 65, 109, 0.42)');
+    areaGrad.addColorStop(0.62, 'rgba(255, 65, 109, 0.12)');
+    areaGrad.addColorStop(1, 'rgba(255, 65, 109, 0.01)');
+    ctx.fillStyle = areaGrad;
+    ctx.beginPath();
+    var first = pointAt(history, values, 0, plot);
+    ctx.moveTo(first.x, plot.y + plot.h);
+    for (var i = 0; i < history.length; i++) {
+      var areaPoint = pointAt(history, values, i, plot);
+      ctx.lineTo(areaPoint.x, areaPoint.y);
+    }
+    var last = pointAt(history, values, history.length - 1, plot);
+    ctx.lineTo(last.x, plot.y + plot.h);
+    ctx.closePath();
+    ctx.fill();
+
+    var lineGrad = ctx.createLinearGradient(plot.x, 0, plot.x + plot.w, 0);
+    lineGrad.addColorStop(0, '#ff6b93');
+    lineGrad.addColorStop(0.52, palette.red);
+    lineGrad.addColorStop(1, '#ff2b56');
+    ctx.save();
+    ctx.strokeStyle = lineGrad;
+    ctx.lineWidth = 3.5;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.shadowColor = 'rgba(255, 65, 109, 0.62)';
+    ctx.shadowBlur = 16;
+    ctx.beginPath();
+    for (var lineIndex = 0; lineIndex < history.length; lineIndex++) {
+      var linePoint = pointAt(history, values, lineIndex, plot);
+      if (lineIndex === 0) ctx.moveTo(linePoint.x, linePoint.y);
+      else ctx.lineTo(linePoint.x, linePoint.y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    for (var dotIndex = 0; dotIndex < history.length; dotIndex++) {
+      var dot = pointAt(history, values, dotIndex, plot);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = palette.red;
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var highIndex = values.indexOf(maxVal);
+    var lowIndex = values.indexOf(minVal);
+    var currentIndex = history.length - 1;
+    var highPoint = pointAt(history, values, highIndex, plot);
+    var lowPoint = pointAt(history, values, lowIndex, plot);
+    var currentPoint = pointAt(history, values, currentIndex, plot);
+    var occupied = [];
+    var labelBounds = { x: x, y: y + 6, w: w, h: h - 12 };
+
+    drawFloatingLabel('Highest', maxVal, highPoint, labelBounds, 'above', palette.gold, occupied);
+    drawFloatingLabel('Lowest', minVal, lowPoint, labelBounds, 'below', palette.danger, occupied);
+    if (currentIndex !== highIndex && currentIndex !== lowIndex) {
+      drawFloatingLabel('Current', values[currentIndex], currentPoint, labelBounds, 'right', palette.red, occupied);
+    }
+    drawHighestPoint(highPoint);
+    drawLowestPoint(lowPoint);
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(255, 65, 109, 0.72)';
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = palette.red;
+    ctx.beginPath();
+    ctx.arc(currentPoint.x, currentPoint.y, 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(currentPoint.x, currentPoint.y, 3.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(226, 236, 255, 0.62)';
+    ctx.font = font('600', 12);
+    ctx.fillText(formatDate(history[0].date), plot.x, plot.y + plot.h + 18);
+    ctx.fillText(formatDate(history[history.length - 1].date), plot.x + plot.w, plot.y + plot.h + 18);
+
+    return { highest: maxVal, lowest: minVal };
+  }
+
+  function normalizedHistory() {
+    var history = Array.isArray(posterData.history) ? posterData.history.slice() : [];
+    history = history
+      .filter(function (item) { return item && item.date && item.amount !== undefined; })
+      .map(function (item) { return { date: item.date, amount: Number(item.amount) || 0 }; })
+      .sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
+    if (!history.length) {
+      history.push({ date: new Date().toISOString(), amount: Number(posterData.currentAmount) || 0 });
+    }
+    return history;
+  }
+
+  function drawPoster() {
+    var history = normalizedHistory();
+    var values = history.map(function (item) { return item.amount; });
+    var currentAmount = Number(posterData.currentAmount) || 0;
+    var highest = Math.max.apply(null, values);
+    var lowest = Math.min.apply(null, values);
+    var rankText = '#' + posterData.rank + ' / ' + posterData.totalPlayers;
+
+    ctx.clearRect(0, 0, W, H);
+    drawBackground();
+    drawHeader(currentAmount, posterData.coinName || 'Fermat Coin', posterData.nickname || posterData.username || '');
+    drawRankBadge(64, 252, 286, 202, posterData.rank, posterData.totalPlayers);
+    var chartStats = drawLineChart(426, 172, 726, 354, history);
+    if (chartStats) {
+      highest = chartStats.highest;
+      lowest = chartStats.lowest;
+    }
+
+    var cardY = 562;
+    var cardH = 78;
+    var gap = 14;
+    var cardW = (W - 128 - gap * 3) / 4;
+    drawMetricCard(64, cardY, cardW, cardH, 'Current', formatAmount(currentAmount), palette.gold);
+    drawMetricCard(64 + (cardW + gap), cardY, cardW, cardH, 'Highest', formatAmount(highest), palette.gold);
+    drawMetricCard(64 + (cardW + gap) * 2, cardY, cardW, cardH, 'Lowest', formatAmount(lowest), palette.red);
+    drawMetricCard(64 + (cardW + gap) * 3, cardY, cardW, cardH, 'Rank', rankText, palette.gold);
+
+    var bottomAccent = ctx.createLinearGradient(40, 0, W - 40, 0);
+    bottomAccent.addColorStop(0, 'rgba(247, 200, 75, 0)');
+    bottomAccent.addColorStop(0.24, 'rgba(247, 200, 75, 0.58)');
+    bottomAccent.addColorStop(0.7, 'rgba(255, 65, 109, 0.42)');
+    bottomAccent.addColorStop(1, 'rgba(255, 65, 109, 0)');
+    ctx.fillStyle = bottomAccent;
+    ctx.fillRect(40, H - 4, W - 80, 3);
+  }
+
+  window.downloadPoster = function downloadPoster() {
+    var btn = document.getElementById('dl-btn');
+    if (btn) {
+      btn.textContent = '生成中...';
+      btn.disabled = true;
+    }
+    canvas.toBlob(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'fermat_poster_' + (posterData.nickname || posterData.username || 'player') + '.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      if (btn) {
+        btn.textContent = '下载图片';
+        btn.disabled = false;
+      }
+    }, 'image/png');
+  };
+
+  window.__fermatPoster = {
+    drawPoster: drawPoster,
+    formatAmount: formatAmount,
+  };
+})();

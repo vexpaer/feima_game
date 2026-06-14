@@ -139,6 +139,12 @@ button,
   text-decoration: none;
 }
 
+.button-link.secondary {
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--accent-2);
+  border: 1px solid var(--line);
+}
+
 button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
@@ -441,6 +447,23 @@ th {
   align-content: start;
 }
 
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.filter-form label {
+  min-width: 220px;
+}
+
+.filter-form button,
+.filter-form .button-link {
+  margin-top: 0;
+}
+
 .empty {
   padding: 18px;
   border: 1px dashed var(--line);
@@ -499,7 +522,7 @@ th {
 
 .poster {
   width: 100%;
-  aspect-ratio: 1672 / 941;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
