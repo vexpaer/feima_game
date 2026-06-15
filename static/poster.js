@@ -24,6 +24,13 @@
     grid: 'rgba(255, 255, 255, 0.10)',
   };
 
+  var titleStyles = {
+    '赌怪': { color: '#ff3f7f', size: 24, glow: 'rgba(255, 63, 127, 0.72)' },
+    '赌王': { color: '#f7c84b', size: 22, glow: 'rgba(247, 200, 75, 0.58)' },
+    '赌狗': { color: '#6ee7f9', size: 20, glow: 'rgba(110, 231, 249, 0.46)' },
+    '费马': { color: 'rgba(226, 236, 255, 0.72)', size: 18, glow: 'rgba(226, 236, 255, 0.24)' },
+  };
+
   bg.crossOrigin = 'anonymous';
   bg.onload = drawPoster;
   bg.onerror = drawPoster;
@@ -156,7 +163,16 @@
     return fontSize;
   }
 
-  function drawHeader(currentAmount, coinName, nickname) {
+  function playerTitle(rank, totalPlayers) {
+    var total = Math.max(1, Number(totalPlayers) || 1);
+    var topPercent = Math.max(0, Math.min(100, (Number(rank) || total) / total * 100));
+    if (topPercent <= 10) return '赌怪';
+    if (topPercent <= 30) return '赌王';
+    if (topPercent <= 50) return '赌狗';
+    return '费马';
+  }
+
+  function drawHeader(currentAmount, coinName, nickname, titleName) {
     ctx.save();
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
@@ -166,11 +182,27 @@
 
     ctx.shadowColor = 'rgba(0, 0, 0, 0.48)';
     ctx.shadowBlur = 18;
-    drawFittedText(nickname, 48, 51, 330, '800', 42, 26, 'left', palette.text);
+    var titleStyle = titleStyles[titleName] || titleStyles['费马'];
+    var nameSize = drawFittedText(nickname, 48, 51, 274, '800', 42, 26, 'left', palette.text);
+    var nameWidth = Math.min(274, ctx.measureText(nickname).width);
+    var titleX = 62 + nameWidth;
+    var titleY = 57 + Math.max(0, (nameSize - titleStyle.size) / 2);
+    ctx.font = font('900', titleStyle.size);
+    var titleW = ctx.measureText(titleName).width + 24;
     ctx.shadowBlur = 0;
-    ctx.fillStyle = palette.muted;
-    ctx.font = font('500', 15);
-    ctx.fillText('Investment match summary', 50, 98);
+    ctx.beginPath();
+    roundRect(titleX - 12, titleY - 5, titleW, titleStyle.size + 13, 6);
+    ctx.fillStyle = 'rgba(6, 14, 30, 0.62)';
+    ctx.fill();
+    ctx.strokeStyle = titleStyle.color;
+    ctx.globalAlpha = 0.86;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.shadowColor = titleStyle.glow;
+    ctx.shadowBlur = 16;
+    ctx.fillStyle = titleStyle.color;
+    ctx.fillText(titleName, titleX, titleY);
+    ctx.shadowBlur = 0;
     ctx.restore();
 
     ctx.save();
@@ -206,6 +238,7 @@
     cup.addColorStop(0.52, palette.gold);
     cup.addColorStop(1, '#a96f13');
     ctx.fillStyle = cup;
+    ctx.beginPath();
     roundRect(9, 5, 30, 26, 5);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
@@ -219,6 +252,7 @@
     ctx.fillStyle = palette.gold;
     ctx.fillRect(22, 31, 5, 10);
     ctx.fillRect(31, 31, 5, 10);
+    ctx.beginPath();
     roundRect(15, 41, 28, 7, 3);
     ctx.fill();
     ctx.restore();
@@ -230,11 +264,6 @@
     var rankPercent = safeTotal ? Math.max(0, Math.min(100, (1 - safeRank / safeTotal) * 100)) : 0;
     var topPercent = safeTotal ? Math.max(0, Math.min(100, (safeRank / safeTotal) * 100)) : 0;
 
-    drawGlassCard(x, y, w, h, 8, {
-      fill: 'rgba(8, 16, 34, 0.62)',
-      border: 'rgba(247, 200, 75, 0.36)',
-      blur: 30,
-    });
     drawTrophy(x + 22, y + 22, 0.78);
 
     ctx.textAlign = 'left';
@@ -270,21 +299,161 @@
   }
 
   function drawMetricCard(x, y, w, h, title, value, accent) {
-    drawGlassCard(x, y, w, h, 8, {
-      fill: 'rgba(7, 15, 32, 0.58)',
-      border: accent === palette.red ? 'rgba(255, 65, 109, 0.32)' : 'rgba(255, 255, 255, 0.17)',
-      blur: 20,
-      offsetY: 10,
-    });
-    ctx.fillStyle = accent;
-    roundRect(x + 16, y + 17, 4, h - 34, 2);
-    ctx.fill();
     ctx.fillStyle = palette.muted;
     ctx.font = font('800', 13);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText(title, x + 30, y + 15);
-    drawFittedText(value, x + 30, y + 39, w - 46, '900', 25, 17, 'left', palette.text);
+    ctx.fillText(title, x + 18, y + 15);
+    drawFittedText(value, x + 18, y + 39, w - 36, '900', 30, 20, 'left', accent || palette.text);
+  }
+
+  function clamp01(value) {
+    return Math.max(0, Math.min(1, Number(value) || 0));
+  }
+
+  function formatPercent(value) {
+    return ((Number(value) || 0) * 100).toFixed(1) + '%';
+  }
+
+  function formatOdds(value) {
+    return (Number(value) || 0).toFixed(2) + 'x';
+  }
+
+  function radarItems(stats) {
+    var s = stats || {};
+    function raw(key) {
+      var item = s[key];
+      if (item && typeof item === 'object') return Number(item.value) || 0;
+      return Number(item) || 0;
+    }
+    function score(key) {
+      var item = s[key];
+      if (item && typeof item === 'object') return clamp01(item.score);
+      return 0;
+    }
+    return [
+      {
+        label: '胜率',
+        value: formatPercent(raw('winRate')),
+        score: score('winRate'),
+      },
+      {
+        label: '最高赔率',
+        value: formatOdds(raw('maxWinOdds')),
+        score: score('maxWinOdds'),
+      },
+      {
+        label: '最大返利',
+        value: formatAmount(raw('maxSingleRebate')),
+        score: score('maxSingleRebate'),
+      },
+      {
+        label: '平均赔率',
+        value: formatOdds(raw('avgWinOdds')),
+        score: score('avgWinOdds'),
+      },
+      {
+        label: '平均返利',
+        value: formatAmount(raw('avgWinRebate')),
+        score: score('avgWinRebate'),
+      },
+      {
+        label: '回报率',
+        value: formatPercent(raw('returnRate')),
+        score: score('returnRate'),
+      },
+    ];
+  }
+
+  function polygonPoints(cx, cy, radius, count) {
+    var points = [];
+    for (var i = 0; i < count; i++) {
+      var angle = -Math.PI / 2 + Math.PI * 2 * i / count;
+      points.push({
+        x: cx + Math.cos(angle) * radius,
+        y: cy + Math.sin(angle) * radius,
+      });
+    }
+    return points;
+  }
+
+  function drawPolygon(points) {
+    ctx.beginPath();
+    points.forEach(function (point, index) {
+      if (index === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    ctx.closePath();
+  }
+
+  function drawRadarChart(x, y, w, h, stats) {
+    var items = radarItems(stats);
+    var cx = x + w / 2;
+    var cy = y + h / 2 + 4;
+    var radius = Math.min(w * 0.32, h * 0.36);
+
+    ctx.save();
+    for (var level = 4; level >= 1; level--) {
+      var gridPoints = polygonPoints(cx, cy, radius * level / 4, items.length);
+      drawPolygon(gridPoints);
+      ctx.strokeStyle = level === 4 ? 'rgba(247, 200, 75, 0.28)' : 'rgba(255, 255, 255, 0.10)';
+      ctx.lineWidth = level === 4 ? 1.3 : 1;
+      ctx.stroke();
+    }
+
+    var outer = polygonPoints(cx, cy, radius, items.length);
+    outer.forEach(function (point) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(point.x, point.y);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.10)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    var dataPoints = items.map(function (item, index) {
+      var angle = -Math.PI / 2 + Math.PI * 2 * index / items.length;
+      var r = radius * Math.max(0.08, item.score);
+      return {
+        x: cx + Math.cos(angle) * r,
+        y: cy + Math.sin(angle) * r,
+      };
+    });
+
+    var radarFill = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+    radarFill.addColorStop(0, 'rgba(247, 200, 75, 0.36)');
+    radarFill.addColorStop(1, 'rgba(255, 65, 109, 0.34)');
+    drawPolygon(dataPoints);
+    ctx.fillStyle = radarFill;
+    ctx.fill();
+    ctx.strokeStyle = palette.gold;
+    ctx.lineWidth = 2.2;
+    ctx.shadowColor = 'rgba(247, 200, 75, 0.36)';
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    dataPoints.forEach(function (point) {
+      ctx.fillStyle = palette.gold;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 3.6, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.textBaseline = 'middle';
+    items.forEach(function (item, index) {
+      var point = outer[index];
+      var labelX = point.x + (point.x - cx) * 0.24;
+      var labelY = point.y + (point.y - cy) * 0.18;
+      ctx.textAlign = labelX < cx - 6 ? 'right' : labelX > cx + 6 ? 'left' : 'center';
+      ctx.fillStyle = palette.muted;
+      ctx.font = font('800', 11);
+      ctx.fillText(item.label, labelX, labelY - 7);
+      ctx.fillStyle = palette.text;
+      ctx.font = font('900', 11);
+      ctx.fillText(item.value, labelX, labelY + 8);
+    });
+    ctx.restore();
   }
 
   function pointAt(history, values, index, plot) {
@@ -404,21 +573,6 @@
   }
 
   function drawLineChart(x, y, w, h, history) {
-    drawGlassCard(x, y, w, h, 8, {
-      fill: 'rgba(7, 15, 32, 0.54)',
-      border: 'rgba(255, 255, 255, 0.18)',
-      blur: 28,
-    });
-
-    ctx.fillStyle = palette.text;
-    ctx.font = font('900', 18);
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillText('Capital Curve', x + 26, y + 22);
-    ctx.fillStyle = palette.muted;
-    ctx.font = font('600', 12);
-    ctx.fillText('Net asset history', x + 26, y + 47);
-
     if (history.length < 2) {
       ctx.fillStyle = 'rgba(226, 236, 255, 0.58)';
       ctx.font = font('700', 20);
@@ -591,30 +745,32 @@
 
   function drawPoster() {
     var history = normalizedHistory();
-    var values = history.map(function (item) { return item.amount; });
     var currentAmount = Number(posterData.currentAmount) || 0;
-    var highest = Math.max.apply(null, values);
-    var lowest = Math.min.apply(null, values);
-    var rankText = '#' + posterData.rank + ' / ' + posterData.totalPlayers;
+    var activity = posterData.activity || {};
+    var titleName = playerTitle(posterData.rank, posterData.totalPlayers);
 
     ctx.clearRect(0, 0, W, H);
     drawBackground();
-    drawHeader(currentAmount, posterData.coinName || 'Fermat Coin', posterData.nickname || posterData.username || '');
-    drawRankBadge(64, 252, 286, 202, posterData.rank, posterData.totalPlayers);
-    var chartStats = drawLineChart(426, 172, 726, 354, history);
-    if (chartStats) {
-      highest = chartStats.highest;
-      lowest = chartStats.lowest;
-    }
+    drawHeader(currentAmount, posterData.coinName || 'Fermat Coin', posterData.nickname || posterData.username || '', titleName);
 
-    var cardY = 562;
-    var cardH = 78;
+    var leftX = 48;
+    var leftW = 330;
+    var rightX = 426;
+    var rightW = 726;
+    var topY = 172;
+    var chartH = 354;
     var gap = 14;
-    var cardW = (W - 128 - gap * 3) / 4;
-    drawMetricCard(64, cardY, cardW, cardH, 'Current', formatAmount(currentAmount), palette.gold);
-    drawMetricCard(64 + (cardW + gap), cardY, cardW, cardH, 'Highest', formatAmount(highest), palette.gold);
-    drawMetricCard(64 + (cardW + gap) * 2, cardY, cardW, cardH, 'Lowest', formatAmount(lowest), palette.red);
-    drawMetricCard(64 + (cardW + gap) * 3, cardY, cardW, cardH, 'Rank', rankText, palette.gold);
+
+    drawRadarChart(leftX, topY, leftW, 258, posterData.radarStats || {});
+    drawRankBadge(leftX, 444, leftW, 192, posterData.rank, posterData.totalPlayers);
+    drawLineChart(rightX, topY, rightW, chartH, history);
+
+    var cardY = topY + chartH + 22;
+    var cardH = 88;
+    var cardW = (rightW - gap * 2) / 3;
+    drawMetricCard(rightX, cardY, cardW, cardH, '猜测次数', formatAmount(activity.betCount), palette.gold);
+    drawMetricCard(rightX + cardW + gap, cardY, cardW, cardH, '贷款次数', formatAmount(activity.loanCount), palette.gold);
+    drawMetricCard(rightX + (cardW + gap) * 2, cardY, cardW, cardH, '注册天数', formatAmount(activity.registrationDays), palette.gold);
 
     var bottomAccent = ctx.createLinearGradient(40, 0, W - 40, 0);
     bottomAccent.addColorStop(0, 'rgba(247, 200, 75, 0)');

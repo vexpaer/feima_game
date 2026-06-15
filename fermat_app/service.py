@@ -836,6 +836,8 @@ def build_poster_data(username, data, current_amount=None):
         len(ranked_players) + 1,
     )
     history = _poster_history(data.get("net_asset_history", {}).get(username, []))
+    poster_stats = _poster_performance_stats(username, data)
+    radar_bounds = _poster_radar_bounds(data)
 
     return {
         "nickname": username,
@@ -844,6 +846,8 @@ def build_poster_data(username, data, current_amount=None):
         "history": history,
         "rank": rank,
         "totalPlayers": len(ranked_players),
+        "activity": poster_stats["activity"],
+        "radarStats": _poster_radar_scores(poster_stats["radarStats"], radar_bounds),
         # Legacy fields kept for current callers and older templates.
         "username": username,
         "current_net_asset": current,
@@ -862,6 +866,86 @@ def _poster_history(raw_history):
             continue
         history.append({"date": date, "amount": int(amount)})
     return sorted(history, key=lambda item: item["date"])
+
+
+def _poster_performance_stats(username, data):
+    user_bets = [
+        bet for bet in data.get("bets", {}).values()
+        if bet.get("username") == username and not bet.get("mirrored_from")
+    ]
+    resolved_bets = [
+        bet for bet in user_bets
+        if bet.get("status") in ("won", "lost")
+    ]
+    won_bets = [bet for bet in resolved_bets if bet.get("status") == "won"]
+    loans = [
+        loan for loan in data.get("loans", {}).values()
+        if loan.get("username") == username
+    ]
+    user = data.get("users", {}).get(username, {})
+    created_at = parse_iso(user.get("created_at")) if user.get("created_at") else None
+    registration_days = max(1, (utc_now() - created_at).days + 1) if created_at else 0
+
+    total_principal = sum(int(bet.get("stake", 0)) for bet in resolved_bets)
+    total_payout = sum(int(bet.get("payout", 0)) for bet in resolved_bets)
+    win_payouts = [int(bet.get("payout", 0)) for bet in won_bets]
+    win_odds = [float(bet.get("odds", 0) or 0) for bet in won_bets]
+    win_rate = len(won_bets) / len(resolved_bets) if resolved_bets else 0
+    return_rate = (total_payout - total_principal) / total_principal if total_principal else 0
+
+    return {
+        "activity": {
+            "betCount": len(resolved_bets),
+            "loanCount": len(loans),
+            "registrationDays": registration_days,
+        },
+        "radarStats": {
+            "winRate": win_rate,
+            "maxWinOdds": max(win_odds) if win_odds else 0,
+            "maxSingleRebate": max(win_payouts) if win_payouts else 0,
+            "avgWinOdds": sum(win_odds) / len(win_odds) if win_odds else 0,
+            "avgWinRebate": sum(win_payouts) / len(win_payouts) if win_payouts else 0,
+            "returnRate": return_rate,
+        },
+    }
+
+
+def _poster_radar_bounds(data):
+    bounds = {
+        "winRate": {"min": None, "max": None},
+        "maxWinOdds": {"min": None, "max": None},
+        "maxSingleRebate": {"min": None, "max": None},
+        "avgWinOdds": {"min": None, "max": None},
+        "avgWinRebate": {"min": None, "max": None},
+        "returnRate": {"min": None, "max": None},
+    }
+    for player_name, player in data.get("users", {}).items():
+        if player.get("is_negative"):
+            continue
+        stats = _poster_performance_stats(player_name, data)["radarStats"]
+        for key, item in bounds.items():
+            value = float(stats.get(key, 0) or 0)
+            item["max"] = value if item["max"] is None else max(item["max"], value)
+            item["min"] = value if item["min"] is None else min(item["min"], value)
+    for item in bounds.values():
+        item["min"] = item["min"] or 0
+        item["max"] = item["max"] or 0
+    return bounds
+
+
+def _poster_radar_scores(stats, bounds):
+    result = {}
+    for key, value in stats.items():
+        item = bounds.get(key, {"min": 0, "max": 0})
+        min_value = float(item.get("min", 0) or 0)
+        max_value = float(item.get("max", 0) or 0)
+        numeric_value = float(value or 0)
+        score = (numeric_value - min_value) / (max_value - min_value) if max_value > min_value else 1
+        result[key] = {
+            "value": numeric_value,
+            "score": max(0, min(1, score)),
+        }
+    return result
 
 
 def get_poster_data(username):
