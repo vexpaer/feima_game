@@ -67,6 +67,7 @@ def default_db():
         "loans": {},
         "balance_adjustments": {},
         "net_asset_history": {},
+        "custom_leaderboards": {},
     }
 
 

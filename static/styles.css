@@ -464,6 +464,35 @@ th {
   margin-top: 0;
 }
 
+.compact-form {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.compact-form select {
+  margin-top: 0;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 420px;
+  white-space: normal;
+}
+
+.chip-form {
+  display: inline-flex;
+}
+
+.chip-form button.ghost {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
 .empty {
   padding: 18px;
   border: 1px dashed var(--line);
@@ -479,6 +508,7 @@ th {
 /* === 排行榜 Tab === */
 .tab-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   margin-bottom: 20px;
   border-bottom: 2px solid var(--line);

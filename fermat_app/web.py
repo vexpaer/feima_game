@@ -10,7 +10,7 @@ from http.cookies import SimpleCookie
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 from . import service
-from .store import DB_PATH, ROOT_DIR, parse_iso, read_db, utc_now
+from .store import ADMIN_USERNAME, DB_PATH, ROOT_DIR, parse_iso, read_db, utc_now
 
 
 PORT = int(os.environ.get("PORT", "3008"))
@@ -137,6 +137,10 @@ class FermatHandler(BaseHTTPRequestHandler):
             self.require_admin(user)
             msg = service.set_admin(user["username"], form.get("username", ""))
             return self.redirect("/admin", message=msg)
+        if path == "/admin/demote-admin":
+            self.require_admin(user)
+            msg = service.demote_admin(user["username"], form.get("username", ""))
+            return self.redirect("/admin", message=msg)
         if path == "/admin/settle-match":
             self.require_admin(user)
             msg = service.manual_settle_match(
@@ -161,6 +165,34 @@ class FermatHandler(BaseHTTPRequestHandler):
         if path == "/admin/delete-match":
             self.require_admin(user)
             msg = service.delete_match(user["username"], form.get("match_id", ""))
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/leaderboards/create":
+            self.require_admin(user)
+            msg = service.create_custom_leaderboard(
+                user["username"],
+                form.get("name", ""),
+                form.get("metric", ""),
+            )
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/leaderboards/delete":
+            self.require_admin(user)
+            msg = service.delete_custom_leaderboard(user["username"], form.get("leaderboard_id", ""))
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/leaderboards/add-user":
+            self.require_admin(user)
+            msg = service.add_custom_leaderboard_user(
+                user["username"],
+                form.get("leaderboard_id", ""),
+                form.get("username", ""),
+            )
+            return self.redirect("/admin", message=msg)
+        if path == "/admin/leaderboards/remove-user":
+            self.require_admin(user)
+            msg = service.remove_custom_leaderboard_user(
+                user["username"],
+                form.get("leaderboard_id", ""),
+                form.get("username", ""),
+            )
             return self.redirect("/admin", message=msg)
         self.send_error(HTTPStatus.NOT_FOUND)
 
@@ -319,17 +351,19 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.send_html(layout("借贷", body, user, query))
 
     def render_leaderboard(self, user, query):
-        by_balance, by_net = service.leaderboard_snapshot()
-        tab = first_query(query, "tab") or "balance"
+        by_balance, by_net, custom_leaderboards = service.leaderboard_snapshot()
+        requested_tab = first_query(query, "tab") or "balance"
         show_negative = first_query(query, "show_negative") == "1"
         visible_by_balance = by_balance if show_negative else [item for item in by_balance if not item.get("is_negative")]
         visible_by_net = by_net if show_negative else [item for item in by_net if not item.get("is_negative")]
+        custom_tabs = {f"custom-{item['id']}" for item in custom_leaderboards}
+        tab = requested_tab if requested_tab in {"balance", "net"} | custom_tabs else "balance"
         negative_toggle_href = add_query("/leaderboard", {
             "tab": tab,
             "show_negative": "" if show_negative else "1",
         })
         negative_toggle_text = "隐藏反向账户" if show_negative else "显示反向账户"
-        bal_active = "active" if tab != "net" else ""
+        bal_active = "active" if tab == "balance" else ""
         net_active = "active" if tab == "net" else ""
 
         top_bal = visible_by_balance[:3]
@@ -343,6 +377,42 @@ class FermatHandler(BaseHTTPRequestHandler):
             metric_card(f"第 {idx} 名", item["username"], f"净资产 {money(item['net_asset'])} fermat coin")
             for idx, item in enumerate(top_net, 1)
         ) or metric_card("净资产榜", "暂无账户", "等待用户注册")
+
+        custom_tab_buttons = []
+        custom_sections = []
+        for leaderboard in custom_leaderboards:
+            tab_key = f"custom-{leaderboard['id']}"
+            active = "active" if tab == tab_key else ""
+            metric = leaderboard["metric"]
+            users = leaderboard["users"]
+            top_users = users[:3]
+            cards = "".join(
+                metric_card(
+                    f"第 {idx} 名",
+                    item["username"],
+                    f"{leaderboard['metric_label']} {money(item[metric])} fermat coin",
+                )
+                for idx, item in enumerate(top_users, 1)
+            ) or metric_card(leaderboard["name"], "暂无账户", "等待管理员添加")
+            table = (
+                net_asset_standings_table(users)
+                if metric == "net_asset"
+                else standings_table(users)
+            ) if users else empty_state("暂无参与用户")
+            custom_tab_buttons.append(
+                f'<button class="tab-item {active}" data-tab="{e(tab_key)}">{e(leaderboard["name"])}</button>'
+            )
+            custom_sections.append(f"""
+        <section class="tab-content {active}" data-tab-content="{e(tab_key)}">
+          <section class="metric-grid podium-grid">
+            {cards}
+          </section>
+          <section class="panel">
+            <div class="panel-title"><h2>完整榜单 · {e(leaderboard["metric_label"])}</h2></div>
+            {table}
+          </section>
+        </section>
+            """)
 
         body = f"""
         <section class="page-head">
@@ -358,6 +428,7 @@ class FermatHandler(BaseHTTPRequestHandler):
         <div class="tab-bar">
           <button class="tab-item {bal_active}" data-tab="balance">富豪榜（余额）</button>
           <button class="tab-item {net_active}" data-tab="net">净资产榜</button>
+          {''.join(custom_tab_buttons)}
         </div>
         <section class="tab-content {bal_active}" data-tab-content="balance">
           <section class="metric-grid podium-grid">
@@ -377,21 +448,23 @@ class FermatHandler(BaseHTTPRequestHandler):
             {net_asset_standings_table(visible_by_net)}
           </section>
         </section>
+        {''.join(custom_sections)}
         <script>
         (function () {{
           var tabs = document.querySelectorAll('.tab-item');
-          var contents = {{
-            balance: document.querySelector('[data-tab-content="balance"]'),
-            net: document.querySelector('[data-tab-content="net"]')
-          }};
+          var contents = document.querySelectorAll('[data-tab-content]');
           function activate(name) {{
             tabs.forEach(function (t) {{ t.classList.remove('active'); }});
-            Object.keys(contents).forEach(function (k) {{
-              if (contents[k]) contents[k].classList.remove('active');
+            contents.forEach(function (content) {{
+              content.classList.remove('active');
             }});
             var btn = document.querySelector('.tab-item[data-tab="' + name + '"]');
             if (btn) btn.classList.add('active');
-            if (contents[name]) contents[name].classList.add('active');
+            contents.forEach(function (content) {{
+              if (content.getAttribute('data-tab-content') === name) {{
+                content.classList.add('active');
+              }}
+            }});
           }}
           tabs.forEach(function (tab) {{
             tab.addEventListener('click', function () {{
@@ -477,7 +550,21 @@ class FermatHandler(BaseHTTPRequestHandler):
         </section>
         <section class="panel">
           <div class="panel-title"><h2>全部账号</h2></div>
-          {users_table(snapshot['users'])}
+          {users_table(snapshot['users'], user)}
+        </section>
+        <section class="panel">
+          <div class="panel-title"><h2>自定义排行榜</h2></div>
+          <form class="inline-form filter-form" method="post" action="/admin/leaderboards/create">
+            <label>排行榜名称<input name="name" maxlength="32" required></label>
+            <label>类型
+              <select name="metric" required>
+                <option value="balance">余额</option>
+                <option value="net_asset">净资产</option>
+              </select>
+            </label>
+            <button type="submit">创建排行榜</button>
+          </form>
+          {custom_leaderboards_admin(snapshot['custom_leaderboards'], snapshot['users'])}
         </section>
         <section class="two-col">
           <form class="panel form-card inline-form" method="post" action="/admin/balance">
@@ -1002,6 +1089,67 @@ def account_options(users):
     return "".join(options)
 
 
+def real_account_options(users):
+    options = []
+    for user in users:
+        if user.get("is_negative"):
+            continue
+        label = f"{user['username']} · {money(user.get('balance', 0))}"
+        options.append(f'<option value="{e(user["username"])}">{e(label)}</option>')
+    if not options:
+        options.append('<option value="" disabled selected>暂无真实账户</option>')
+    return "".join(options)
+
+
+def custom_leaderboards_admin(leaderboards, users):
+    if not leaderboards:
+        return empty_state("暂无自定义排行榜")
+    account_select_options = real_account_options(users)
+    rows = []
+    for leaderboard in leaderboards:
+        member_forms = []
+        for member in leaderboard.get("users", []):
+            member_forms.append(f"""
+              <form method="post" action="/admin/leaderboards/remove-user" class="chip-form">
+                <input type="hidden" name="leaderboard_id" value="{e(leaderboard['id'])}">
+                <input type="hidden" name="username" value="{e(member['username'])}">
+                <button type="submit" class="ghost" title="移出排行榜">{e(member['username'])} ×</button>
+              </form>
+            """)
+        members = "".join(member_forms) or '<span class="muted">暂无参与用户</span>'
+        rows.append(f"""
+        <tr>
+          <td>
+            <strong>{e(leaderboard['name'])}</strong>
+            <div class="muted">{e(leaderboard['id'])}</div>
+          </td>
+          <td>{e(leaderboard['metric_label'])}</td>
+          <td><div class="chip-list">{members}</div></td>
+          <td>
+            <form method="post" action="/admin/leaderboards/add-user" class="compact-form">
+              <input type="hidden" name="leaderboard_id" value="{e(leaderboard['id'])}">
+              <select name="username" required>
+                {account_select_options}
+              </select>
+              <button type="submit">添加</button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="/admin/leaderboards/delete" onsubmit="return confirm('确定删除这个排行榜？');">
+              <input type="hidden" name="leaderboard_id" value="{e(leaderboard['id'])}">
+              <button class="danger" type="submit">删除</button>
+            </form>
+          </td>
+        </tr>
+        """)
+    return f"""
+    <div class="table-wrap"><table>
+      <thead><tr><th>排行榜</th><th>类型</th><th>参与用户</th><th>添加用户</th><th>操作</th></tr></thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table></div>
+    """
+
+
 def match_options(matches_dict):
     options = []
     # only list non-completed or maybe we want to allow re-settling? Usually just non-completed.
@@ -1017,18 +1165,32 @@ def match_options(matches_dict):
     return "".join(options)
 
 
-def user_actions(user):
+def user_actions(user, current_user=None):
     actions = []
+    is_super_admin = (
+        current_user
+        and current_user.get("username") == ADMIN_USERNAME
+        and current_user.get("role") == "admin"
+    )
     if user.get("role") == "admin":
-        actions.append('<span class="muted">保留</span>')
+        if is_super_admin and user.get("username") != ADMIN_USERNAME:
+            actions.append(f"""
+            <form method="post" action="/admin/demote-admin" onsubmit="return confirm('确定将这个管理员降为普通用户？');" style="display:inline-block;">
+              <input type="hidden" name="username" value="{e(user['username'])}">
+              <button class="danger" type="submit">降为普通用户</button>
+            </form>
+            """)
+        else:
+            actions.append('<span class="muted">保留</span>')
     else:
-        confirm = "确定删除这个反向账号及相关猜测记录？" if user.get("is_negative") else "确定删除这个账号、关联反向账号及相关猜测和借贷记录？"
-        actions.append(f"""
-        <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');" style="display:inline-block; margin-right:4px;">
-          <input type="hidden" name="username" value="{e(user['username'])}">
-          <button class="danger" type="submit">删除</button>
-        </form>
-        """)
+        if is_super_admin:
+            confirm = "确定删除这个反向账号及相关猜测记录？" if user.get("is_negative") else "确定删除这个账号、关联反向账号及相关猜测和借贷记录？"
+            actions.append(f"""
+            <form method="post" action="/admin/delete-user" onsubmit="return confirm('{e(confirm)}');" style="display:inline-block; margin-right:4px;">
+              <input type="hidden" name="username" value="{e(user['username'])}">
+              <button class="danger" type="submit">删除</button>
+            </form>
+            """)
         if not user.get("is_negative"):
             actions.append(f"""
             <form method="post" action="/admin/set-admin" onsubmit="return confirm('确定将这个账号设置为管理员？');" style="display:inline-block;">
@@ -1069,10 +1231,10 @@ def admin_matches_table(matches_dict):
     """
 
 
-def users_table(users):
+def users_table(users, current_user=None):
     rows = []
     for user in users:
-        action = user_actions(user)
+        action = user_actions(user, current_user)
         rows.append(
             f"""
             <tr>

@@ -6,12 +6,13 @@ from datetime import timedelta
 from .config import load_config
 from .sources import MatchSource
 from .store import parse_iso, read_db, to_iso, utc_now, verify_password, write_db
-from .store import negative_user, normal_user
+from .store import ADMIN_USERNAME, negative_user, normal_user
 
 
 USERNAME_RE = re.compile(r"^[A-Za-z0-9_-]{3,24}$")
 CHOICE_LABELS = {"home": "主胜", "draw": "平局", "away": "客胜"}
 BALANCE_OPERATIONS = {"set": "设为", "add": "增加", "subtract": "扣减"}
+CUSTOM_LEADERBOARD_METRICS = {"balance": "余额", "net_asset": "净资产"}
 LOAN_WEEKLY_RATE = 0.10
 LOAN_DUE_DAYS = 14
 COIN_NAME = "Fermat Coin"
@@ -26,6 +27,20 @@ def public_user(user):
     result = dict(user)
     result.pop("password_hash", None)
     return result
+
+
+def require_admin_user(data, admin_username):
+    admin = data["users"].get(admin_username)
+    if not admin or admin.get("role") != "admin":
+        raise AppError("需要管理员权限。")
+    return admin
+
+
+def require_super_admin_user(data, admin_username):
+    admin = require_admin_user(data, admin_username)
+    if admin_username != ADMIN_USERNAME:
+        raise AppError("需要超级管理员权限。")
+    return admin
 
 
 def register_user(username, password):
@@ -366,10 +381,8 @@ def delete_user(admin_username, target_username):
         raise AppError("请选择要删除的账号。")
 
     def mutate(data):
-        admin = data["users"].get(admin_username)
+        require_super_admin_user(data, admin_username)
         target = data["users"].get(target_username)
-        if not admin or admin.get("role") != "admin":
-            raise AppError("需要管理员权限。")
         if not target:
             raise AppError("账号不存在。")
         if target.get("role") == "admin":
@@ -402,6 +415,12 @@ def delete_user(admin_username, target_username):
             for loan_id, loan in data.get("loans", {}).items()
             if loan.get("username") not in usernames
         }
+        for leaderboard in data.setdefault("custom_leaderboards", {}).values():
+            leaderboard["usernames"] = [
+                username
+                for username in leaderboard.get("usernames", [])
+                if username not in usernames
+            ]
         return sorted(usernames)
 
     deleted = write_db(mutate)
@@ -425,6 +444,126 @@ def set_admin(admin_username, target_username):
 
     write_db(mutate)
     return f"已设置 {target_username} 为管理员。"
+
+
+def demote_admin(admin_username, target_username):
+    target_username = (target_username or "").strip()
+    if not target_username:
+        raise AppError("请选择目标账号。")
+
+    def mutate(data):
+        require_super_admin_user(data, admin_username)
+        target = data["users"].get(target_username)
+        if not target or target.get("is_negative"):
+            raise AppError("目标账号无效。")
+        if target_username == ADMIN_USERNAME:
+            raise AppError("不能降级超级管理员。")
+        if target.get("role") != "admin":
+            raise AppError("目标账号不是管理员。")
+        target["role"] = "user"
+        return True
+
+    write_db(mutate)
+    return f"已将 {target_username} 降为普通用户。"
+
+
+def create_custom_leaderboard(admin_username, name, metric):
+    name = (name or "").strip()
+    metric = (metric or "").strip()
+    if not name:
+        raise AppError("请输入排行榜名称。")
+    if len(name) > 32:
+        raise AppError("排行榜名称最多 32 个字符。")
+    if metric not in CUSTOM_LEADERBOARD_METRICS:
+        raise AppError("排行榜类型无效。")
+
+    def mutate(data):
+        require_admin_user(data, admin_username)
+        leaderboards = data.setdefault("custom_leaderboards", {})
+        if any(item.get("name") == name for item in leaderboards.values()):
+            raise AppError("排行榜名称已存在。")
+        while True:
+            leaderboard_id = f"lb_{secrets.token_hex(8)}"
+            if leaderboard_id not in leaderboards:
+                break
+        leaderboards[leaderboard_id] = {
+            "id": leaderboard_id,
+            "name": name,
+            "metric": metric,
+            "usernames": [],
+            "created_by": admin_username,
+            "created_at": to_iso(utc_now()),
+        }
+        return name
+
+    created_name = write_db(mutate)
+    return f"已创建排行榜：{created_name}。"
+
+
+def delete_custom_leaderboard(admin_username, leaderboard_id):
+    leaderboard_id = (leaderboard_id or "").strip()
+    if not leaderboard_id:
+        raise AppError("请选择要删除的排行榜。")
+
+    def mutate(data):
+        require_admin_user(data, admin_username)
+        leaderboards = data.setdefault("custom_leaderboards", {})
+        leaderboard = leaderboards.pop(leaderboard_id, None)
+        if not leaderboard:
+            raise AppError("排行榜不存在。")
+        return leaderboard.get("name", leaderboard_id)
+
+    deleted_name = write_db(mutate)
+    return f"已删除排行榜：{deleted_name}。"
+
+
+def add_custom_leaderboard_user(admin_username, leaderboard_id, target_username):
+    leaderboard_id = (leaderboard_id or "").strip()
+    target_username = (target_username or "").strip()
+    if not leaderboard_id:
+        raise AppError("请选择排行榜。")
+    if not target_username:
+        raise AppError("请选择要添加的账号。")
+
+    def mutate(data):
+        require_admin_user(data, admin_username)
+        leaderboard = data.setdefault("custom_leaderboards", {}).get(leaderboard_id)
+        if not leaderboard:
+            raise AppError("排行榜不存在。")
+        target = data["users"].get(target_username)
+        if not target or target.get("is_negative"):
+            raise AppError("只能添加真实账户，不能添加反向账户。")
+        usernames = leaderboard.setdefault("usernames", [])
+        if target_username not in usernames:
+            usernames.append(target_username)
+        return leaderboard.get("name", leaderboard_id), target_username
+
+    leaderboard_name, username = write_db(mutate)
+    return f"已将 {username} 加入排行榜：{leaderboard_name}。"
+
+
+def remove_custom_leaderboard_user(admin_username, leaderboard_id, target_username):
+    leaderboard_id = (leaderboard_id or "").strip()
+    target_username = (target_username or "").strip()
+    if not leaderboard_id:
+        raise AppError("请选择排行榜。")
+    if not target_username:
+        raise AppError("请选择要移除的账号。")
+
+    def mutate(data):
+        require_admin_user(data, admin_username)
+        leaderboard = data.setdefault("custom_leaderboards", {}).get(leaderboard_id)
+        if not leaderboard:
+            raise AppError("排行榜不存在。")
+        leaderboard["usernames"] = [
+            username
+            for username in leaderboard.get("usernames", [])
+            if username != target_username
+        ]
+        return leaderboard.get("name", leaderboard_id), target_username
+
+    leaderboard_name, username = write_db(mutate)
+    return f"已将 {username} 移出排行榜：{leaderboard_name}。"
 
 
 def manual_settle_match(admin_username, match_id, home_score, away_score):
@@ -722,43 +861,7 @@ def audit_loans(data):
                 user["game_over"] = True
 
 
-def admin_snapshot():
-    update_matches_if_due()
-    data = read_db()
-    pending = [
-        public_user(user)
-        for user in data["users"].values()
-        if not user.get("is_negative") and not user.get("approved")
-    ]
-    users = [public_user(user) for user in data["users"].values()]
-    loans = [enrich_loan(loan) for loan in data["loans"].values()]
-    adjustments = list(data.get("balance_adjustments", {}).values())
-    bets = list(data.get("bets", {}).values())
-    return {
-        "pending": sorted(pending, key=lambda item: item["created_at"]),
-        "users": sorted(users, key=lambda item: item["username"]),
-        "loans": sorted(loans, key=lambda item: item["borrowed_at"], reverse=True),
-        "adjustments": sorted(adjustments, key=lambda item: item["created_at"], reverse=True)[:20],
-        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
-        "meta": data["meta"],
-        "matches": data["matches"],
-    }
-
-
-def all_bets_snapshot():
-    update_matches_if_due()
-    data = read_db()
-    bets = list(data.get("bets", {}).values())
-    return {
-        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
-        "matches": data["matches"],
-    }
-
-
-def leaderboard_snapshot():
-    run_housekeeping()
-    data = read_db()
-
+def users_with_assets(data):
     # 统计每个用户活跃贷款应还总额
     user_loan_due = {}
     for loan in data.get("loans", {}).values():
@@ -784,10 +887,84 @@ def leaderboard_snapshot():
         # 净资产 = 当前余额 - 贷款应还 + 未结算下注
         item["net_asset"] = item["balance"] - loan_due + open_stakes
         users.append(item)
+    return users
+
+
+def sort_leaderboard_users(users, metric):
+    return sorted(
+        users,
+        key=lambda item: (-int(item.get(metric, 0)), item.get("username", "").lower()),
+    )
+
+
+def custom_leaderboard_views(data, users=None):
+    users = users if users is not None else users_with_assets(data)
+    users_by_name = {item["username"]: item for item in users if not item.get("is_negative")}
+    boards = []
+    for board in data.get("custom_leaderboards", {}).values():
+        metric = board.get("metric")
+        if metric not in CUSTOM_LEADERBOARD_METRICS:
+            metric = "balance"
+        member_users = [
+            users_by_name[username]
+            for username in board.get("usernames", [])
+            if username in users_by_name
+        ]
+        boards.append({
+            "id": board.get("id"),
+            "name": board.get("name", "未命名排行榜"),
+            "metric": metric,
+            "metric_label": CUSTOM_LEADERBOARD_METRICS[metric],
+            "usernames": [item["username"] for item in member_users],
+            "users": sort_leaderboard_users(member_users, metric),
+            "created_by": board.get("created_by"),
+            "created_at": board.get("created_at", ""),
+        })
+    return sorted(boards, key=lambda item: (item.get("created_at") or "", item.get("name") or ""))
+
+
+def admin_snapshot():
+    update_matches_if_due()
+    data = read_db()
+    pending = [
+        public_user(user)
+        for user in data["users"].values()
+        if not user.get("is_negative") and not user.get("approved")
+    ]
+    users = users_with_assets(data)
+    loans = [enrich_loan(loan) for loan in data["loans"].values()]
+    adjustments = list(data.get("balance_adjustments", {}).values())
+    bets = list(data.get("bets", {}).values())
+    return {
+        "pending": sorted(pending, key=lambda item: item["created_at"]),
+        "users": sorted(users, key=lambda item: item["username"]),
+        "loans": sorted(loans, key=lambda item: item["borrowed_at"], reverse=True),
+        "adjustments": sorted(adjustments, key=lambda item: item["created_at"], reverse=True)[:20],
+        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
+        "custom_leaderboards": custom_leaderboard_views(data, users),
+        "meta": data["meta"],
+        "matches": data["matches"],
+    }
+
+
+def all_bets_snapshot():
+    update_matches_if_due()
+    data = read_db()
+    bets = list(data.get("bets", {}).values())
+    return {
+        "bets": sorted(bets, key=lambda item: item["created_at"], reverse=True),
+        "matches": data["matches"],
+    }
+
+
+def leaderboard_snapshot():
+    run_housekeeping()
+    data = read_db()
+    users = users_with_assets(data)
 
     by_balance = sorted(users, key=lambda it: it.get("balance", 0), reverse=True)
     by_net = sorted(users, key=lambda it: it.get("net_asset", 0), reverse=True)
-    return by_balance, by_net
+    return by_balance, by_net, custom_leaderboard_views(data, users)
 
 
 def compute_net_asset(username, data):
