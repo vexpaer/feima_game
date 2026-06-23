@@ -8,12 +8,12 @@ from fermat_app import service, store, web
 class AdminRoleTests(unittest.TestCase):
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
-        self.original_db_path = store.DB_PATH
-        store.DB_PATH = Path(self.tmpdir.name) / "db.json"
+        self.original_sqlite_path = store.SQLITE_PATH
+        store.SQLITE_PATH = Path(self.tmpdir.name) / "db.sqlite"
         store.ensure_db()
 
     def tearDown(self):
-        store.DB_PATH = self.original_db_path
+        store.SQLITE_PATH = self.original_sqlite_path
         self.tmpdir.cleanup()
 
     def make_admin(self, username):

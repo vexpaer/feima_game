@@ -4,6 +4,7 @@ import hmac
 import json
 import secrets
 import sqlite3
+import tempfile
 import threading
 from contextlib import closing
 from datetime import datetime, timezone
@@ -12,10 +13,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT_DIR / "data"
-DB_PATH = DATA_DIR / "db.json"
 SQLITE_PATH = DATA_DIR / "db.sqlite"
-_DEFAULT_DB_PATH = DB_PATH
-_DEFAULT_SQLITE_PATH = SQLITE_PATH
 
 INITIAL_BALANCE = 1_000_000
 ADMIN_USERNAME = "vexpaer"
@@ -121,19 +119,6 @@ def negative_user(owner_username):
     }
 
 
-def _db_path():
-    if SQLITE_PATH == _DEFAULT_SQLITE_PATH and DB_PATH != _DEFAULT_DB_PATH:
-        return DB_PATH.with_suffix(".sqlite")
-    return SQLITE_PATH
-
-
-def _read_json_file():
-    if not DB_PATH.exists():
-        return default_db()
-    with DB_PATH.open("r", encoding="utf-8") as f:
-        return json.load(f)
-
-
 def _dump_json(value):
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
 
@@ -159,9 +144,8 @@ def _ensure_schema(conn):
 
 
 def _connect():
-    path = _db_path()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(path)
+    SQLITE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(SQLITE_PATH)
     conn.row_factory = sqlite3.Row
     _ensure_schema(conn)
     return conn
@@ -174,19 +158,8 @@ def _sqlite_has_data(conn):
 
 
 def _read_sqlite():
-    path = _db_path()
-    if not path.exists() and DB_PATH.exists():
-        data = _read_json_file()
-        with closing(_connect()) as conn:
-            _write_sqlite(conn, data)
-        return data
-
     with closing(_connect()) as conn:
         if not _sqlite_has_data(conn):
-            if DB_PATH.exists():
-                data = _read_json_file()
-                _write_sqlite(conn, data)
-                return data
             return default_db()
 
         data = default_db()
@@ -241,19 +214,13 @@ def _write_storage(data, old_data=None):
         _write_sqlite(conn, data, old_data)
 
 
-def export_json_bytes():
-    data = read_db()
-    return json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
-
-
-def export_json_file(path=DB_PATH):
-    path = Path(path)
-    data = read_db()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp_path = path.with_suffix(".tmp")
-    with tmp_path.open("w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    tmp_path.replace(path)
+def export_sqlite_bytes():
+    ensure_db()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        snapshot_path = Path(tmpdir) / SQLITE_PATH.name
+        with closing(_connect()) as source, closing(sqlite3.connect(snapshot_path)) as target:
+            source.backup(target)
+        return snapshot_path.read_bytes()
 
 
 def ensure_db():

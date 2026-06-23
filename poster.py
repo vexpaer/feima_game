@@ -14,15 +14,14 @@ from fermat_app import service, store
 
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_DB = ROOT / "data" / "db.json"
 DEFAULT_OUT = ROOT / "poster"
 POSTER_JS = ROOT / "static" / "poster.js"
 BACKGROUND = ROOT / "static" / "feima.png"
 POSTER_SIZE = (1200, 675)
 
 
-def load_ranked_poster_data(db_path=DEFAULT_DB):
-    data = store.read_db() if Path(db_path) == DEFAULT_DB else json.loads(Path(db_path).read_text(encoding="utf-8"))
+def load_ranked_poster_data():
+    data = store.read_db()
     players = []
     for username, user in data.get("users", {}).items():
         if user.get("is_negative"):
@@ -138,9 +137,9 @@ def write_pdfs(image_paths, pdf_path, small_pdf_path):
     write_small_pdf(image_paths, small_pdf_path)
 
 
-def generate_posters(db_path=DEFAULT_DB, out_dir=DEFAULT_OUT):
+def generate_posters(out_dir=DEFAULT_OUT):
     out_dir = Path(out_dir)
-    posters = load_ranked_poster_data(db_path)
+    posters = load_ranked_poster_data()
     image_paths = render_pngs(posters, out_dir)
     pdf_path = out_dir / "ranking_posters.pdf"
     small_pdf_path = out_dir / "ranking_posters_small.pdf"
@@ -150,11 +149,10 @@ def generate_posters(db_path=DEFAULT_DB, out_dir=DEFAULT_OUT):
 
 def main():
     parser = argparse.ArgumentParser(description="Generate ranked Fermat posters from the app database.")
-    parser.add_argument("--db", default=str(DEFAULT_DB), help="Optional legacy db.json path.")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help="Output directory. Defaults to ./poster.")
     args = parser.parse_args()
 
-    images, pdf_path, small_pdf_path = generate_posters(args.db, args.out)
+    images, pdf_path, small_pdf_path = generate_posters(args.out)
     print(f"Generated {len(images)} poster images in {Path(args.out).resolve()}")
     print(f"Generated PDF: {pdf_path.resolve()}")
     print(f"Generated small PDF: {small_pdf_path.resolve()}")

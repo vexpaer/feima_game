@@ -10,7 +10,7 @@ from http.cookies import SimpleCookie
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 from . import service
-from .store import ADMIN_USERNAME, ROOT_DIR, export_json_bytes, parse_iso, read_db, utc_now
+from .store import ADMIN_USERNAME, ROOT_DIR, export_sqlite_bytes, parse_iso, read_db, utc_now
 
 
 PORT = int(os.environ.get("PORT", "3008"))
@@ -538,7 +538,7 @@ class FermatHandler(BaseHTTPRequestHandler):
             <h1>账号审核与数据维护</h1>
           </div>
           <div class="head-actions">
-            <a class="button-link" href="/admin/download-db">下载 db.json</a>
+            <a class="button-link" href="/admin/download-db">下载 db.sqlite</a>
             <form method="post" action="/admin/refresh">
               <button type="submit">立即刷新比赛</button>
             </form>
@@ -709,10 +709,10 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
     def download_db(self):
-        content = export_json_bytes()
+        content = export_sqlite_bytes()
         self.send_response(HTTPStatus.OK)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Disposition", 'attachment; filename="db.json"')
+        self.send_header("Content-Type", "application/vnd.sqlite3")
+        self.send_header("Content-Disposition", 'attachment; filename="db.sqlite"')
         self.send_header("Content-Length", str(len(content)))
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
