@@ -42,7 +42,7 @@
   bg.crossOrigin = 'anonymous';
   bg.onload = drawPoster;
   bg.onerror = drawPoster;
-  bg.src = '/static/feima.png';
+  bg.src = 'https://i1.hdslb.com/bfs/new_dyn/a646cb7f5af320998220e541076f6bc9390644905.png@1052w_!web-dynamic.avif';
 
   function font(weight, size) {
     return weight + ' ' + size + 'px "Microsoft YaHei", "PingFang SC", Arial, sans-serif';

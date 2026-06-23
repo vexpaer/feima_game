@@ -3,4 +3,5 @@ __pycache__/
 data/*.tmp
 data/*.sqlite-wal
 data/*.sqlite-shm
+data/db6.23.json
 poster/

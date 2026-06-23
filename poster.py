@@ -1,5 +1,4 @@
 import argparse
-import base64
 import json
 import re
 import tempfile
@@ -16,7 +15,7 @@ from fermat_app import service, store
 ROOT = Path(__file__).resolve().parent
 DEFAULT_OUT = ROOT / "poster"
 POSTER_JS = ROOT / "static" / "poster.js"
-BACKGROUND = ROOT / "static" / "feima.png"
+BACKGROUND_IMAGE_URL = "https://i1.hdslb.com/bfs/new_dyn/a646cb7f5af320998220e541076f6bc9390644905.png@1052w_!web-dynamic.avif"
 POSTER_SIZE = (1200, 675)
 
 
@@ -45,9 +44,8 @@ def safe_filename(value):
 
 def site_poster_script(script_text=None):
     script = POSTER_JS.read_text(encoding="utf-8") if script_text is None else script_text
-    background_data = base64.b64encode(BACKGROUND.read_bytes()).decode("ascii")
-    background_src = f"data:image/png;base64,{background_data}"
-    script = script.replace("bg.src = '/static/feima.png';", f"bg.src = '{background_src}';")
+    background_src = json.dumps(BACKGROUND_IMAGE_URL)
+    script = re.sub(r"bg\.src\s*=\s*['\"][^'\"]*['\"];", f"bg.src = {background_src};", script, count=1)
     marker = "ctx.fillRect(40, H - 4, W - 80, 3);"
     if marker in script and "window.__posterReady" not in script:
         script = script.replace(marker, marker + "\n    window.__posterReady = true;")

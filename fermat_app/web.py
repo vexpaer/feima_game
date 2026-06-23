@@ -795,7 +795,7 @@ def layout(title, body, user, query):
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>{e(title)} - Fermat Coin</title>
-      <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+      <link rel="icon" href="https://www.svgrepo.com/show/522513/coin.svg" type="image/svg+xml">
       <link rel="stylesheet" href="/static/styles.css">
     </head>
     <body>
