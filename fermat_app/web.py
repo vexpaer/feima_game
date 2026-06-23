@@ -10,7 +10,7 @@ from http.cookies import SimpleCookie
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 from . import service
-from .store import ADMIN_USERNAME, DB_PATH, ROOT_DIR, parse_iso, read_db, utc_now
+from .store import ADMIN_USERNAME, ROOT_DIR, export_json_bytes, parse_iso, read_db, utc_now
 
 
 PORT = int(os.environ.get("PORT", "3008"))
@@ -709,7 +709,7 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
     def download_db(self):
-        content = DB_PATH.read_bytes()
+        content = export_json_bytes()
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Disposition", 'attachment; filename="db.json"')

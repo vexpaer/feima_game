@@ -10,7 +10,7 @@ from playwright.sync_api import sync_playwright
 from reportlab.lib.pagesizes import landscape
 from reportlab.pdfgen import canvas as pdf_canvas
 
-from fermat_app import service
+from fermat_app import service, store
 
 
 ROOT = Path(__file__).resolve().parent
@@ -22,7 +22,7 @@ POSTER_SIZE = (1200, 675)
 
 
 def load_ranked_poster_data(db_path=DEFAULT_DB):
-    data = json.loads(Path(db_path).read_text(encoding="utf-8"))
+    data = store.read_db() if Path(db_path) == DEFAULT_DB else json.loads(Path(db_path).read_text(encoding="utf-8"))
     players = []
     for username, user in data.get("users", {}).items():
         if user.get("is_negative"):
@@ -149,8 +149,8 @@ def generate_posters(db_path=DEFAULT_DB, out_dir=DEFAULT_OUT):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate ranked Fermat posters from db.json.")
-    parser.add_argument("--db", default=str(DEFAULT_DB), help="Path to db.json.")
+    parser = argparse.ArgumentParser(description="Generate ranked Fermat posters from the app database.")
+    parser.add_argument("--db", default=str(DEFAULT_DB), help="Optional legacy db.json path.")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help="Output directory. Defaults to ./poster.")
     args = parser.parse_args()
 

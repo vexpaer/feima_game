@@ -1,4 +1,6 @@
 __pycache__/
 *.pyc
 data/*.tmp
+data/*.sqlite-wal
+data/*.sqlite-shm
 poster/

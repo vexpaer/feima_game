@@ -3,7 +3,9 @@ import hashlib
 import hmac
 import json
 import secrets
+import sqlite3
 import threading
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -11,12 +13,24 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT_DIR / "data"
 DB_PATH = DATA_DIR / "db.json"
+SQLITE_PATH = DATA_DIR / "db.sqlite"
+_DEFAULT_DB_PATH = DB_PATH
+_DEFAULT_SQLITE_PATH = SQLITE_PATH
 
 INITIAL_BALANCE = 1_000_000
 ADMIN_USERNAME = "vexpaer"
 ADMIN_PASSWORD = "1qaz2wsX"
 
 _LOCK = threading.RLock()
+_DICT_COLLECTIONS = (
+    "users",
+    "matches",
+    "bets",
+    "loans",
+    "balance_adjustments",
+    "net_asset_history",
+    "custom_leaderboards",
+)
 
 
 def utc_now():
@@ -107,25 +121,146 @@ def negative_user(owner_username):
     }
 
 
-def _read_file():
+def _db_path():
+    if SQLITE_PATH == _DEFAULT_SQLITE_PATH and DB_PATH != _DEFAULT_DB_PATH:
+        return DB_PATH.with_suffix(".sqlite")
+    return SQLITE_PATH
+
+
+def _read_json_file():
     if not DB_PATH.exists():
         return default_db()
     with DB_PATH.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def _write_file(data):
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    tmp_path = DB_PATH.with_suffix(".tmp")
+def _dump_json(value):
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+
+
+def _ensure_schema(conn):
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA synchronous=NORMAL")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS meta (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+    """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS records (
+            collection TEXT NOT NULL,
+            id TEXT NOT NULL,
+            data TEXT NOT NULL,
+            PRIMARY KEY (collection, id)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_records_collection ON records(collection)")
+
+
+def _connect():
+    path = _db_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(path)
+    conn.row_factory = sqlite3.Row
+    _ensure_schema(conn)
+    return conn
+
+
+def _sqlite_has_data(conn):
+    meta_count = conn.execute("SELECT COUNT(*) FROM meta").fetchone()[0]
+    record_count = conn.execute("SELECT COUNT(*) FROM records").fetchone()[0]
+    return bool(meta_count or record_count)
+
+
+def _read_sqlite():
+    path = _db_path()
+    if not path.exists() and DB_PATH.exists():
+        data = _read_json_file()
+        with closing(_connect()) as conn:
+            _write_sqlite(conn, data)
+        return data
+
+    with closing(_connect()) as conn:
+        if not _sqlite_has_data(conn):
+            if DB_PATH.exists():
+                data = _read_json_file()
+                _write_sqlite(conn, data)
+                return data
+            return default_db()
+
+        data = default_db()
+        data["meta"] = {
+            row["key"]: json.loads(row["value"])
+            for row in conn.execute("SELECT key, value FROM meta")
+        }
+        for collection in _DICT_COLLECTIONS:
+            data[collection] = {}
+        for row in conn.execute("SELECT collection, id, data FROM records"):
+            if row["collection"] in data:
+                data[row["collection"]][row["id"]] = json.loads(row["data"])
+        return data
+
+
+def _write_sqlite(conn, data, old_data=None):
+    old_data = old_data or {}
+    with conn:
+        old_meta = old_data.get("meta", {})
+        new_meta = data.get("meta", {})
+        for key in set(old_meta) - set(new_meta):
+            conn.execute("DELETE FROM meta WHERE key = ?", (key,))
+        for key, value in new_meta.items():
+            serialized = _dump_json(value)
+            if old_meta.get(key) != value:
+                conn.execute(
+                    "INSERT INTO meta(key, value) VALUES(?, ?) "
+                    "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+                    (key, serialized),
+                )
+
+        for collection in _DICT_COLLECTIONS:
+            old_items = old_data.get(collection, {})
+            new_items = data.get(collection, {})
+            for item_id in set(old_items) - set(new_items):
+                conn.execute(
+                    "DELETE FROM records WHERE collection = ? AND id = ?",
+                    (collection, item_id),
+                )
+            for item_id, value in new_items.items():
+                if old_items.get(item_id) == value:
+                    continue
+                conn.execute(
+                    "INSERT INTO records(collection, id, data) VALUES(?, ?, ?) "
+                    "ON CONFLICT(collection, id) DO UPDATE SET data = excluded.data",
+                    (collection, item_id, _dump_json(value)),
+                )
+
+
+def _write_storage(data, old_data=None):
+    with closing(_connect()) as conn:
+        _write_sqlite(conn, data, old_data)
+
+
+def export_json_bytes():
+    data = read_db()
+    return json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
+
+
+def export_json_file(path=DB_PATH):
+    path = Path(path)
+    data = read_db()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_suffix(".tmp")
     with tmp_path.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    tmp_path.replace(DB_PATH)
+    tmp_path.replace(path)
 
 
 def ensure_db():
     with _LOCK:
         DATA_DIR.mkdir(parents=True, exist_ok=True)
-        data = _read_file()
+        data = _read_sqlite()
+        old_data = copy.deepcopy(data)
         changed = False
         for key, value in default_db().items():
             if key not in data:
@@ -154,20 +289,21 @@ def ensure_db():
             users[ADMIN_USERNAME]["negative_username"] = negative_name
             changed = True
         if changed:
-            _write_file(data)
+            _write_storage(data, old_data)
         return copy.deepcopy(data)
 
 
 def read_db():
     with _LOCK:
         ensure_db()
-        return copy.deepcopy(_read_file())
+        return copy.deepcopy(_read_sqlite())
 
 
 def write_db(mutator):
     with _LOCK:
         ensure_db()
-        data = _read_file()
+        data = _read_sqlite()
+        old_data = copy.deepcopy(data)
         result = mutator(data)
-        _write_file(data)
+        _write_storage(data, old_data)
         return result

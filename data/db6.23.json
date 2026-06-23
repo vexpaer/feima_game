@@ -1,7 +1,7 @@
 {
   "meta": {
     "created_at": "2026-06-01T15:10:19Z",
-    "last_match_update": "2026-06-19T14:37:25Z",
+    "last_match_update": "2026-06-23T02:23:57Z",
     "match_source": "Odds-API.io 拉取失败：HTTP 429 请求过多，可能已触发接口频率限制或额度限制；The Odds API 拉取失败：SSL 证书校验失败，请确认 Python/certifi 证书包可用；当前仍显示旧比赛：The Odds API 72 场、内置演示源 4 场、手动添加 1 场",
     "session_secret": "686ba6fb9145a09407e1fb510326934957dc7ec7be95e85acd855110c8773e5b"
   },
@@ -42,7 +42,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-zhaoq",
-      "balance": 401500,
+      "balance": 68436780,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-01T16:55:28Z",
@@ -56,7 +56,7 @@
       "is_negative": true,
       "owner_username": "zhaoq",
       "negative_username": null,
-      "balance": -28734000,
+      "balance": -132543000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-01T16:55:28Z",
@@ -294,7 +294,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-zq777",
-      "balance": 4494200,
+      "balance": 7464200,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-11T15:04:25Z",
@@ -308,7 +308,7 @@
       "is_negative": true,
       "owner_username": "zq777",
       "negative_username": null,
-      "balance": -4736900,
+      "balance": -8736900,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-11T15:04:25Z",
@@ -434,7 +434,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-Monkey",
-      "balance": 24965800,
+      "balance": 221645800,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-13T04:53:43Z",
@@ -448,7 +448,7 @@
       "is_negative": true,
       "owner_username": "Monkey",
       "negative_username": null,
-      "balance": -168637000,
+      "balance": -275447000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-13T04:53:44Z",
@@ -462,7 +462,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-Morz-AI",
-      "balance": 80851000,
+      "balance": 479361000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-13T07:22:18Z",
@@ -476,7 +476,7 @@
       "is_negative": true,
       "owner_username": "Morz-AI",
       "negative_username": null,
-      "balance": -215851650,
+      "balance": -508899150,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-13T07:22:18Z",
@@ -602,7 +602,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-big",
-      "balance": 17473250,
+      "balance": 1784743250,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-14T10:03:04Z",
@@ -616,7 +616,7 @@
       "is_negative": true,
       "owner_username": "big",
       "negative_username": null,
-      "balance": -7570500,
+      "balance": -1077935500,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-14T10:03:04Z",
@@ -630,7 +630,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-Lyu",
-      "balance": 0,
+      "balance": 106000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-14T10:03:31Z",
@@ -686,7 +686,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-QS_Guoziqing555",
-      "balance": 13693285,
+      "balance": 16533979,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-14T10:58:32Z",
@@ -700,7 +700,7 @@
       "is_negative": true,
       "owner_username": "QS_Guoziqing555",
       "negative_username": null,
-      "balance": -494390,
+      "balance": -205754,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-14T10:58:33Z",
@@ -761,34 +761,6 @@
       "game_over": false,
       "created_at": "2026-06-14T17:03:54Z",
       "approved_at": "2026-06-14T17:03:54Z"
-    },
-    "wxm": {
-      "username": "wxm",
-      "password_hash": "pbkdf2_sha256$20384f2c1da19404ab92d12748b9a73e$3d8fec627eb89ece959480c0bcffed9cb1e581bb7f930d9d805e8e45ef5bb637",
-      "role": "user",
-      "approved": true,
-      "is_negative": false,
-      "owner_username": null,
-      "negative_username": "negative-wxm",
-      "balance": 1000000,
-      "credit": 100,
-      "game_over": false,
-      "created_at": "2026-06-15T05:20:37Z",
-      "approved_at": "2026-06-15T05:20:46Z"
-    },
-    "negative-wxm": {
-      "username": "negative-wxm",
-      "password_hash": "",
-      "role": "negative",
-      "approved": true,
-      "is_negative": true,
-      "owner_username": "wxm",
-      "negative_username": null,
-      "balance": 1000000,
-      "credit": 100,
-      "game_over": false,
-      "created_at": "2026-06-15T05:20:37Z",
-      "approved_at": "2026-06-15T05:20:37Z"
     },
     "qwertyuiop": {
       "username": "qwertyuiop",
@@ -854,7 +826,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-feima_B",
-      "balance": 1753978072,
+      "balance": 0,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-15T18:07:35Z",
@@ -868,7 +840,7 @@
       "is_negative": true,
       "owner_username": "feima_B",
       "negative_username": null,
-      "balance": -99233364,
+      "balance": -918211436,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-15T18:07:35Z",
@@ -910,7 +882,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-Ferrari_HAN",
-      "balance": 242585000,
+      "balance": 33045000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-15T18:16:08Z",
@@ -924,7 +896,7 @@
       "is_negative": true,
       "owner_username": "Ferrari_HAN",
       "negative_username": null,
-      "balance": -37500000,
+      "balance": -2012300000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-15T18:16:08Z",
@@ -980,7 +952,7 @@
       "is_negative": true,
       "owner_username": "yoyo",
       "negative_username": null,
-      "balance": 714500,
+      "balance": 753500,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-16T01:42:34Z",
@@ -1078,7 +1050,7 @@
       "is_negative": false,
       "owner_username": null,
       "negative_username": "negative-morzz",
-      "balance": 527664400,
+      "balance": 26069664400,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-18T09:12:14Z",
@@ -1092,11 +1064,67 @@
       "is_negative": true,
       "owner_username": "morzz",
       "negative_username": null,
-      "balance": -2507805000,
+      "balance": -11676055000,
       "credit": 100,
       "game_over": false,
       "created_at": "2026-06-18T09:12:14Z",
       "approved_at": "2026-06-18T09:12:14Z"
+    },
+    "vexpaer_3": {
+      "username": "vexpaer_3",
+      "password_hash": "pbkdf2_sha256$2cf97dd12057229285a7107702e3b2c3$19688c9338014f4e2572a56f4788f2e41da990a66fccc25b13d50bdf51d22284",
+      "role": "user",
+      "approved": true,
+      "is_negative": false,
+      "owner_username": null,
+      "negative_username": "negative-vexpaer_3",
+      "balance": 3760000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-19T16:37:15Z",
+      "approved_at": "2026-06-19T16:37:22Z"
+    },
+    "negative-vexpaer_3": {
+      "username": "negative-vexpaer_3",
+      "password_hash": "",
+      "role": "negative",
+      "approved": true,
+      "is_negative": true,
+      "owner_username": "vexpaer_3",
+      "negative_username": null,
+      "balance": -3338000000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-19T16:37:16Z",
+      "approved_at": "2026-06-19T16:37:16Z"
+    },
+    "Heisenberg": {
+      "username": "Heisenberg",
+      "password_hash": "pbkdf2_sha256$1c9be22ae84e48b7eafb035f7f728c7a$059aef6a1aa981d9e1258e6200a3f44b16ab0da4033035a8e091371ab301f387",
+      "role": "user",
+      "approved": true,
+      "is_negative": false,
+      "owner_username": null,
+      "negative_username": "negative-Heisenberg",
+      "balance": 11840000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-21T17:07:28Z",
+      "approved_at": "2026-06-21T17:07:51Z"
+    },
+    "negative-Heisenberg": {
+      "username": "negative-Heisenberg",
+      "password_hash": "",
+      "role": "negative",
+      "approved": true,
+      "is_negative": true,
+      "owner_username": "Heisenberg",
+      "negative_username": null,
+      "balance": -9500000,
+      "credit": 100,
+      "game_over": false,
+      "created_at": "2026-06-21T17:07:29Z",
+      "approved_at": "2026-06-21T17:07:29Z"
     }
   },
   "matches": {
@@ -1644,10 +1672,10 @@
         "draw": 4.2,
         "away": 5.68
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 2,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1663,10 +1691,10 @@
         "draw": 3.28,
         "away": 1.97
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "away",
+      "home_score": 0,
+      "away_score": 1,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1682,10 +1710,10 @@
         "draw": 12.74,
         "away": 30.24
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 3,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1701,10 +1729,10 @@
         "draw": 3.24,
         "away": 3.89
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "away",
+      "home_score": 0,
+      "away_score": 1,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1720,10 +1748,10 @@
         "draw": 4.0,
         "away": 5.23
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 5,
+      "away_score": 1,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1739,10 +1767,10 @@
         "draw": 4.29,
         "away": 5.7
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 2,
+      "away_score": 1,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1758,10 +1786,10 @@
         "draw": 6.88,
         "away": 14.71
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "draw",
+      "home_score": 0,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1777,10 +1805,10 @@
         "draw": 3.59,
         "away": 1.69
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "away",
+      "home_score": 0,
+      "away_score": 4,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1796,10 +1824,10 @@
         "draw": 9.8,
         "away": 23.94
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 4,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1815,10 +1843,10 @@
         "draw": 4.65,
         "away": 7.85
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "draw",
+      "home_score": 0,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1834,10 +1862,10 @@
         "draw": 4.42,
         "away": 7.3
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "draw",
+      "home_score": 2,
+      "away_score": 2,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1853,10 +1881,10 @@
         "draw": 3.68,
         "away": 1.73
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "away",
+      "home_score": 1,
+      "away_score": 3,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1872,10 +1900,10 @@
         "draw": 3.83,
         "away": 5.47
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 2,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1891,10 +1919,10 @@
         "draw": 8.78,
         "away": 24.53
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 3,
+      "away_score": 0,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -1910,10 +1938,10 @@
         "draw": 3.45,
         "away": 3.35
       },
-      "status": "upcoming",
-      "result": null,
-      "home_score": null,
-      "away_score": null,
+      "status": "completed",
+      "result": "home",
+      "home_score": 3,
+      "away_score": 2,
       "source": "The Odds API",
       "updated_at": "2026-06-13T06:06:52Z"
     },
@@ -6906,10 +6934,10 @@
       "choice": "home",
       "stake": 50000,
       "odds": 2.12,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 106000,
       "created_at": "2026-06-14T10:32:17Z",
-      "settled_at": null,
+      "settled_at": "2026-06-23T02:02:21Z",
       "mirrored_from": null
     },
     "bet_17d19bc78374": {
@@ -6919,10 +6947,10 @@
       "choice": "away",
       "stake": 50000,
       "odds": 3.35,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-14T10:32:17Z",
-      "settled_at": null,
+      "settled_at": "2026-06-23T02:02:21Z",
       "mirrored_from": "bet_f8cace25b67d"
     },
     "bet_cf91b6ac10b2": {
@@ -12882,10 +12910,10 @@
       "choice": "draw",
       "stake": 50000,
       "odds": 4.2,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-17T05:11:28Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_9aeefa4e8b8f": {
@@ -12895,10 +12923,10 @@
       "choice": "home",
       "stake": 25000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 39000,
       "created_at": "2026-06-17T05:11:28Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_29f24941a816"
     },
     "bet_a54642e1a599": {
@@ -12908,10 +12936,10 @@
       "choice": "away",
       "stake": 25000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-17T05:11:28Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_29f24941a816"
     },
     "bet_b54e24f02df9": {
@@ -14736,10 +14764,10 @@
       "choice": "away",
       "stake": 229855,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 452814,
       "created_at": "2026-06-19T03:31:26Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_e30b4e34dc6c": {
@@ -14749,10 +14777,10 @@
       "choice": "home",
       "stake": 229855,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T03:31:26Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_5c465c675539"
     },
     "bet_e6d0e08881d1": {
@@ -14762,10 +14790,10 @@
       "choice": "away",
       "stake": 300000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T06:46:59Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_d2c1cd94601b": {
@@ -14775,10 +14803,10 @@
       "choice": "home",
       "stake": 300000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 468000,
       "created_at": "2026-06-19T06:46:59Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_e6d0e08881d1"
     },
     "bet_8503d5f239c8": {
@@ -14788,10 +14816,10 @@
       "choice": "home",
       "stake": 300000,
       "odds": 2.04,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T06:47:21Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": null
     },
     "bet_c5af78d6c06f": {
@@ -14801,10 +14829,10 @@
       "choice": "away",
       "stake": 300000,
       "odds": 3.89,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 1167000,
       "created_at": "2026-06-19T06:47:21Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": "bet_8503d5f239c8"
     },
     "bet_6be713676f99": {
@@ -14814,10 +14842,10 @@
       "choice": "home",
       "stake": 2000000,
       "odds": 1.62,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 3240000,
       "created_at": "2026-06-19T06:47:34Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T19:06:12Z",
       "mirrored_from": null
     },
     "bet_b778d6ec0a1e": {
@@ -14827,10 +14855,10 @@
       "choice": "away",
       "stake": 2000000,
       "odds": 5.23,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T06:47:34Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T19:06:12Z",
       "mirrored_from": "bet_6be713676f99"
     },
     "bet_e33d899d1794": {
@@ -14840,10 +14868,10 @@
       "choice": "home",
       "stake": 10000000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 15600000,
       "created_at": "2026-06-19T12:00:49Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_492888911a77": {
@@ -14853,10 +14881,10 @@
       "choice": "away",
       "stake": 10000000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:00:49Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_e33d899d1794"
     },
     "bet_5aeee00f0d4a": {
@@ -14866,10 +14894,10 @@
       "choice": "draw",
       "stake": 8000000,
       "odds": 3.28,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:01:24Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_66d8cf5c738d": {
@@ -14879,10 +14907,10 @@
       "choice": "home",
       "stake": 4000000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:01:24Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_5aeee00f0d4a"
     },
     "bet_f369525e916d": {
@@ -14892,10 +14920,10 @@
       "choice": "away",
       "stake": 4000000,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 7880000,
       "created_at": "2026-06-19T12:01:24Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_5aeee00f0d4a"
     },
     "bet_804de32c56ff": {
@@ -14905,10 +14933,10 @@
       "choice": "draw",
       "stake": 3000000,
       "odds": 12.74,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:01:59Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T02:51:09Z",
       "mirrored_from": null
     },
     "bet_7ae21026976b": {
@@ -14918,10 +14946,10 @@
       "choice": "home",
       "stake": 1500000,
       "odds": 1.07,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 1605000,
       "created_at": "2026-06-19T12:01:59Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T02:51:09Z",
       "mirrored_from": "bet_804de32c56ff"
     },
     "bet_bfdc4b3e8826": {
@@ -14931,10 +14959,10 @@
       "choice": "away",
       "stake": 1500000,
       "odds": 30.24,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:01:59Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T02:51:09Z",
       "mirrored_from": "bet_804de32c56ff"
     },
     "bet_b0307bb20b2c": {
@@ -14944,10 +14972,10 @@
       "choice": "home",
       "stake": 10000000,
       "odds": 2.04,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:03:15Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": null
     },
     "bet_32e18c069396": {
@@ -14957,10 +14985,10 @@
       "choice": "away",
       "stake": 10000000,
       "odds": 3.89,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 38900000,
       "created_at": "2026-06-19T12:03:15Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": "bet_b0307bb20b2c"
     },
     "bet_07f7c634bd2e": {
@@ -14970,10 +14998,10 @@
       "choice": "home",
       "stake": 2000000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 3120000,
       "created_at": "2026-06-19T12:38:29Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_a3d2059fea98": {
@@ -14983,10 +15011,10 @@
       "choice": "away",
       "stake": 2000000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:38:29Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_07f7c634bd2e"
     },
     "bet_04fbda9751a8": {
@@ -14996,10 +15024,10 @@
       "choice": "away",
       "stake": 1000000,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 1970000,
       "created_at": "2026-06-19T12:39:01Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_4713b8cd0b2a": {
@@ -15009,10 +15037,10 @@
       "choice": "home",
       "stake": 1000000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:39:01Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_04fbda9751a8"
     },
     "bet_2f99db6ec94a": {
@@ -15022,10 +15050,10 @@
       "choice": "draw",
       "stake": 500000,
       "odds": 3.24,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:39:52Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": null
     },
     "bet_2f416c2c0804": {
@@ -15035,10 +15063,10 @@
       "choice": "home",
       "stake": 250000,
       "odds": 2.04,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:39:52Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": "bet_2f99db6ec94a"
     },
     "bet_66ca25b41e2b": {
@@ -15048,10 +15076,10 @@
       "choice": "away",
       "stake": 250000,
       "odds": 3.89,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 972500,
       "created_at": "2026-06-19T12:39:52Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T05:15:34Z",
       "mirrored_from": "bet_2f99db6ec94a"
     },
     "bet_af425b1586f1": {
@@ -15061,10 +15089,10 @@
       "choice": "home",
       "stake": 7000000,
       "odds": 1.07,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 7490000,
       "created_at": "2026-06-19T12:40:23Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T02:51:09Z",
       "mirrored_from": null
     },
     "bet_14de14f369ef": {
@@ -15074,10 +15102,10 @@
       "choice": "away",
       "stake": 7000000,
       "odds": 30.24,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T12:40:23Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T02:51:09Z",
       "mirrored_from": "bet_af425b1586f1"
     },
     "bet_94c80d6ced78": {
@@ -15087,10 +15115,10 @@
       "choice": "home",
       "stake": 15000000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 23400000,
       "created_at": "2026-06-19T14:56:10Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_4cb56450772c": {
@@ -15100,10 +15128,10 @@
       "choice": "away",
       "stake": 15000000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T14:56:10Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_94c80d6ced78"
     },
     "bet_38d592fd889f": {
@@ -15113,10 +15141,10 @@
       "choice": "draw",
       "stake": 5000000,
       "odds": 4.2,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T14:56:31Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": null
     },
     "bet_61bbc9c405ae": {
@@ -15126,10 +15154,10 @@
       "choice": "home",
       "stake": 2500000,
       "odds": 1.56,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 3900000,
       "created_at": "2026-06-19T14:56:31Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_38d592fd889f"
     },
     "bet_ef24d108e39c": {
@@ -15139,10 +15167,10 @@
       "choice": "away",
       "stake": 2500000,
       "odds": 5.68,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T14:56:31Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:38:42Z",
       "mirrored_from": "bet_38d592fd889f"
     },
     "bet_39c3b68a33fe": {
@@ -15152,10 +15180,10 @@
       "choice": "away",
       "stake": 14000000,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 27580000,
       "created_at": "2026-06-19T14:59:52Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_ef534c2287a2": {
@@ -15165,10 +15193,10 @@
       "choice": "home",
       "stake": 14000000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T14:59:52Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_39c3b68a33fe"
     },
     "bet_f8444621940b": {
@@ -15178,10 +15206,10 @@
       "choice": "draw",
       "stake": 6500000,
       "odds": 3.28,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T15:00:37Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_52d0bb8fb4d5": {
@@ -15191,10 +15219,10 @@
       "choice": "home",
       "stake": 3250000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T15:00:37Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_f8444621940b"
     },
     "bet_5a8794b0494e": {
@@ -15204,10 +15232,10 @@
       "choice": "away",
       "stake": 3250000,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 6402500,
       "created_at": "2026-06-19T15:00:37Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_f8444621940b"
     },
     "bet_3364445ce673": {
@@ -15217,10 +15245,10 @@
       "choice": "away",
       "stake": 1400000000,
       "odds": 1.97,
-      "status": "open",
-      "payout": 0,
+      "status": "won",
+      "payout": 2758000000,
       "created_at": "2026-06-19T15:17:28Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_7846bcbdda3c": {
@@ -15230,10 +15258,10 @@
       "choice": "home",
       "stake": 1400000000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T15:17:28Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_3364445ce673"
     },
     "bet_81fab545b7a6": {
@@ -15243,10 +15271,10 @@
       "choice": "draw",
       "stake": 650000000,
       "odds": 3.28,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T15:17:49Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": null
     },
     "bet_ac594739ba9f": {
@@ -15256,10 +15284,10 @@
       "choice": "home",
       "stake": 325000000,
       "odds": 4.11,
-      "status": "open",
+      "status": "lost",
       "payout": 0,
       "created_at": "2026-06-19T15:17:49Z",
-      "settled_at": null,
+      "settled_at": "2026-06-20T00:39:01Z",
       "mirrored_from": "bet_81fab545b7a6"
     },
     "bet_c741aeacaf19": {
@@ -15269,11 +15297,2514 @@
       "choice": "away",
       "stake": 325000000,
       "odds": 1.97,
+      "status": "won",
+      "payout": 640250000,
+      "created_at": "2026-06-19T15:17:49Z",
+      "settled_at": "2026-06-20T00:39:01Z",
+      "mirrored_from": "bet_81fab545b7a6"
+    },
+    "bet_dcc86fc3a35b": {
+      "id": "bet_dcc86fc3a35b",
+      "username": "vexpaer_3",
+      "match_id": "065b3573e875f8d23803357f73e5b99e",
+      "choice": "home",
+      "stake": 11000000,
+      "odds": 1.56,
+      "status": "won",
+      "payout": 17160000,
+      "created_at": "2026-06-19T16:38:26Z",
+      "settled_at": "2026-06-20T00:38:42Z",
+      "mirrored_from": null
+    },
+    "bet_0e0625a092fc": {
+      "id": "bet_0e0625a092fc",
+      "username": "negative-vexpaer_3",
+      "match_id": "065b3573e875f8d23803357f73e5b99e",
+      "choice": "away",
+      "stake": 11000000,
+      "odds": 5.68,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-19T16:38:26Z",
+      "settled_at": "2026-06-20T00:38:42Z",
+      "mirrored_from": "bet_dcc86fc3a35b"
+    },
+    "bet_05e63e969efb": {
+      "id": "bet_05e63e969efb",
+      "username": "Morz-AI",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "home",
+      "stake": 22000000,
+      "odds": 2.04,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:37:24Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": null
+    },
+    "bet_312d11950cae": {
+      "id": "bet_312d11950cae",
+      "username": "negative-Morz-AI",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "away",
+      "stake": 22000000,
+      "odds": 3.89,
+      "status": "won",
+      "payout": 85580000,
+      "created_at": "2026-06-20T02:37:24Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_05e63e969efb"
+    },
+    "bet_c87856961907": {
+      "id": "bet_c87856961907",
+      "username": "Morz-AI",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "draw",
+      "stake": 13000000,
+      "odds": 3.24,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:37:54Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": null
+    },
+    "bet_99b6eb544ce4": {
+      "id": "bet_99b6eb544ce4",
+      "username": "negative-Morz-AI",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "home",
+      "stake": 6500000,
+      "odds": 2.04,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:37:54Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_c87856961907"
+    },
+    "bet_26feff2c277c": {
+      "id": "bet_26feff2c277c",
+      "username": "negative-Morz-AI",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "away",
+      "stake": 6500000,
+      "odds": 3.89,
+      "status": "won",
+      "payout": 25285000,
+      "created_at": "2026-06-20T02:37:54Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_c87856961907"
+    },
+    "bet_c079addc2789": {
+      "id": "bet_c079addc2789",
+      "username": "morzz",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "home",
+      "stake": 900000000,
+      "odds": 2.04,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:45:24Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": null
+    },
+    "bet_e9a95a7b96ed": {
+      "id": "bet_e9a95a7b96ed",
+      "username": "negative-morzz",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "away",
+      "stake": 900000000,
+      "odds": 3.89,
+      "status": "won",
+      "payout": 3501000000,
+      "created_at": "2026-06-20T02:45:24Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_c079addc2789"
+    },
+    "bet_9f00ddf8693c": {
+      "id": "bet_9f00ddf8693c",
+      "username": "morzz",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "draw",
+      "stake": 500000000,
+      "odds": 3.24,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:45:39Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": null
+    },
+    "bet_33e5dc169413": {
+      "id": "bet_33e5dc169413",
+      "username": "negative-morzz",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "home",
+      "stake": 250000000,
+      "odds": 2.04,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:45:39Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_9f00ddf8693c"
+    },
+    "bet_b0b9c7f66404": {
+      "id": "bet_b0b9c7f66404",
+      "username": "negative-morzz",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "away",
+      "stake": 250000000,
+      "odds": 3.89,
+      "status": "won",
+      "payout": 972500000,
+      "created_at": "2026-06-20T02:45:39Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_9f00ddf8693c"
+    },
+    "bet_40ddff981fd3": {
+      "id": "bet_40ddff981fd3",
+      "username": "QS_Guoziqing555",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "home",
+      "stake": 270115,
+      "odds": 2.04,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T02:53:43Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": null
+    },
+    "bet_9a2e96d8e6bf": {
+      "id": "bet_9a2e96d8e6bf",
+      "username": "negative-QS_Guoziqing555",
+      "match_id": "f955d4b3395ce6e3b5ac1031ca52ca4e",
+      "choice": "away",
+      "stake": 270115,
+      "odds": 3.89,
+      "status": "won",
+      "payout": 1050747,
+      "created_at": "2026-06-20T02:53:43Z",
+      "settled_at": "2026-06-20T05:15:34Z",
+      "mirrored_from": "bet_40ddff981fd3"
+    },
+    "bet_0dcf256065f3": {
+      "id": "bet_0dcf256065f3",
+      "username": "QS_Guoziqing555",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 491996,
+      "odds": 2.12,
+      "status": "won",
+      "payout": 1043032,
+      "created_at": "2026-06-20T05:30:44Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": null
+    },
+    "bet_a4012bf26bae": {
+      "id": "bet_a4012bf26bae",
+      "username": "negative-QS_Guoziqing555",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 491996,
+      "odds": 3.35,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:30:44Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_0dcf256065f3"
+    },
+    "bet_08a509598218": {
+      "id": "bet_08a509598218",
+      "username": "zhaoq",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 8100000,
+      "created_at": "2026-06-20T05:49:18Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_7f1867b54450": {
+      "id": "bet_7f1867b54450",
+      "username": "negative-zhaoq",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:49:18Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_08a509598218"
+    },
+    "bet_a93183a833c6": {
+      "id": "bet_a93183a833c6",
+      "username": "zhaoq",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 7700000,
+      "created_at": "2026-06-20T05:50:08Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_73dc1f4b2d86": {
+      "id": "bet_73dc1f4b2d86",
+      "username": "negative-zhaoq",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:50:08Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_a93183a833c6"
+    },
+    "bet_2f72c50fbde7": {
+      "id": "bet_2f72c50fbde7",
+      "username": "zhaoq",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 1500000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 2535000,
+      "created_at": "2026-06-20T05:50:43Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_0dbeac546dc7": {
+      "id": "bet_0dbeac546dc7",
+      "username": "negative-zhaoq",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 1500000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:50:43Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_2f72c50fbde7"
+    },
+    "bet_d89371a7964b": {
+      "id": "bet_d89371a7964b",
+      "username": "zhaoq",
+      "match_id": "681895f294b670b4c7b14495dfb583bc",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 1.19,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:51:00Z",
+      "settled_at": "2026-06-21T03:14:41Z",
+      "mirrored_from": null
+    },
+    "bet_ef4236095621": {
+      "id": "bet_ef4236095621",
+      "username": "negative-zhaoq",
+      "match_id": "681895f294b670b4c7b14495dfb583bc",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 14.71,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T05:51:00Z",
+      "settled_at": "2026-06-21T03:14:41Z",
+      "mirrored_from": "bet_d89371a7964b"
+    },
+    "bet_27173d70b427": {
+      "id": "bet_27173d70b427",
+      "username": "vexpaer_3",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 70000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 107800000,
+      "created_at": "2026-06-20T09:25:40Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_806162fe5447": {
+      "id": "bet_806162fe5447",
+      "username": "negative-vexpaer_3",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 70000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T09:25:40Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_27173d70b427"
+    },
+    "bet_e84ed6eefd4f": {
+      "id": "bet_e84ed6eefd4f",
+      "username": "Monkey",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 2000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 3240000,
+      "created_at": "2026-06-20T13:29:18Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_f13480c1fa84": {
+      "id": "bet_f13480c1fa84",
+      "username": "negative-Monkey",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 2000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T13:29:18Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_e84ed6eefd4f"
+    },
+    "bet_e4c1d647eaea": {
+      "id": "bet_e4c1d647eaea",
+      "username": "Monkey",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 2000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 3380000,
+      "created_at": "2026-06-20T13:33:19Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_5a809590d476": {
+      "id": "bet_5a809590d476",
+      "username": "negative-Monkey",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 2000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T13:33:19Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_e4c1d647eaea"
+    },
+    "bet_0234a4ff1e43": {
+      "id": "bet_0234a4ff1e43",
+      "username": "Monkey",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 2000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 3080000,
+      "created_at": "2026-06-20T13:33:53Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_41643d221921": {
+      "id": "bet_41643d221921",
+      "username": "negative-Monkey",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 2000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T13:33:53Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_0234a4ff1e43"
+    },
+    "bet_cdebcccedeee": {
+      "id": "bet_cdebcccedeee",
+      "username": "Monkey",
+      "match_id": "681895f294b670b4c7b14495dfb583bc",
+      "choice": "draw",
+      "stake": 1000000,
+      "odds": 6.88,
+      "status": "won",
+      "payout": 6880000,
+      "created_at": "2026-06-20T13:34:16Z",
+      "settled_at": "2026-06-21T03:14:41Z",
+      "mirrored_from": null
+    },
+    "bet_fd0e9e85c6e7": {
+      "id": "bet_fd0e9e85c6e7",
+      "username": "negative-Monkey",
+      "match_id": "681895f294b670b4c7b14495dfb583bc",
+      "choice": "home",
+      "stake": 500000,
+      "odds": 1.19,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T13:34:16Z",
+      "settled_at": "2026-06-21T03:14:41Z",
+      "mirrored_from": "bet_cdebcccedeee"
+    },
+    "bet_f9aa36cd349a": {
+      "id": "bet_f9aa36cd349a",
+      "username": "negative-Monkey",
+      "match_id": "681895f294b670b4c7b14495dfb583bc",
+      "choice": "away",
+      "stake": 500000,
+      "odds": 14.71,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T13:34:16Z",
+      "settled_at": "2026-06-21T03:14:41Z",
+      "mirrored_from": "bet_cdebcccedeee"
+    },
+    "bet_e70022835383": {
+      "id": "bet_e70022835383",
+      "username": "Ferrari_HAN",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 150000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 243000000,
+      "created_at": "2026-06-20T15:51:56Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_bdfadb9e9221": {
+      "id": "bet_bdfadb9e9221",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 150000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T15:51:56Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_e70022835383"
+    },
+    "bet_aba61984503e": {
+      "id": "bet_aba61984503e",
+      "username": "Ferrari_HAN",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "draw",
+      "stake": 60000000,
+      "odds": 4.0,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T15:52:32Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_2f385a72a422": {
+      "id": "bet_2f385a72a422",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 30000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 48600000,
+      "created_at": "2026-06-20T15:52:32Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_aba61984503e"
+    },
+    "bet_3e264632c3e6": {
+      "id": "bet_3e264632c3e6",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 30000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T15:52:32Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_aba61984503e"
+    },
+    "bet_4ee6411178c3": {
+      "id": "bet_4ee6411178c3",
+      "username": "Morz-AI",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 26000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 42120000,
+      "created_at": "2026-06-20T16:03:13Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_f0c269ae10c1": {
+      "id": "bet_f0c269ae10c1",
+      "username": "negative-Morz-AI",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 26000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:03:13Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_4ee6411178c3"
+    },
+    "bet_6c9232592035": {
+      "id": "bet_6c9232592035",
+      "username": "Morz-AI",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 8000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:03:31Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_781aabab83e4": {
+      "id": "bet_781aabab83e4",
+      "username": "negative-Morz-AI",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 8000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 12960000,
+      "created_at": "2026-06-20T16:03:31Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_6c9232592035"
+    },
+    "bet_76a2a79f6963": {
+      "id": "bet_76a2a79f6963",
+      "username": "Morz-AI",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 34000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 52360000,
+      "created_at": "2026-06-20T16:03:57Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_9eb68fa5c014": {
+      "id": "bet_9eb68fa5c014",
+      "username": "negative-Morz-AI",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 34000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:03:57Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_76a2a79f6963"
+    },
+    "bet_9f3991b9ebd0": {
+      "id": "bet_9f3991b9ebd0",
+      "username": "big",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 8100000,
+      "created_at": "2026-06-20T16:07:03Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_faf5e5f5989f": {
+      "id": "bet_faf5e5f5989f",
+      "username": "negative-big",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:07:03Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_9f3991b9ebd0"
+    },
+    "bet_d7962962f848": {
+      "id": "bet_d7962962f848",
+      "username": "big",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 15400000,
+      "created_at": "2026-06-20T16:07:19Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_1edff5f27669": {
+      "id": "bet_1edff5f27669",
+      "username": "negative-big",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:07:19Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_d7962962f848"
+    },
+    "bet_afac8352c6a1": {
+      "id": "bet_afac8352c6a1",
+      "username": "big",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 2000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 3380000,
+      "created_at": "2026-06-20T16:07:32Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_26b6093caa7a": {
+      "id": "bet_26b6093caa7a",
+      "username": "negative-big",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 2000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:07:32Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_afac8352c6a1"
+    },
+    "bet_534c60eba68c": {
+      "id": "bet_534c60eba68c",
+      "username": "morzz",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 1300000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 2106000000,
+      "created_at": "2026-06-20T16:42:53Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_99b00bb54816": {
+      "id": "bet_99b00bb54816",
+      "username": "negative-morzz",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 1300000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:42:53Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_534c60eba68c"
+    },
+    "bet_87c6aaba0014": {
+      "id": "bet_87c6aaba0014",
+      "username": "morzz",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "away",
+      "stake": 400000000,
+      "odds": 5.23,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T16:45:15Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": null
+    },
+    "bet_fa40fd058786": {
+      "id": "bet_fa40fd058786",
+      "username": "negative-morzz",
+      "match_id": "4f0c518545b0096c68326daf25bffc1e",
+      "choice": "home",
+      "stake": 400000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 648000000,
+      "created_at": "2026-06-20T16:45:15Z",
+      "settled_at": "2026-06-20T19:06:12Z",
+      "mirrored_from": "bet_87c6aaba0014"
+    },
+    "bet_855245e170e3": {
+      "id": "bet_855245e170e3",
+      "username": "zq777",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 1690000,
+      "created_at": "2026-06-20T17:05:36Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_5cde2ccd1ed7": {
+      "id": "bet_5cde2ccd1ed7",
+      "username": "negative-zq777",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T17:05:36Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_855245e170e3"
+    },
+    "bet_3886dddad7a9": {
+      "id": "bet_3886dddad7a9",
+      "username": "zq777",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 1.54,
+      "status": "won",
+      "payout": 1540000,
+      "created_at": "2026-06-20T17:07:54Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": null
+    },
+    "bet_ccd14e99070f": {
+      "id": "bet_ccd14e99070f",
+      "username": "negative-zq777",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 5.7,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-20T17:07:54Z",
+      "settled_at": "2026-06-20T22:05:29Z",
+      "mirrored_from": "bet_3886dddad7a9"
+    },
+    "bet_249194db40bd": {
+      "id": "bet_249194db40bd",
+      "username": "morzz",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "home",
+      "stake": 1700000000,
+      "odds": 1.54,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-20T19:14:03Z",
+      "settled_at": "2026-06-20T19:38:59Z",
+      "mirrored_from": null,
+      "canceled_at": "2026-06-20T19:38:59Z"
+    },
+    "bet_5b0bfb9a7bfc": {
+      "id": "bet_5b0bfb9a7bfc",
+      "username": "negative-morzz",
+      "match_id": "f1ab0f69832972a329243522ceaa7804",
+      "choice": "away",
+      "stake": 1700000000,
+      "odds": 5.7,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-20T19:14:03Z",
+      "settled_at": "2026-06-20T19:38:59Z",
+      "mirrored_from": "bet_249194db40bd",
+      "canceled_at": "2026-06-20T19:38:59Z"
+    },
+    "bet_021525fe36cb": {
+      "id": "bet_021525fe36cb",
+      "username": "big",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 8450000,
+      "created_at": "2026-06-21T00:26:09Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_00a087ff4dfb": {
+      "id": "bet_00a087ff4dfb",
+      "username": "negative-big",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T00:26:09Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_021525fe36cb"
+    },
+    "bet_ee1175592ad9": {
+      "id": "bet_ee1175592ad9",
+      "username": "Ferrari_HAN",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 383000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 620460000,
+      "created_at": "2026-06-21T02:48:11Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_bb9b133d7752": {
+      "id": "bet_bb9b133d7752",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 383000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T02:48:11Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_ee1175592ad9"
+    },
+    "bet_9a02c32d2386": {
+      "id": "bet_9a02c32d2386",
+      "username": "Ferrari_HAN",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "draw",
+      "stake": 160000000,
+      "odds": 3.83,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T02:48:48Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_4085ff091c74": {
+      "id": "bet_4085ff091c74",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 80000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 129600000,
+      "created_at": "2026-06-21T02:48:48Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_9a02c32d2386"
+    },
+    "bet_bc16c2cb0d66": {
+      "id": "bet_bc16c2cb0d66",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 80000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T02:48:48Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_9a02c32d2386"
+    },
+    "bet_a03ecde678fb": {
+      "id": "bet_a03ecde678fb",
+      "username": "Morz-AI",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 32000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 54080000,
+      "created_at": "2026-06-21T03:46:41Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_10ac06ad42ae": {
+      "id": "bet_10ac06ad42ae",
+      "username": "negative-Morz-AI",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 32000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:46:41Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_a03ecde678fb"
+    },
+    "bet_0b2ca1272f43": {
+      "id": "bet_0b2ca1272f43",
+      "username": "Morz-AI",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "draw",
+      "stake": 10000000,
+      "odds": 3.59,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:47:08Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_08c21e4936e2": {
+      "id": "bet_08c21e4936e2",
+      "username": "negative-Morz-AI",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:47:08Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_0b2ca1272f43"
+    },
+    "bet_93992c92b52f": {
+      "id": "bet_93992c92b52f",
+      "username": "negative-Morz-AI",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 8450000,
+      "created_at": "2026-06-21T03:47:08Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_0b2ca1272f43"
+    },
+    "bet_db9faf610048": {
+      "id": "bet_db9faf610048",
+      "username": "morzz",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 5000000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 8450000000,
+      "created_at": "2026-06-21T03:51:14Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_ba177e2402ee": {
+      "id": "bet_ba177e2402ee",
+      "username": "negative-morzz",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 5000000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:51:14Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_db9faf610048"
+    },
+    "bet_9ef0187e094d": {
+      "id": "bet_9ef0187e094d",
+      "username": "morzz",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "draw",
+      "stake": 2000000000,
+      "odds": 3.59,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:51:58Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_c7205f2fa3a3": {
+      "id": "bet_c7205f2fa3a3",
+      "username": "negative-morzz",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "home",
+      "stake": 1000000000,
+      "odds": 5.33,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T03:51:58Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_9ef0187e094d"
+    },
+    "bet_871f4c168158": {
+      "id": "bet_871f4c168158",
+      "username": "negative-morzz",
+      "match_id": "dfc5202cf1b8ae002cf952cd04f235b9",
+      "choice": "away",
+      "stake": 1000000000,
+      "odds": 1.69,
+      "status": "won",
+      "payout": 1690000000,
+      "created_at": "2026-06-21T03:51:58Z",
+      "settled_at": "2026-06-21T06:05:07Z",
+      "mirrored_from": "bet_9ef0187e094d"
+    },
+    "bet_a83c059540e9": {
+      "id": "bet_a83c059540e9",
+      "username": "Monkey",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "draw",
+      "stake": 3000000,
+      "odds": 9.8,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:01:09Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": null
+    },
+    "bet_ca1b0ccef062": {
+      "id": "bet_ca1b0ccef062",
+      "username": "negative-Monkey",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "home",
+      "stake": 1500000,
+      "odds": 1.1,
+      "status": "won",
+      "payout": 1650000,
+      "created_at": "2026-06-21T06:01:09Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": "bet_a83c059540e9"
+    },
+    "bet_d3055579ddb6": {
+      "id": "bet_d3055579ddb6",
+      "username": "negative-Monkey",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "away",
+      "stake": 1500000,
+      "odds": 23.94,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:01:09Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": "bet_a83c059540e9"
+    },
+    "bet_fce6a479155a": {
+      "id": "bet_fce6a479155a",
+      "username": "Monkey",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 1.4,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:01:56Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": null
+    },
+    "bet_457a9ea8edd3": {
+      "id": "bet_457a9ea8edd3",
+      "username": "negative-Monkey",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 7.85,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:01:56Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_fce6a479155a"
+    },
+    "bet_4866ffa502d3": {
+      "id": "bet_4866ffa502d3",
+      "username": "Monkey",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "draw",
+      "stake": 10000000,
+      "odds": 4.42,
+      "status": "won",
+      "payout": 44200000,
+      "created_at": "2026-06-21T06:02:23Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": null
+    },
+    "bet_77f15124ffcd": {
+      "id": "bet_77f15124ffcd",
+      "username": "negative-Monkey",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 1.44,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:02:23Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_4866ffa502d3"
+    },
+    "bet_9091f8a2df02": {
+      "id": "bet_9091f8a2df02",
+      "username": "negative-Monkey",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 7.3,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:02:23Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_4866ffa502d3"
+    },
+    "bet_1d6b62d28597": {
+      "id": "bet_1d6b62d28597",
+      "username": "Monkey",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 17300000,
+      "created_at": "2026-06-21T06:02:45Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_c98aa93a7cd5": {
+      "id": "bet_c98aa93a7cd5",
+      "username": "negative-Monkey",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T06:02:45Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_1d6b62d28597"
+    },
+    "bet_7bec0992ce94": {
+      "id": "bet_7bec0992ce94",
+      "username": "zhaoq",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 1.1,
+      "status": "won",
+      "payout": 11000000,
+      "created_at": "2026-06-21T07:05:43Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": null
+    },
+    "bet_cc76fb88f070": {
+      "id": "bet_cc76fb88f070",
+      "username": "negative-zhaoq",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 23.94,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:05:43Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": "bet_7bec0992ce94"
+    },
+    "bet_c60f11a095ae": {
+      "id": "bet_c60f11a095ae",
+      "username": "zhaoq",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 20000000,
+      "odds": 1.4,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:06:19Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": null
+    },
+    "bet_212e0f4a8f4d": {
+      "id": "bet_212e0f4a8f4d",
+      "username": "negative-zhaoq",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 20000000,
+      "odds": 7.85,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:06:19Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_c60f11a095ae"
+    },
+    "bet_a6be331a7703": {
+      "id": "bet_a6be331a7703",
+      "username": "zhaoq",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "home",
+      "stake": 20000000,
+      "odds": 1.44,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:06:38Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": null
+    },
+    "bet_8619a482597e": {
+      "id": "bet_8619a482597e",
+      "username": "negative-zhaoq",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "away",
+      "stake": 20000000,
+      "odds": 7.3,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:06:38Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_a6be331a7703"
+    },
+    "bet_b9b93bce00e7": {
+      "id": "bet_b9b93bce00e7",
+      "username": "zhaoq",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 17300000,
+      "created_at": "2026-06-21T07:07:08Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_992b62d5857b": {
+      "id": "bet_992b62d5857b",
+      "username": "negative-zhaoq",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:07:08Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_b9b93bce00e7"
+    },
+    "bet_611ab2d7263e": {
+      "id": "bet_611ab2d7263e",
+      "username": "vexpaer_3",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "home",
+      "stake": 400000000,
+      "odds": 1.1,
+      "status": "won",
+      "payout": 440000000,
+      "created_at": "2026-06-21T07:27:04Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": null
+    },
+    "bet_c5a4f8327ffb": {
+      "id": "bet_c5a4f8327ffb",
+      "username": "negative-vexpaer_3",
+      "match_id": "73529a242e319a86bf3d00ddb4accc37",
+      "choice": "away",
+      "stake": 400000000,
+      "odds": 23.94,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T07:27:04Z",
+      "settled_at": "2026-06-22T01:05:47Z",
+      "mirrored_from": "bet_611ab2d7263e"
+    },
+    "bet_443befac00fa": {
+      "id": "bet_443befac00fa",
+      "username": "big",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 100000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 173000000,
+      "created_at": "2026-06-21T09:43:37Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_471294bbf5fe": {
+      "id": "bet_471294bbf5fe",
+      "username": "negative-big",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 100000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T09:43:37Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_443befac00fa"
+    },
+    "bet_75c972e3ba3a": {
+      "id": "bet_75c972e3ba3a",
+      "username": "Morz-AI",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 32000000,
+      "odds": 1.4,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:38:29Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": null
+    },
+    "bet_a5cad20816e2": {
+      "id": "bet_a5cad20816e2",
+      "username": "negative-Morz-AI",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 32000000,
+      "odds": 7.85,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:38:29Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_75c972e3ba3a"
+    },
+    "bet_e5a75317b4c1": {
+      "id": "bet_e5a75317b4c1",
+      "username": "Morz-AI",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "draw",
+      "stake": 10000000,
+      "odds": 4.65,
+      "status": "won",
+      "payout": 46500000,
+      "created_at": "2026-06-21T15:38:47Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": null
+    },
+    "bet_644445166589": {
+      "id": "bet_644445166589",
+      "username": "negative-Morz-AI",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 1.4,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:38:47Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_e5a75317b4c1"
+    },
+    "bet_40b14fada414": {
+      "id": "bet_40b14fada414",
+      "username": "negative-Morz-AI",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 7.85,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:38:47Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_e5a75317b4c1"
+    },
+    "bet_797ce83656a0": {
+      "id": "bet_797ce83656a0",
+      "username": "Morz-AI",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "home",
+      "stake": 30000000,
+      "odds": 1.44,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:39:48Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": null
+    },
+    "bet_c7f99faff6ea": {
+      "id": "bet_c7f99faff6ea",
+      "username": "negative-Morz-AI",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "away",
+      "stake": 30000000,
+      "odds": 7.3,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:39:48Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_797ce83656a0"
+    },
+    "bet_b1a2a62a46d6": {
+      "id": "bet_b1a2a62a46d6",
+      "username": "Morz-AI",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "draw",
+      "stake": 12000000,
+      "odds": 4.42,
+      "status": "won",
+      "payout": 53040000,
+      "created_at": "2026-06-21T15:40:05Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": null
+    },
+    "bet_a60f52ae228a": {
+      "id": "bet_a60f52ae228a",
+      "username": "negative-Morz-AI",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "home",
+      "stake": 6000000,
+      "odds": 1.44,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:40:05Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_b1a2a62a46d6"
+    },
+    "bet_f441278852ea": {
+      "id": "bet_f441278852ea",
+      "username": "negative-Morz-AI",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "away",
+      "stake": 6000000,
+      "odds": 7.3,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T15:40:05Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_b1a2a62a46d6"
+    },
+    "bet_b662a2e477f1": {
+      "id": "bet_b662a2e477f1",
+      "username": "Heisenberg",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 7000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 11340000,
+      "created_at": "2026-06-21T17:20:59Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_0ec43257c655": {
+      "id": "bet_0ec43257c655",
+      "username": "negative-Heisenberg",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 7000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T17:20:59Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_b662a2e477f1"
+    },
+    "bet_9c74fefd91a8": {
+      "id": "bet_9c74fefd91a8",
+      "username": "Heisenberg",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "home",
+      "stake": 3000000,
+      "odds": 1.44,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T17:21:48Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": null
+    },
+    "bet_387e3c226d9b": {
+      "id": "bet_387e3c226d9b",
+      "username": "negative-Heisenberg",
+      "match_id": "852a3abe6d46820720febc0fedebff9a",
+      "choice": "away",
+      "stake": 3000000,
+      "odds": 7.3,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T17:21:48Z",
+      "settled_at": "2026-06-22T01:06:47Z",
+      "mirrored_from": "bet_9c74fefd91a8"
+    },
+    "bet_ee1d659b3433": {
+      "id": "bet_ee1d659b3433",
+      "username": "Heisenberg",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "draw",
+      "stake": 500000,
+      "odds": 4.65,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-21T17:26:19Z",
+      "settled_at": "2026-06-21T17:26:59Z",
+      "mirrored_from": null,
+      "canceled_at": "2026-06-21T17:26:59Z"
+    },
+    "bet_43d2999109db": {
+      "id": "bet_43d2999109db",
+      "username": "negative-Heisenberg",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 250000,
+      "odds": 1.4,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-21T17:26:19Z",
+      "settled_at": "2026-06-21T17:26:59Z",
+      "mirrored_from": "bet_ee1d659b3433",
+      "canceled_at": "2026-06-21T17:26:59Z"
+    },
+    "bet_1c651d94714b": {
+      "id": "bet_1c651d94714b",
+      "username": "negative-Heisenberg",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 250000,
+      "odds": 7.85,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-21T17:26:19Z",
+      "settled_at": "2026-06-21T17:26:59Z",
+      "mirrored_from": "bet_ee1d659b3433",
+      "canceled_at": "2026-06-21T17:26:59Z"
+    },
+    "bet_2c35a5176ca6": {
+      "id": "bet_2c35a5176ca6",
+      "username": "Heisenberg",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "home",
+      "stake": 500000,
+      "odds": 1.4,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T17:27:43Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": null
+    },
+    "bet_e00032d35166": {
+      "id": "bet_e00032d35166",
+      "username": "negative-Heisenberg",
+      "match_id": "5f92f257386ec5bf7c6e2498a21f3a61",
+      "choice": "away",
+      "stake": 500000,
+      "odds": 7.85,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-21T17:27:43Z",
+      "settled_at": "2026-06-22T01:06:19Z",
+      "mirrored_from": "bet_2c35a5176ca6"
+    },
+    "bet_2331db08b7dc": {
+      "id": "bet_2331db08b7dc",
+      "username": "Morz-AI",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 26000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 44980000,
+      "created_at": "2026-06-22T00:46:37Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_ed874b7a09d3": {
+      "id": "bet_ed874b7a09d3",
+      "username": "negative-Morz-AI",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 26000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:46:37Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_2331db08b7dc"
+    },
+    "bet_62442d5d8663": {
+      "id": "bet_62442d5d8663",
+      "username": "Morz-AI",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "draw",
+      "stake": 10000000,
+      "odds": 3.68,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:46:53Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_d90fb0c75af8": {
+      "id": "bet_d90fb0c75af8",
+      "username": "negative-Morz-AI",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:46:53Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_62442d5d8663"
+    },
+    "bet_08e4ac64bab1": {
+      "id": "bet_08e4ac64bab1",
+      "username": "negative-Morz-AI",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 8650000,
+      "created_at": "2026-06-22T00:46:53Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_62442d5d8663"
+    },
+    "bet_5afe8da78ed8": {
+      "id": "bet_5afe8da78ed8",
+      "username": "morzz",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 2600000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 4498000000,
+      "created_at": "2026-06-22T00:54:25Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_2814c299c9cc": {
+      "id": "bet_2814c299c9cc",
+      "username": "negative-morzz",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 2600000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:54:25Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_5afe8da78ed8"
+    },
+    "bet_ed45980bbd5b": {
+      "id": "bet_ed45980bbd5b",
+      "username": "morzz",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "draw",
+      "stake": 1000000000,
+      "odds": 3.68,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:54:47Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": null
+    },
+    "bet_948a730eee89": {
+      "id": "bet_948a730eee89",
+      "username": "negative-morzz",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "home",
+      "stake": 500000000,
+      "odds": 4.77,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T00:54:47Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_ed45980bbd5b"
+    },
+    "bet_9d4ef6f5ebbd": {
+      "id": "bet_9d4ef6f5ebbd",
+      "username": "negative-morzz",
+      "match_id": "c1ec9a65f4b4cf74477b368a7d6282de",
+      "choice": "away",
+      "stake": 500000000,
+      "odds": 1.73,
+      "status": "won",
+      "payout": 865000000,
+      "created_at": "2026-06-22T00:54:47Z",
+      "settled_at": "2026-06-22T03:21:09Z",
+      "mirrored_from": "bet_ed45980bbd5b"
+    },
+    "bet_b0f308b5cea7": {
+      "id": "bet_b0f308b5cea7",
+      "username": "vexpaer_3",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "home",
+      "stake": 880000000,
+      "odds": 1.11,
+      "status": "won",
+      "payout": 976800000,
+      "created_at": "2026-06-22T03:22:06Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": null
+    },
+    "bet_e01f9c69ca19": {
+      "id": "bet_e01f9c69ca19",
+      "username": "negative-vexpaer_3",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "away",
+      "stake": 880000000,
+      "odds": 24.53,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T03:22:06Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": "bet_b0f308b5cea7"
+    },
+    "bet_2f5d4af95914": {
+      "id": "bet_2f5d4af95914",
+      "username": "Monkey",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 50000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 81000000,
+      "created_at": "2026-06-22T04:01:49Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_71b9377c8107": {
+      "id": "bet_71b9377c8107",
+      "username": "negative-Monkey",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 50000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:01:49Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_2f5d4af95914"
+    },
+    "bet_e8c9ab4fc245": {
+      "id": "bet_e8c9ab4fc245",
+      "username": "Monkey",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 10000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 16200000,
+      "created_at": "2026-06-22T04:02:14Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_3e44e427c694": {
+      "id": "bet_3e44e427c694",
+      "username": "negative-Monkey",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 10000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:02:14Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_e8c9ab4fc245"
+    },
+    "bet_141139b12c44": {
+      "id": "bet_141139b12c44",
+      "username": "Monkey",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "draw",
+      "stake": 1000000,
+      "odds": 8.78,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:02:45Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": null
+    },
+    "bet_cb7fdb8cd318": {
+      "id": "bet_cb7fdb8cd318",
+      "username": "negative-Monkey",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "home",
+      "stake": 500000,
+      "odds": 1.11,
+      "status": "won",
+      "payout": 555000,
+      "created_at": "2026-06-22T04:02:45Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": "bet_141139b12c44"
+    },
+    "bet_56ce093a2ac1": {
+      "id": "bet_56ce093a2ac1",
+      "username": "negative-Monkey",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "away",
+      "stake": 500000,
+      "odds": 24.53,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:02:45Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": "bet_141139b12c44"
+    },
+    "bet_cf4ddfaddca8": {
+      "id": "bet_cf4ddfaddca8",
+      "username": "Monkey",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "draw",
+      "stake": 60000000,
+      "odds": 3.45,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:03:41Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": null
+    },
+    "bet_6db332142c2c": {
+      "id": "bet_6db332142c2c",
+      "username": "negative-Monkey",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 30000000,
+      "odds": 2.12,
+      "status": "won",
+      "payout": 63600000,
+      "created_at": "2026-06-22T04:03:41Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_cf4ddfaddca8"
+    },
+    "bet_828f9dfda6ff": {
+      "id": "bet_828f9dfda6ff",
+      "username": "negative-Monkey",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 30000000,
+      "odds": 3.35,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T04:03:41Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_cf4ddfaddca8"
+    },
+    "bet_7ecf761c80a8": {
+      "id": "bet_7ecf761c80a8",
+      "username": "Monkey",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "draw",
+      "stake": 60000000,
+      "odds": 4.17,
       "status": "open",
       "payout": 0,
-      "created_at": "2026-06-19T15:17:49Z",
+      "created_at": "2026-06-22T04:04:03Z",
       "settled_at": null,
-      "mirrored_from": "bet_81fab545b7a6"
+      "mirrored_from": null
+    },
+    "bet_a57e5bc837cd": {
+      "id": "bet_a57e5bc837cd",
+      "username": "negative-Monkey",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 30000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-22T04:04:03Z",
+      "settled_at": null,
+      "mirrored_from": "bet_7ecf761c80a8"
+    },
+    "bet_5fb7349d004e": {
+      "id": "bet_5fb7349d004e",
+      "username": "negative-Monkey",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 30000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-22T04:04:03Z",
+      "settled_at": null,
+      "mirrored_from": "bet_7ecf761c80a8"
+    },
+    "bet_c6639505f635": {
+      "id": "bet_c6639505f635",
+      "username": "feima_B",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "draw",
+      "stake": 500000000,
+      "odds": 3.83,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T05:37:55Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_65607c67fe6b": {
+      "id": "bet_65607c67fe6b",
+      "username": "negative-feima_B",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 250000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 405000000,
+      "created_at": "2026-06-22T05:37:55Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_c6639505f635"
+    },
+    "bet_16cde101dbb0": {
+      "id": "bet_16cde101dbb0",
+      "username": "negative-feima_B",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 250000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T05:37:55Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_c6639505f635"
+    },
+    "bet_037a818aca65": {
+      "id": "bet_037a818aca65",
+      "username": "feima_B",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "draw",
+      "stake": 500000000,
+      "odds": 3.45,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T05:38:12Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": null
+    },
+    "bet_9ae3507e4dea": {
+      "id": "bet_9ae3507e4dea",
+      "username": "negative-feima_B",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 250000000,
+      "odds": 2.12,
+      "status": "won",
+      "payout": 530000000,
+      "created_at": "2026-06-22T05:38:12Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_037a818aca65"
+    },
+    "bet_cf5de760e46b": {
+      "id": "bet_cf5de760e46b",
+      "username": "negative-feima_B",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 250000000,
+      "odds": 3.35,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T05:38:12Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_037a818aca65"
+    },
+    "bet_967a50ae9dc0": {
+      "id": "bet_967a50ae9dc0",
+      "username": "feima_B",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "draw",
+      "stake": 753978072,
+      "odds": 4.17,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-22T05:38:47Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_b4c6997889e6": {
+      "id": "bet_b4c6997889e6",
+      "username": "negative-feima_B",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 376989036,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-22T05:38:47Z",
+      "settled_at": null,
+      "mirrored_from": "bet_967a50ae9dc0"
+    },
+    "bet_b03332418523": {
+      "id": "bet_b03332418523",
+      "username": "negative-feima_B",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 376989036,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-22T05:38:47Z",
+      "settled_at": null,
+      "mirrored_from": "bet_967a50ae9dc0"
+    },
+    "bet_5375cd477bf5": {
+      "id": "bet_5375cd477bf5",
+      "username": "zhaoq",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 32281500,
+      "odds": 2.12,
+      "status": "won",
+      "payout": 68436780,
+      "created_at": "2026-06-22T06:21:43Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": null
+    },
+    "bet_755ed97bab39": {
+      "id": "bet_755ed97bab39",
+      "username": "negative-zhaoq",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 32281500,
+      "odds": 3.35,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T06:21:43Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_5375cd477bf5"
+    },
+    "bet_4a3887f13692": {
+      "id": "bet_4a3887f13692",
+      "username": "big",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "home",
+      "stake": 800000000,
+      "odds": 1.11,
+      "status": "won",
+      "payout": 888000000,
+      "created_at": "2026-06-22T10:01:57Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": null
+    },
+    "bet_05fb15cc100c": {
+      "id": "bet_05fb15cc100c",
+      "username": "negative-big",
+      "match_id": "7ad7a0ce2ef2618bb59b066da5642f70",
+      "choice": "away",
+      "stake": 800000000,
+      "odds": 24.53,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T10:01:57Z",
+      "settled_at": "2026-06-23T02:02:31Z",
+      "mirrored_from": "bet_4a3887f13692"
+    },
+    "bet_1de77f8aa9cb": {
+      "id": "bet_1de77f8aa9cb",
+      "username": "zq777",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 1620000,
+      "created_at": "2026-06-22T14:53:14Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_5ffa72d0a50c": {
+      "id": "bet_5ffa72d0a50c",
+      "username": "negative-zq777",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T14:53:14Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_1de77f8aa9cb"
+    },
+    "bet_1d1742b25d9a": {
+      "id": "bet_1d1742b25d9a",
+      "username": "zq777",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 2.12,
+      "status": "won",
+      "payout": 2120000,
+      "created_at": "2026-06-22T14:53:39Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": null
+    },
+    "bet_0602f766e0cf": {
+      "id": "bet_0602f766e0cf",
+      "username": "negative-zq777",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 3.35,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T14:53:39Z",
+      "settled_at": "2026-06-23T02:02:21Z",
+      "mirrored_from": "bet_1d1742b25d9a"
+    },
+    "bet_a460bcb3d8a9": {
+      "id": "bet_a460bcb3d8a9",
+      "username": "zq777",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "home",
+      "stake": 1000000,
+      "odds": 2.12,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-22T14:53:40Z",
+      "settled_at": "2026-06-22T14:53:58Z",
+      "mirrored_from": null,
+      "canceled_at": "2026-06-22T14:53:58Z"
+    },
+    "bet_7a0c744ebd06": {
+      "id": "bet_7a0c744ebd06",
+      "username": "negative-zq777",
+      "match_id": "3f48473742ca0fd2a85930554720c75e",
+      "choice": "away",
+      "stake": 1000000,
+      "odds": 3.35,
+      "status": "canceled",
+      "payout": 0,
+      "created_at": "2026-06-22T14:53:40Z",
+      "settled_at": "2026-06-22T14:53:58Z",
+      "mirrored_from": "bet_a460bcb3d8a9",
+      "canceled_at": "2026-06-22T14:53:58Z"
+    },
+    "bet_a698d596759e": {
+      "id": "bet_a698d596759e",
+      "username": "Morz-AI",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 80000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 129600000,
+      "created_at": "2026-06-22T15:58:26Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_9e62d1b5a662": {
+      "id": "bet_9e62d1b5a662",
+      "username": "negative-Morz-AI",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 80000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T15:58:26Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_a698d596759e"
+    },
+    "bet_a742686c7449": {
+      "id": "bet_a742686c7449",
+      "username": "Morz-AI",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "draw",
+      "stake": 22500000,
+      "odds": 3.83,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T15:59:09Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_af52199582a6": {
+      "id": "bet_af52199582a6",
+      "username": "negative-Morz-AI",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 11250000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 18225000,
+      "created_at": "2026-06-22T15:59:09Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_a742686c7449"
+    },
+    "bet_8f278674b779": {
+      "id": "bet_8f278674b779",
+      "username": "negative-Morz-AI",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 11250000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T15:59:09Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_a742686c7449"
+    },
+    "bet_5480362a8ff0": {
+      "id": "bet_5480362a8ff0",
+      "username": "morzz",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 3500000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 5670000000,
+      "created_at": "2026-06-22T16:17:56Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_9a1ef562197f": {
+      "id": "bet_9a1ef562197f",
+      "username": "negative-morzz",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 3500000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T16:17:56Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_5480362a8ff0"
+    },
+    "bet_ab8ffe7fda28": {
+      "id": "bet_ab8ffe7fda28",
+      "username": "morzz",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "draw",
+      "stake": 1500000000,
+      "odds": 3.83,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T16:18:23Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": null
+    },
+    "bet_d32fcdae74a6": {
+      "id": "bet_d32fcdae74a6",
+      "username": "negative-morzz",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "home",
+      "stake": 750000000,
+      "odds": 1.62,
+      "status": "won",
+      "payout": 1215000000,
+      "created_at": "2026-06-22T16:18:23Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_ab8ffe7fda28"
+    },
+    "bet_8879cd58a8c3": {
+      "id": "bet_8879cd58a8c3",
+      "username": "negative-morzz",
+      "match_id": "be6c63f416c67bca1300a98f5b89c3af",
+      "choice": "away",
+      "stake": 750000000,
+      "odds": 5.47,
+      "status": "lost",
+      "payout": 0,
+      "created_at": "2026-06-22T16:18:23Z",
+      "settled_at": "2026-06-22T19:05:07Z",
+      "mirrored_from": "bet_ab8ffe7fda28"
+    },
+    "bet_0eb5d8a8b970": {
+      "id": "bet_0eb5d8a8b970",
+      "username": "Ferrari_HAN",
+      "match_id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "choice": "home",
+      "stake": 1200000000,
+      "odds": 1.31,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T01:37:57Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_5cde2f41f173": {
+      "id": "bet_5cde2f41f173",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "choice": "away",
+      "stake": 1200000000,
+      "odds": 9.42,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T01:37:57Z",
+      "settled_at": null,
+      "mirrored_from": "bet_0eb5d8a8b970"
+    },
+    "bet_0113b06fb112": {
+      "id": "bet_0113b06fb112",
+      "username": "Ferrari_HAN",
+      "match_id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "choice": "draw",
+      "stake": 200000000,
+      "odds": 5.26,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T01:42:27Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_37095c1839b3": {
+      "id": "bet_37095c1839b3",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "choice": "home",
+      "stake": 100000000,
+      "odds": 1.31,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T01:42:27Z",
+      "settled_at": null,
+      "mirrored_from": "bet_0113b06fb112"
+    },
+    "bet_c874116900d6": {
+      "id": "bet_c874116900d6",
+      "username": "negative-Ferrari_HAN",
+      "match_id": "2f49dd8deae3079dc4eb2d634d18a99c",
+      "choice": "away",
+      "stake": 100000000,
+      "odds": 9.42,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T01:42:27Z",
+      "settled_at": null,
+      "mirrored_from": "bet_0113b06fb112"
+    },
+    "bet_924458813d18": {
+      "id": "bet_924458813d18",
+      "username": "vexpaer_3",
+      "match_id": "8ba93d190f1f934e33862a97a6353a6e",
+      "choice": "home",
+      "stake": 1800000000,
+      "odds": 1.23,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:13:35Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_ffa9c3f678d5": {
+      "id": "bet_ffa9c3f678d5",
+      "username": "negative-vexpaer_3",
+      "match_id": "8ba93d190f1f934e33862a97a6353a6e",
+      "choice": "away",
+      "stake": 1800000000,
+      "odds": 11.31,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:13:35Z",
+      "settled_at": null,
+      "mirrored_from": "bet_924458813d18"
+    },
+    "bet_d020e5656fdf": {
+      "id": "bet_d020e5656fdf",
+      "username": "vexpaer_3",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 18000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:17:39Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_ecbbd3fba928": {
+      "id": "bet_ecbbd3fba928",
+      "username": "negative-vexpaer_3",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 18000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:17:39Z",
+      "settled_at": null,
+      "mirrored_from": "bet_d020e5656fdf"
+    },
+    "bet_9ca23e916506": {
+      "id": "bet_9ca23e916506",
+      "username": "big",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 150000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:20:18Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_bd08ce0505fc": {
+      "id": "bet_bd08ce0505fc",
+      "username": "negative-big",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 150000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:20:18Z",
+      "settled_at": null,
+      "mirrored_from": "bet_9ca23e916506"
+    },
+    "bet_5c7c56b9ec95": {
+      "id": "bet_5c7c56b9ec95",
+      "username": "vexpaer_3",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 160000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:23:18Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_fd558a2b8579": {
+      "id": "bet_fd558a2b8579",
+      "username": "negative-vexpaer_3",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 160000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:23:18Z",
+      "settled_at": null,
+      "mirrored_from": "bet_5c7c56b9ec95"
+    },
+    "bet_be5cc806426c": {
+      "id": "bet_be5cc806426c",
+      "username": "Morz-AI",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 85000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:31:39Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_4f378bf635f2": {
+      "id": "bet_4f378bf635f2",
+      "username": "negative-Morz-AI",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 85000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:31:39Z",
+      "settled_at": null,
+      "mirrored_from": "bet_be5cc806426c"
+    },
+    "bet_703cdf89931f": {
+      "id": "bet_703cdf89931f",
+      "username": "Morz-AI",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "draw",
+      "stake": 10000000,
+      "odds": 4.17,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:32:09Z",
+      "settled_at": null,
+      "mirrored_from": null
+    },
+    "bet_4cf8ab1b1b74": {
+      "id": "bet_4cf8ab1b1b74",
+      "username": "negative-Morz-AI",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "home",
+      "stake": 5000000,
+      "odds": 6.35,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:32:09Z",
+      "settled_at": null,
+      "mirrored_from": "bet_703cdf89931f"
+    },
+    "bet_75ef0bb0dcfc": {
+      "id": "bet_75ef0bb0dcfc",
+      "username": "negative-Morz-AI",
+      "match_id": "fd8533b650e655030f6a7946f8795db2",
+      "choice": "away",
+      "stake": 5000000,
+      "odds": 1.51,
+      "status": "open",
+      "payout": 0,
+      "created_at": "2026-06-23T02:32:09Z",
+      "settled_at": null,
+      "mirrored_from": "bet_703cdf89931f"
     }
   },
   "loans": {
@@ -15732,23 +18263,23 @@
       "id": "loan_8ea18639c33f",
       "username": "Morz-AI",
       "principal": 110160000,
-      "paid_amount": 0,
+      "paid_amount": 110160000,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-17T08:08:33Z",
       "due_at": "2026-07-01T08:08:33Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-20T00:47:55Z"
     },
     "loan_28db88b63c03": {
       "id": "loan_28db88b63c03",
       "username": "zhaoq",
       "principal": 13000000,
-      "paid_amount": 0,
+      "paid_amount": 13000000,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-17T10:20:56Z",
       "due_at": "2026-07-01T10:20:56Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-21T07:02:24Z"
     },
     "loan_508820452517": {
       "id": "loan_508820452517",
@@ -15776,12 +18307,12 @@
       "id": "loan_468a39b427c9",
       "username": "Ferrari_HAN",
       "principal": 220000000,
-      "paid_amount": 0,
+      "paid_amount": 220000000,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-17T22:37:27Z",
       "due_at": "2026-07-01T22:37:27Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-21T02:31:08Z"
     },
     "loan_2671c58404aa": {
       "id": "loan_2671c58404aa",
@@ -15842,43 +18373,252 @@
       "id": "loan_e3f2a050870e",
       "username": "big",
       "principal": 19157500,
-      "paid_amount": 0,
+      "paid_amount": 19157500,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-18T23:14:33Z",
       "due_at": "2026-07-02T23:14:33Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-20T23:46:55Z"
     },
     "loan_4dcc3938e7b6": {
       "id": "loan_4dcc3938e7b6",
       "username": "morzz",
       "principal": 2330604000,
-      "paid_amount": 0,
+      "paid_amount": 2330604000,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-18T23:31:35Z",
       "due_at": "2026-07-02T23:31:35Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-20T02:42:01Z"
     },
     "loan_981ca48b5226": {
       "id": "loan_981ca48b5226",
       "username": "QS_Guoziqing555",
       "principal": 12591024,
-      "paid_amount": 0,
+      "paid_amount": 12591024,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-19T03:31:15Z",
       "due_at": "2026-07-03T03:31:15Z",
-      "status": "active",
-      "closed_at": null
+      "status": "paid",
+      "closed_at": "2026-06-20T02:53:11Z"
     },
     "loan_a2b589ae51ff": {
       "id": "loan_a2b589ae51ff",
       "username": "Monkey",
       "principal": 50878000,
-      "paid_amount": 0,
+      "paid_amount": 50878000,
       "weekly_rate": 0.1,
       "borrowed_at": "2026-06-19T11:59:35Z",
       "due_at": "2026-07-03T11:59:35Z",
+      "status": "paid",
+      "closed_at": "2026-06-22T03:48:17Z"
+    },
+    "loan_7c630821857c": {
+      "id": "loan_7c630821857c",
+      "username": "vexpaer_3",
+      "principal": 10000000,
+      "paid_amount": 10000000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-19T16:37:51Z",
+      "due_at": "2026-07-03T16:37:51Z",
+      "status": "paid",
+      "closed_at": "2026-06-20T09:24:42Z"
+    },
+    "loan_4c7d49dd7255": {
+      "id": "loan_4c7d49dd7255",
+      "username": "Morz-AI",
+      "principal": 216710000,
+      "paid_amount": 216710000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-20T00:48:03Z",
+      "due_at": "2026-07-04T00:48:03Z",
+      "status": "paid",
+      "closed_at": "2026-06-22T03:23:18Z"
+    },
+    "loan_717636e86f1e": {
+      "id": "loan_717636e86f1e",
+      "username": "morzz",
+      "principal": 9550604000,
+      "paid_amount": 9550604000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-20T02:42:12Z",
+      "due_at": "2026-07-04T02:42:12Z",
+      "status": "paid",
+      "closed_at": "2026-06-21T09:41:24Z"
+    },
+    "loan_8315ce6a5268": {
+      "id": "loan_8315ce6a5268",
+      "username": "QS_Guoziqing555",
+      "principal": 14697983,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-20T02:53:32Z",
+      "due_at": "2026-07-04T02:53:32Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_103298f1b004": {
+      "id": "loan_103298f1b004",
+      "username": "vexpaer_3",
+      "principal": 71600000,
+      "paid_amount": 71600000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-20T09:25:00Z",
+      "due_at": "2026-07-04T09:25:00Z",
+      "status": "paid",
+      "closed_at": "2026-06-21T07:18:35Z"
+    },
+    "loan_1b4c63658403": {
+      "id": "loan_1b4c63658403",
+      "username": "Ferrari_HAN",
+      "principal": 500000000,
+      "paid_amount": 500000000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T02:31:51Z",
+      "due_at": "2026-07-05T02:31:51Z",
+      "status": "paid",
+      "closed_at": "2026-06-23T01:22:01Z"
+    },
+    "loan_ccfe3575a48e": {
+      "id": "loan_ccfe3575a48e",
+      "username": "zhaoq",
+      "principal": 58165000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T07:03:12Z",
+      "due_at": "2026-07-05T07:03:12Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_5583d580f2ab": {
+      "id": "loan_5583d580f2ab",
+      "username": "vexpaer_3",
+      "principal": 400000000,
+      "paid_amount": 400000000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T07:18:52Z",
+      "due_at": "2026-07-05T07:18:52Z",
+      "status": "paid",
+      "closed_at": "2026-06-22T03:20:52Z"
+    },
+    "loan_153a3b33fc20": {
+      "id": "loan_153a3b33fc20",
+      "username": "big",
+      "principal": 148857500,
+      "paid_amount": 148857500,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T09:39:58Z",
+      "due_at": "2026-07-05T09:39:58Z",
+      "status": "paid",
+      "closed_at": "2026-06-22T10:00:55Z"
+    },
+    "loan_ade5f9fb0801": {
+      "id": "loan_ade5f9fb0801",
+      "username": "morzz",
+      "principal": 14110604000,
+      "paid_amount": 14110604000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T09:41:37Z",
+      "due_at": "2026-07-05T09:41:37Z",
+      "status": "paid",
+      "closed_at": "2026-06-22T03:28:40Z"
+    },
+    "loan_886429d7ecea": {
+      "id": "loan_886429d7ecea",
+      "username": "Heisenberg",
+      "principal": 10000000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-21T17:19:51Z",
+      "due_at": "2026-07-05T17:19:51Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_2a3fb7b8fdd7": {
+      "id": "loan_2a3fb7b8fdd7",
+      "username": "vexpaer_3",
+      "principal": 800000000,
+      "paid_amount": 800000000,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-22T03:21:11Z",
+      "due_at": "2026-07-06T03:21:11Z",
+      "status": "paid",
+      "closed_at": "2026-06-23T02:05:58Z"
+    },
+    "loan_616f5358cc79": {
+      "id": "loan_616f5358cc79",
+      "username": "Morz-AI",
+      "principal": 497510000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-22T03:23:26Z",
+      "due_at": "2026-07-06T03:23:26Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_83b6e0144a3b": {
+      "id": "loan_83b6e0144a3b",
+      "username": "morzz",
+      "principal": 23090604000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-22T03:28:49Z",
+      "due_at": "2026-07-06T03:28:49Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_fd358adeec80": {
+      "id": "loan_fd358adeec80",
+      "username": "Monkey",
+      "principal": 277678000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-22T03:48:26Z",
+      "due_at": "2026-07-06T03:48:26Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_fec9f6ca4b0f": {
+      "id": "loan_fec9f6ca4b0f",
+      "username": "big",
+      "principal": 878857500,
+      "paid_amount": 878857500,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-22T10:01:07Z",
+      "due_at": "2026-07-06T10:01:07Z",
+      "status": "paid",
+      "closed_at": "2026-06-23T02:19:41Z"
+    },
+    "loan_4774ee56c4cf": {
+      "id": "loan_4774ee56c4cf",
+      "username": "Ferrari_HAN",
+      "principal": 1300000000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-23T01:22:26Z",
+      "due_at": "2026-07-07T01:22:26Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_66bf7a627d36": {
+      "id": "loan_66bf7a627d36",
+      "username": "vexpaer_3",
+      "principal": 1800000000,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-23T02:06:39Z",
+      "due_at": "2026-07-07T02:06:39Z",
+      "status": "active",
+      "closed_at": null
+    },
+    "loan_5456fa30ca44": {
+      "id": "loan_5456fa30ca44",
+      "username": "big",
+      "principal": 1758857500,
+      "paid_amount": 0,
+      "weekly_rate": 0.1,
+      "borrowed_at": "2026-06-23T02:19:55Z",
+      "due_at": "2026-07-07T02:19:55Z",
       "status": "active",
       "closed_at": null
     }
@@ -15972,6 +18712,10 @@
       {
         "t": "2026-06-13T22:28:43Z",
         "v": -4000000
+      },
+      {
+        "t": "2026-06-20T04:04:16Z",
+        "v": -4400000
       }
     ],
     "zhaoq": [
@@ -16146,6 +18890,58 @@
       {
         "t": "2026-06-19T03:05:32Z",
         "v": -2098500
+      },
+      {
+        "t": "2026-06-20T00:38:42Z",
+        "v": -978500
+      },
+      {
+        "t": "2026-06-20T00:39:02Z",
+        "v": -8500
+      },
+      {
+        "t": "2026-06-20T02:51:09Z",
+        "v": 481500
+      },
+      {
+        "t": "2026-06-20T05:15:34Z",
+        "v": -18500
+      },
+      {
+        "t": "2026-06-20T19:06:12Z",
+        "v": 3081500
+      },
+      {
+        "t": "2026-06-20T22:05:29Z",
+        "v": 5781500
+      },
+      {
+        "t": "2026-06-21T03:14:42Z",
+        "v": 4781500
+      },
+      {
+        "t": "2026-06-21T06:05:07Z",
+        "v": 5816500
+      },
+      {
+        "t": "2026-06-22T01:05:47Z",
+        "v": 6816500
+      },
+      {
+        "t": "2026-06-22T01:06:20Z",
+        "v": -13183500
+      },
+      {
+        "t": "2026-06-22T01:06:47Z",
+        "v": -33183500
+      },
+      {
+        "t": "2026-06-22T03:21:10Z",
+        "v": -25883500
+      },
+      {
+        "t": "2026-06-23T02:02:21Z",
+        "v": 10271780
       }
     ],
     "konnyaku": [
@@ -16250,6 +19046,10 @@
       {
         "t": "2026-06-17T00:17:25Z",
         "v": -999500
+      },
+      {
+        "t": "2026-06-20T04:04:17Z",
+        "v": -1099500
       }
     ],
     "feima38": [
@@ -16280,6 +19080,10 @@
       {
         "t": "2026-06-13T22:28:43Z",
         "v": -9420000
+      },
+      {
+        "t": "2026-06-20T15:44:51Z",
+        "v": -10362000
       }
     ],
     "Morz": [
@@ -16410,6 +19214,10 @@
       {
         "t": "2026-06-17T00:16:17Z",
         "v": -30837000
+      },
+      {
+        "t": "2026-06-22T05:34:30Z",
+        "v": -33920700
       }
     ],
     "MAMBA_CR7": [
@@ -16464,6 +19272,10 @@
       {
         "t": "2026-06-16T03:04:11Z",
         "v": -9854000
+      },
+      {
+        "t": "2026-06-22T02:51:28Z",
+        "v": -10854000
       }
     ],
     "luan": [
@@ -16594,6 +19406,10 @@
       {
         "t": "2026-06-16T03:04:46Z",
         "v": -9949999
+      },
+      {
+        "t": "2026-06-20T06:59:59Z",
+        "v": -10944999
       }
     ],
     "lklklk": [
@@ -16840,6 +19656,22 @@
       {
         "t": "2026-06-17T22:31:08Z",
         "v": 4494200
+      },
+      {
+        "t": "2026-06-20T22:05:30Z",
+        "v": 5034200
+      },
+      {
+        "t": "2026-06-21T06:05:08Z",
+        "v": 5724200
+      },
+      {
+        "t": "2026-06-22T19:05:08Z",
+        "v": 6344200
+      },
+      {
+        "t": "2026-06-23T02:02:23Z",
+        "v": 7464200
       }
     ],
     "Guoziqing555": [
@@ -16928,6 +19760,10 @@
       {
         "t": "2026-06-14T00:17:32Z",
         "v": -10000000
+      },
+      {
+        "t": "2026-06-20T13:21:04Z",
+        "v": -11000000
       }
     ],
     "Monkey": [
@@ -17062,6 +19898,66 @@
       {
         "t": "2026-06-19T03:05:34Z",
         "v": 5087800
+      },
+      {
+        "t": "2026-06-20T00:38:44Z",
+        "v": 10687800
+      },
+      {
+        "t": "2026-06-20T00:39:04Z",
+        "v": 2687800
+      },
+      {
+        "t": "2026-06-20T02:51:11Z",
+        "v": -312200
+      },
+      {
+        "t": "2026-06-20T05:15:36Z",
+        "v": -10312200
+      },
+      {
+        "t": "2026-06-20T19:06:13Z",
+        "v": -9072200
+      },
+      {
+        "t": "2026-06-20T22:05:31Z",
+        "v": -7992200
+      },
+      {
+        "t": "2026-06-21T03:14:43Z",
+        "v": -2112200
+      },
+      {
+        "t": "2026-06-21T06:05:09Z",
+        "v": -732200
+      },
+      {
+        "t": "2026-06-22T01:05:49Z",
+        "v": -3732200
+      },
+      {
+        "t": "2026-06-22T01:06:22Z",
+        "v": -13732200
+      },
+      {
+        "t": "2026-06-22T01:06:49Z",
+        "v": 20467800
+      },
+      {
+        "t": "2026-06-22T03:21:12Z",
+        "v": 27767800
+      },
+      {
+        "t": "2026-06-22T19:05:09Z",
+        "v": 64967800
+      },
+      {
+        "t": "2026-06-23T02:02:23Z",
+        "v": 4967800
+      },
+      {
+        "t": "2026-06-23T02:02:33Z",
+        "v": 3967800
       }
     ],
     "Morz-AI": [
@@ -17160,6 +20056,46 @@
       {
         "t": "2026-06-19T03:05:34Z",
         "v": 11191000
+      },
+      {
+        "t": "2026-06-20T00:38:44Z",
+        "v": 14591000
+      },
+      {
+        "t": "2026-06-20T00:39:04Z",
+        "v": 21671000
+      },
+      {
+        "t": "2026-06-20T05:15:36Z",
+        "v": -13329000
+      },
+      {
+        "t": "2026-06-20T19:06:14Z",
+        "v": -5209000
+      },
+      {
+        "t": "2026-06-20T22:05:31Z",
+        "v": 13151000
+      },
+      {
+        "t": "2026-06-21T06:05:09Z",
+        "v": 25231000
+      },
+      {
+        "t": "2026-06-22T01:06:22Z",
+        "v": 29731000
+      },
+      {
+        "t": "2026-06-22T01:06:49Z",
+        "v": 40771000
+      },
+      {
+        "t": "2026-06-22T03:21:12Z",
+        "v": 49751000
+      },
+      {
+        "t": "2026-06-22T19:05:09Z",
+        "v": 76851000
       }
     ],
     "feima_X": [
@@ -17186,6 +20122,10 @@
       {
         "t": "2026-06-15T17:57:29Z",
         "v": -10000000
+      },
+      {
+        "t": "2026-06-21T04:41:57Z",
+        "v": -11000000
       }
     ],
     "steven": [
@@ -17248,6 +20188,10 @@
       {
         "t": "2026-06-16T03:04:12Z",
         "v": -9650000
+      },
+      {
+        "t": "2026-06-22T14:52:37Z",
+        "v": -10615000
       }
     ],
     "big": [
@@ -17318,6 +20262,34 @@
       {
         "t": "2026-06-19T03:05:34Z",
         "v": 915750
+      },
+      {
+        "t": "2026-06-20T00:38:45Z",
+        "v": 615750
+      },
+      {
+        "t": "2026-06-20T05:15:36Z",
+        "v": 315750
+      },
+      {
+        "t": "2026-06-20T19:06:14Z",
+        "v": 4655750
+      },
+      {
+        "t": "2026-06-20T22:05:31Z",
+        "v": 10055750
+      },
+      {
+        "t": "2026-06-21T06:05:09Z",
+        "v": 14885750
+      },
+      {
+        "t": "2026-06-22T03:21:12Z",
+        "v": 87885750
+      },
+      {
+        "t": "2026-06-23T02:02:34Z",
+        "v": 175885750
       }
     ],
     "Lyu": [
@@ -17360,6 +20332,10 @@
       {
         "t": "2026-06-17T22:31:10Z",
         "v": -8391500
+      },
+      {
+        "t": "2026-06-23T02:02:24Z",
+        "v": -8335500
       }
     ],
     "ZhangBpro": [
@@ -17370,6 +20346,10 @@
       {
         "t": "2026-06-15T01:57:46Z",
         "v": -9000000
+      },
+      {
+        "t": "2026-06-21T10:54:57Z",
+        "v": -10000000
       }
     ],
     "QS_Guoziqing555": [
@@ -17392,6 +20372,18 @@
       {
         "t": "2026-06-19T03:05:35Z",
         "v": 1332116
+      },
+      {
+        "t": "2026-06-20T00:39:04Z",
+        "v": 1555075
+      },
+      {
+        "t": "2026-06-20T05:15:37Z",
+        "v": 1284960
+      },
+      {
+        "t": "2026-06-23T02:02:24Z",
+        "v": 1835996
       }
     ],
     "vexpaer_2": [
@@ -17540,6 +20532,14 @@
       {
         "t": "2026-06-18T21:01:11Z",
         "v": 159452552
+      },
+      {
+        "t": "2026-06-22T19:05:11Z",
+        "v": -340547448
+      },
+      {
+        "t": "2026-06-23T02:02:25Z",
+        "v": -840547448
       }
     ],
     "feima_C": [
@@ -17564,6 +20564,14 @@
       {
         "t": "2026-06-17T22:31:11Z",
         "v": 22585000
+      },
+      {
+        "t": "2026-06-20T19:06:15Z",
+        "v": 55585000
+      },
+      {
+        "t": "2026-06-22T19:05:11Z",
+        "v": 133045000
       }
     ],
     "Robin02": [
@@ -17612,6 +20620,10 @@
       {
         "t": "2026-06-19T03:05:36Z",
         "v": 1058500
+      },
+      {
+        "t": "2026-06-20T00:38:46Z",
+        "v": 1008500
       }
     ],
     "Morzz": [
@@ -17690,8 +20702,88 @@
       {
         "t": "2026-06-19T03:05:37Z",
         "v": 247060400
+      },
+      {
+        "t": "2026-06-20T00:39:06Z",
+        "v": 955060400
+      },
+      {
+        "t": "2026-06-20T05:15:38Z",
+        "v": -444939600
+      },
+      {
+        "t": "2026-06-20T19:06:16Z",
+        "v": -38939600
+      },
+      {
+        "t": "2026-06-21T06:05:11Z",
+        "v": 1411060400
+      },
+      {
+        "t": "2026-06-22T03:21:16Z",
+        "v": 2309060400
+      },
+      {
+        "t": "2026-06-22T19:05:11Z",
+        "v": 2979060400
+      }
+    ],
+    "vexpaer_3": [
+      {
+        "t": "2026-06-19T16:37:36Z",
+        "v": 1000000
+      },
+      {
+        "t": "2026-06-20T00:38:47Z",
+        "v": 7160000
+      },
+      {
+        "t": "2026-06-20T22:05:33Z",
+        "v": 44960000
+      },
+      {
+        "t": "2026-06-22T01:05:52Z",
+        "v": 84960000
+      },
+      {
+        "t": "2026-06-23T02:02:36Z",
+        "v": 181760000
+      }
+    ],
+    "Heisenberg": [
+      {
+        "t": "2026-06-21T17:08:05Z",
+        "v": 1000000
+      },
+      {
+        "t": "2026-06-22T01:06:24Z",
+        "v": 500000
+      },
+      {
+        "t": "2026-06-22T01:06:52Z",
+        "v": -2500000
+      },
+      {
+        "t": "2026-06-22T19:05:12Z",
+        "v": 1840000
       }
     ]
   },
-  "custom_leaderboards": {}
+  "custom_leaderboards": {
+    "lb_9775de485e611022": {
+      "id": "lb_9775de485e611022",
+      "name": "费马榜",
+      "metric": "net_asset",
+      "usernames": [
+        "feima_X",
+        "feima_D",
+        "feima_A",
+        "feima_B",
+        "feima38",
+        "feima_C"
+      ],
+      "created_by": "vexpaer",
+      "created_at": "2026-06-19T16:28:16Z"
+    }
+  }
 }
