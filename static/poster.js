@@ -8,6 +8,14 @@
   var H = canvas.height;
   var posterData = JSON.parse(dataNode.textContent);
   var bg = new Image();
+  var customBg = null;
+  var customBgUrl = '';
+  var bgSettings = {
+    x: 0,
+    y: 0,
+    zoom: 1,
+    opacity: 1,
+  };
 
   var palette = {
     navy: '#071426',
@@ -64,7 +72,11 @@
     ctx.closePath();
   }
 
-  function drawCoverImage(image, x, y, w, h) {
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function drawCoverImage(image, x, y, w, h, settings) {
     if (!image || !image.naturalWidth || !image.naturalHeight) return false;
     var imageRatio = image.naturalWidth / image.naturalHeight;
     var boxRatio = w / h;
@@ -79,12 +91,30 @@
       sh = sw / boxRatio;
       sy = (image.naturalHeight - sh) / 2;
     }
+    if (settings) {
+      var zoom = Math.max(1, Number(settings.zoom) || 1);
+      sw = sw / zoom;
+      sh = sh / zoom;
+      var maxSx = Math.max(0, image.naturalWidth - sw);
+      var maxSy = Math.max(0, image.naturalHeight - sh);
+      sx = clamp((image.naturalWidth - sw) / 2 + (Number(settings.x) || 0) * maxSx / 2, 0, maxSx);
+      sy = clamp((image.naturalHeight - sh) / 2 + (Number(settings.y) || 0) * maxSy / 2, 0, maxSy);
+    }
     ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
     return true;
   }
 
   function drawBackground() {
-    var loaded = drawCoverImage(bg, 0, 0, W, H);
+    var activeBg = customBg && customBg.naturalWidth ? customBg : bg;
+    var cropSettings = activeBg === customBg ? bgSettings : null;
+    var opacity = activeBg === customBg ? clamp(Number(bgSettings.opacity) || 0, 0, 1) : 1;
+    var loaded = false;
+    if (activeBg && activeBg.naturalWidth) {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      loaded = drawCoverImage(activeBg, 0, 0, W, H, cropSettings);
+      ctx.restore();
+    }
     if (!loaded) {
       var fallback = ctx.createLinearGradient(0, 0, W, H);
       fallback.addColorStop(0, '#10223e');
@@ -94,9 +124,9 @@
       ctx.fillRect(0, 0, W, H);
     } else {
       ctx.save();
-      ctx.globalAlpha = 0.36;
+      ctx.globalAlpha = 0.36 * opacity;
       ctx.filter = 'blur(18px) saturate(1.08)';
-      drawCoverImage(bg, -18, -18, W + 36, H + 36);
+      drawCoverImage(activeBg, -18, -18, W + 36, H + 36, cropSettings);
       ctx.restore();
     }
 
@@ -802,6 +832,58 @@
       }
     }, 'image/png');
   };
+
+  function initBackgroundControls() {
+    var fileInput = document.getElementById('poster-bg-file');
+    var xInput = document.getElementById('poster-bg-x');
+    var yInput = document.getElementById('poster-bg-y');
+    var zoomInput = document.getElementById('poster-bg-zoom');
+    var opacityInput = document.getElementById('poster-bg-opacity');
+    var resetButton = document.getElementById('poster-bg-reset');
+    if (!fileInput || !xInput || !yInput || !zoomInput || !opacityInput) return;
+
+    function syncSettings() {
+      bgSettings.x = clamp(Number(xInput.value) / 100, -1, 1);
+      bgSettings.y = clamp(Number(yInput.value) / 100, -1, 1);
+      bgSettings.zoom = clamp(Number(zoomInput.value) / 100, 1, 2.2);
+      bgSettings.opacity = clamp(Number(opacityInput.value) / 100, 0, 1);
+      drawPoster();
+    }
+
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      if (customBgUrl) URL.revokeObjectURL(customBgUrl);
+      customBgUrl = URL.createObjectURL(file);
+      customBg = new Image();
+      customBg.onload = drawPoster;
+      customBg.onerror = function () {
+        customBg = null;
+        drawPoster();
+      };
+      customBg.src = customBgUrl;
+    });
+
+    [xInput, yInput, zoomInput, opacityInput].forEach(function (input) {
+      input.addEventListener('input', syncSettings);
+    });
+
+    if (resetButton) {
+      resetButton.addEventListener('click', function () {
+        if (customBgUrl) URL.revokeObjectURL(customBgUrl);
+        customBgUrl = '';
+        customBg = null;
+        fileInput.value = '';
+        xInput.value = '0';
+        yInput.value = '0';
+        zoomInput.value = '100';
+        opacityInput.value = '100';
+        syncSettings();
+      });
+    }
+  }
+
+  initBackgroundControls();
 
   window.__fermatPoster = {
     drawPoster: drawPoster,

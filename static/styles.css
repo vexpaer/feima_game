@@ -443,6 +443,24 @@ th {
   font-size: 19px;
 }
 
+.input-with-button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.input-with-button input {
+  margin-top: 0;
+}
+
+.input-with-button button {
+  min-height: 42px;
+  padding: 0 12px;
+  margin-top: 0;
+}
+
 .inline-form {
   align-content: start;
 }
@@ -545,6 +563,37 @@ th {
 }
 
 /* === 海报 === */
+.poster-tools {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.poster-tools .filter-form {
+  margin-bottom: 0;
+}
+
+.poster-bg-tools {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.3fr) repeat(4, minmax(120px, 1fr)) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.poster-bg-tools input {
+  margin-top: 6px;
+}
+
+.poster-bg-tools input[type="range"] {
+  min-height: 36px;
+  padding: 0;
+}
+
+.poster-bg-tools button {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
 .poster-wrap {
   max-width: 1000px;
   margin: 0 auto;
@@ -587,7 +636,8 @@ th {
   .two-col,
   .metric-grid,
   .match-main,
-  .bet-form {
+  .bet-form,
+  .poster-bg-tools {
     grid-template-columns: 1fr;
   }
 

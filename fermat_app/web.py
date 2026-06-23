@@ -278,6 +278,8 @@ class FermatHandler(BaseHTTPRequestHandler):
 
     def render_matches(self, user, query):
         matches = service.list_matches()
+        fresh_user = service.get_user(user["username"]) or user
+        user_balance = int(fresh_user.get("balance", 0))
         user_bets = service.list_user_bets(user["username"])
         matches_by_id = {match["id"]: match for match in matches}
         upcoming = [m for m in matches if m["status"] == "upcoming"]
@@ -296,7 +298,7 @@ class FermatHandler(BaseHTTPRequestHandler):
         </section>
         <section class="match-list">
           <h2>可猜测</h2>
-          {''.join(match_card(match, allow_bet=True) for match in upcoming) or empty_state('暂无可猜测比赛')}
+          {''.join(match_card(match, allow_bet=True, user_balance=user_balance) for match in upcoming) or empty_state('暂无可猜测比赛')}
         </section>
         <section class="match-list compact-list">
           <h2>进行中</h2>
@@ -319,6 +321,8 @@ class FermatHandler(BaseHTTPRequestHandler):
             if loan["username"] == user["username"] and loan["status"] == "active"
         ]
         limit = service.loan_limit(real)
+        repay_due = sum(int(loan.get("current_due", 0)) for loan in active)
+        repay_amount = min(repay_due, int(real.get("balance", 0)))
         body = f"""
         <section class="page-head">
           <div>
@@ -339,7 +343,7 @@ class FermatHandler(BaseHTTPRequestHandler):
           </form>
           <form class="panel form-card inline-form" method="post" action="/loan/repay">
             <h2>还款</h2>
-            <label>费马币<input name="amount" type="number" min="1" required></label>
+            <label>费马币<input name="amount" type="number" min="1" max="{repay_amount if repay_amount else 1}" value="{repay_amount}" required></label>
             <button type="submit" {'disabled' if not active else ''}>确认还款</button>
           </form>
         </section>
@@ -505,8 +509,20 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.send_html(layout("全站猜测记录", body, user, query))
 
     def render_poster(self, user, query):
-        data = service.get_poster_data(user["username"])
-        poster_json = json.dumps(data, ensure_ascii=False)
+        db = read_db()
+        poster_users = sorted(
+            username
+            for username, item in db.get("users", {}).items()
+            if not item.get("is_negative")
+        )
+        requested_username = first_query(query, "username").strip()
+        selected_username = requested_username if requested_username in poster_users else user["username"]
+        data = service.get_poster_data(selected_username)
+        poster_json = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+        options = []
+        for username in poster_users:
+            selected = " selected" if username == selected_username else ""
+            options.append(f'<option value="{e(username)}"{selected}>{e(username)}</option>')
 
         body = f"""
         <section class="page-head">
@@ -517,6 +533,24 @@ class FermatHandler(BaseHTTPRequestHandler):
           <div class="head-actions">
             <button class="button-link" onclick="downloadPoster()" id="dl-btn">下载图片</button>
             <a class="button-link" href="/dashboard">返回总览</a>
+          </div>
+        </section>
+        <section class="panel poster-tools">
+          <form class="filter-form" method="get" action="/poster">
+            <label>查看玩家
+              <select name="username">
+                {''.join(options)}
+              </select>
+            </label>
+            <button type="submit">查看海报</button>
+          </form>
+          <div class="poster-bg-tools">
+            <label>上传背景<input id="poster-bg-file" type="file" accept="image/*"></label>
+            <label>横向裁切<input id="poster-bg-x" type="range" min="-100" max="100" value="0"></label>
+            <label>纵向裁切<input id="poster-bg-y" type="range" min="-100" max="100" value="0"></label>
+            <label>缩放<input id="poster-bg-zoom" type="range" min="100" max="220" value="100"></label>
+            <label>透明度<input id="poster-bg-opacity" type="range" min="0" max="100" value="100"></label>
+            <button class="secondary" id="poster-bg-reset" type="button">重置背景</button>
           </div>
         </section>
         <div class="poster-wrap">
@@ -804,6 +838,15 @@ def layout(title, body, user, query):
             applyVisible(visible);
           }});
         }})();
+        document.addEventListener("click", function (event) {{
+          var maxButton = event.target.closest("[data-fill-max]");
+          if (!maxButton) return;
+          var field = maxButton.closest("label");
+          var input = field ? field.querySelector("input[type='number']") : null;
+          if (!input) return;
+          input.value = maxButton.getAttribute("data-fill-max") || "0";
+          input.focus();
+        }});
       </script>
     </body>
     </html>"""
@@ -827,7 +870,7 @@ def metric_card(label, value, sub):
     """
 
 
-def match_card(match, allow_bet):
+def match_card(match, allow_bet, user_balance=0):
     odds = match.get("odds") or {}
     status = status_label(match.get("status"))
     score = ""
@@ -843,7 +886,12 @@ def match_card(match, allow_bet):
             {choice_radio('draw', '平局', odds.get('draw'))}
             {choice_radio('away', match['away_team'], odds.get('away'))}
           </div>
-          <label class="stake-input">费马币<input name="stake" type="number" min="1" required></label>
+          <label class="stake-input">费马币
+            <span class="input-with-button">
+              <input name="stake" type="number" min="1" max="{max(1, int(user_balance))}" required>
+              <button type="button" data-fill-max="{max(0, int(user_balance))}">max</button>
+            </span>
+          </label>
           <button type="submit">猜测</button>
         </form>
         """
