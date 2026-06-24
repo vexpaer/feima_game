@@ -580,16 +580,32 @@ th {
   align-items: end;
 }
 
-.poster-bg-tools input {
+.poster-mask-tools {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.poster-bg-tools input,
+.poster-mask-tools input,
+.poster-mask-tools select {
   margin-top: 6px;
 }
 
-.poster-bg-tools input[type="range"] {
+.poster-bg-tools input[type="range"],
+.poster-mask-tools input[type="range"] {
   min-height: 36px;
   padding: 0;
 }
 
-.poster-bg-tools button {
+.poster-mask-tools input[type="color"] {
+  height: 42px;
+  padding: 4px;
+}
+
+.poster-bg-tools button,
+.poster-mask-tools button {
   margin-top: 0;
   white-space: nowrap;
 }
@@ -637,7 +653,8 @@ th {
   .metric-grid,
   .match-main,
   .bet-form,
-  .poster-bg-tools {
+  .poster-bg-tools,
+  .poster-mask-tools {
     grid-template-columns: 1fr;
   }
 

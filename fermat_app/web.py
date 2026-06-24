@@ -93,8 +93,9 @@ class FermatHandler(BaseHTTPRequestHandler):
             self.set_session(logged_in["username"])
             return self.redirect("/dashboard", message="登录成功。")
         if path == "/register":
-            service.register_user(form.get("username", ""), form.get("password", ""))
-            return self.redirect("/login", message="注册成功，请等待管理员审核。")
+            approved = service.register_user(form.get("username", ""), form.get("password", ""))
+            message = "注册成功，请登录。" if approved else "注册成功，请等待管理员审核。"
+            return self.redirect("/login", message=message)
         if path == "/logout":
             self.clear_session()
             return self.redirect("/login", message="已退出登录。")
@@ -133,6 +134,10 @@ class FermatHandler(BaseHTTPRequestHandler):
             self.require_admin(user)
             service.update_matches(force=True)
             return self.redirect("/admin", message="已手动刷新 API 数据。")
+        if path == "/admin/auto-approve":
+            self.require_admin(user)
+            msg = service.set_auto_approve_registration(user["username"], form.get("enabled") == "1")
+            return self.redirect("/admin", message=msg)
         if path == "/admin/set-admin":
             self.require_admin(user)
             msg = service.set_admin(user["username"], form.get("username", ""))
@@ -215,12 +220,14 @@ class FermatHandler(BaseHTTPRequestHandler):
         self.send_html(layout("登录", body, None, query))
 
     def render_register(self, query):
-        body = """
+        auto_approve = bool(read_db().get("meta", {}).get("auto_approve_registration"))
+        note = "注册后系统会自动创建同名反向账户，提交后可直接登录。" if auto_approve else "注册后系统会自动创建同名反向账户，管理员通过后才能登录。"
+        body = f"""
         <section class="auth-panel">
           <div>
             <p class="eyebrow">注册</p>
             <h1>创建账户</h1>
-            <p class="muted">注册后系统会自动创建同名反向账户，管理员通过后才能登录。</p>
+            <p class="muted">{note}</p>
           </div>
           <form method="post" action="/register" class="form-card">
             <label>用户名<input name="username" minlength="3" maxlength="24" required></label>
@@ -552,6 +559,30 @@ class FermatHandler(BaseHTTPRequestHandler):
             <label>透明度<input id="poster-bg-opacity" type="range" min="0" max="100" value="100"></label>
             <button class="secondary" id="poster-bg-reset" type="button">重置背景</button>
           </div>
+          <div class="poster-mask-tools">
+            <label>蒙版
+              <select id="poster-mask-mode">
+                <option value="default" selected>默认黑金</option>
+                <option value="custom">自定义</option>
+              </select>
+            </label>
+            <label>主色<input id="poster-mask-color" type="color" value="#071426"></label>
+            <label>取主色图片<input id="poster-mask-color-file" type="file" accept="image/*"></label>
+            <button class="secondary" id="poster-mask-auto-color" type="button">使用背景主色</button>
+            <label>角度<input id="poster-mask-angle" type="range" min="0" max="360" value="45"></label>
+            <label>角度值<input id="poster-mask-angle-number" type="number" min="0" max="360" value="45"></label>
+            <label>最高透明度<input id="poster-mask-max" type="range" min="0" max="100" value="84"></label>
+            <label>最低透明度<input id="poster-mask-min" type="range" min="0" max="100" value="18"></label>
+            <label>变化曲线
+              <select id="poster-mask-curve">
+                <option value="linear" selected>线性</option>
+                <option value="s">S 型</option>
+                <option value="exponential">指数</option>
+                <option value="power">幂函数</option>
+              </select>
+            </label>
+            <button class="secondary" id="poster-mask-reset" type="button">重置蒙版</button>
+          </div>
         </section>
         <div class="poster-wrap">
           <div class="poster" id="poster-container">
@@ -582,6 +613,7 @@ class FermatHandler(BaseHTTPRequestHandler):
           <div class="panel-title"><h2>待审核账号</h2></div>
           {pending_table(snapshot['pending'])}
         </section>
+        {auto_approve_panel(snapshot['meta'], user)}
         <section class="panel">
           <div class="panel-title"><h2>全部账号</h2></div>
           {users_table(snapshot['users'], user)}
@@ -1126,6 +1158,32 @@ def pending_table(users):
       <thead><tr><th>用户名</th><th>注册时间</th><th>操作</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table></div>
+    """
+
+
+def auto_approve_panel(meta, current_user):
+    is_super_admin = (
+        current_user
+        and current_user.get("username") == ADMIN_USERNAME
+        and current_user.get("role") == "admin"
+    )
+    if not is_super_admin:
+        return ""
+    enabled = bool(meta.get("auto_approve_registration"))
+    status = "已开启" if enabled else "已关闭"
+    next_value = "0" if enabled else "1"
+    button_text = "关闭自动审核" if enabled else "开启自动审核"
+    note = "开启后，新注册用户会自动通过并可直接登录。"
+    return f"""
+    <section class="panel">
+      <div class="panel-title"><h2>注册自动审核</h2></div>
+      <form class="inline-form filter-form" method="post" action="/admin/auto-approve">
+        <span class="pill">当前：{status}</span>
+        <input type="hidden" name="enabled" value="{next_value}">
+        <button type="submit">{button_text}</button>
+        <span class="muted">{note}</span>
+      </form>
+    </section>
     """
 
 

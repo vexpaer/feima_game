@@ -71,6 +71,34 @@ class AdminRoleTests(unittest.TestCase):
         data = store.read_db()
         self.assertEqual("admin", data["users"]["vexpaer"]["role"])
 
+    def test_registration_waits_for_approval_by_default(self):
+        approved = service.register_user("charlie", "secret1")
+
+        data = store.read_db()
+        self.assertFalse(approved)
+        self.assertFalse(data["users"]["charlie"]["approved"])
+
+    def test_super_admin_can_enable_auto_approve_registration(self):
+        message = service.set_auto_approve_registration("vexpaer", True)
+        approved = service.register_user("charlie", "secret1")
+
+        data = store.read_db()
+        self.assertEqual("已开启注册自动审核。", message)
+        self.assertTrue(data["meta"]["auto_approve_registration"])
+        self.assertTrue(approved)
+        self.assertTrue(data["users"]["charlie"]["approved"])
+        self.assertIsNotNone(data["users"]["charlie"]["approved_at"])
+        self.assertEqual("charlie", service.login_user("charlie", "secret1")["username"])
+
+    def test_regular_admin_cannot_toggle_auto_approve_registration(self):
+        self.make_admin("alice")
+
+        with self.assertRaisesRegex(service.AppError, "需要超级管理员权限"):
+            service.set_auto_approve_registration("alice", True)
+
+        data = store.read_db()
+        self.assertFalse(data["meta"]["auto_approve_registration"])
+
     def test_super_admin_table_shows_demote_action_for_other_admins(self):
         users = [
             {"username": "alice", "role": "admin", "balance": 0, "credit": 100, "approved": True},
@@ -114,6 +142,16 @@ class AdminRoleTests(unittest.TestCase):
 
         self.assertNotIn('action="/admin/demote-admin"', html)
         self.assertNotIn("降为普通用户", html)
+
+    def test_auto_approve_panel_only_shows_for_super_admin(self):
+        meta = {"auto_approve_registration": False}
+
+        super_html = web.auto_approve_panel(meta, {"username": "vexpaer", "role": "admin"})
+        regular_html = web.auto_approve_panel(meta, {"username": "alice", "role": "admin"})
+
+        self.assertIn('action="/admin/auto-approve"', super_html)
+        self.assertIn("开启自动审核", super_html)
+        self.assertEqual("", regular_html)
 
 
 if __name__ == "__main__":

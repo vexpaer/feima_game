@@ -72,6 +72,7 @@ def default_db():
             "last_match_update": None,
             "match_source": "未更新",
             "session_secret": secrets.token_hex(32),
+            "auto_approve_registration": False,
         },
         "users": {},
         "matches": {},
@@ -233,9 +234,10 @@ def ensure_db():
             if key not in data:
                 data[key] = value
                 changed = True
-        for key in ("created_at", "last_match_update", "match_source", "session_secret"):
+        defaults = default_db()
+        for key, value in defaults["meta"].items():
             if key not in data["meta"]:
-                data["meta"][key] = default_db()["meta"][key]
+                data["meta"][key] = value
                 changed = True
         users = data["users"]
         if ADMIN_USERNAME not in users:

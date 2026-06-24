@@ -16,6 +16,14 @@
     zoom: 1,
     opacity: 1,
   };
+  var maskSettings = {
+    mode: 'default',
+    color: '#071426',
+    angle: 45,
+    maxOpacity: 0.84,
+    minOpacity: 0.18,
+    curve: 'linear',
+  };
 
   var palette = {
     navy: '#071426',
@@ -76,6 +84,165 @@
     return Math.max(min, Math.min(max, value));
   }
 
+  function componentToHex(value) {
+    return clamp(Math.round(value) || 0, 0, 255).toString(16).padStart(2, '0');
+  }
+
+  function rgbToHex(rgb) {
+    return '#' + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
+  }
+
+  function hexToRgb(hex) {
+    var value = String(hex || '').trim().replace(/^#/, '');
+    if (value.length === 3) {
+      value = value.split('').map(function (ch) { return ch + ch; }).join('');
+    }
+    if (!/^[0-9a-fA-F]{6}$/.test(value)) return [7, 20, 38];
+    return [
+      parseInt(value.slice(0, 2), 16),
+      parseInt(value.slice(2, 4), 16),
+      parseInt(value.slice(4, 6), 16),
+    ];
+  }
+
+  function rgbaFromHex(hex, opacity) {
+    var rgb = hexToRgb(hex);
+    return 'rgba(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ', ' + clamp(opacity, 0, 1).toFixed(3) + ')';
+  }
+
+  function colorDistance(a, b) {
+    var dr = a[0] - b[0];
+    var dg = a[1] - b[1];
+    var db = a[2] - b[2];
+    return Math.sqrt(dr * dr + dg * dg + db * db);
+  }
+
+  function saturation(rgb) {
+    var r = rgb[0] / 255;
+    var g = rgb[1] / 255;
+    var b = rgb[2] / 255;
+    var mx = Math.max(r, g, b);
+    var mn = Math.min(r, g, b);
+    return mx === 0 ? 0 : (mx - mn) / mx;
+  }
+
+  function brightness(rgb) {
+    return Math.max(rgb[0], rgb[1], rgb[2]) / 255;
+  }
+
+  function extractDominantColor(image, done) {
+    if (!image || !image.naturalWidth || !image.naturalHeight) return;
+    var maxSide = 300;
+    var scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+    var w = Math.max(1, Math.round(image.naturalWidth * scale));
+    var h = Math.max(1, Math.round(image.naturalHeight * scale));
+    var sampleCanvas = document.createElement('canvas');
+    sampleCanvas.width = w;
+    sampleCanvas.height = h;
+    var sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+    sampleCtx.drawImage(image, 0, 0, w, h);
+    var data;
+    try {
+      data = sampleCtx.getImageData(0, 0, w, h).data;
+    } catch (err) {
+      return;
+    }
+
+    var pixels = [];
+    var pixelCount = data.length / 4;
+    var step = Math.max(1, Math.floor(pixelCount / 12000));
+    for (var i = 0; i < pixelCount; i += step) {
+      var offset = i * 4;
+      if (data[offset + 3] < 32) continue;
+      pixels.push([data[offset], data[offset + 1], data[offset + 2]]);
+    }
+    if (!pixels.length) return;
+
+    var k = Math.min(5, pixels.length);
+    var centers = [];
+    for (var c = 0; c < k; c++) {
+      centers.push(pixels[Math.floor((pixels.length - 1) * (c + 0.5) / k)].slice());
+    }
+
+    var labels = new Array(pixels.length);
+    for (var iter = 0; iter < 8; iter++) {
+      var sums = [];
+      var counts = [];
+      for (var s = 0; s < k; s++) {
+        sums.push([0, 0, 0]);
+        counts.push(0);
+      }
+      for (var p = 0; p < pixels.length; p++) {
+        var bestIndex = 0;
+        var bestDistance = Infinity;
+        for (var ci = 0; ci < k; ci++) {
+          var dist = colorDistance(pixels[p], centers[ci]);
+          if (dist < bestDistance) {
+            bestDistance = dist;
+            bestIndex = ci;
+          }
+        }
+        labels[p] = bestIndex;
+        sums[bestIndex][0] += pixels[p][0];
+        sums[bestIndex][1] += pixels[p][1];
+        sums[bestIndex][2] += pixels[p][2];
+        counts[bestIndex] += 1;
+      }
+      for (var u = 0; u < k; u++) {
+        if (!counts[u]) continue;
+        centers[u] = [
+          sums[u][0] / counts[u],
+          sums[u][1] / counts[u],
+          sums[u][2] / counts[u],
+        ];
+      }
+    }
+
+    var centerCounts = new Array(k).fill(0);
+    labels.forEach(function (label) { centerCounts[label] += 1; });
+    var used = new Array(k).fill(false);
+    var merged = [];
+    for (var m = 0; m < k; m++) {
+      if (used[m]) continue;
+      var countSum = centerCounts[m];
+      var colorSum = [
+        centers[m][0] * centerCounts[m],
+        centers[m][1] * centerCounts[m],
+        centers[m][2] * centerCounts[m],
+      ];
+      used[m] = true;
+      for (var n = m + 1; n < k; n++) {
+        if (used[n] || colorDistance(centers[m], centers[n]) >= 40) continue;
+        colorSum[0] += centers[n][0] * centerCounts[n];
+        colorSum[1] += centers[n][1] * centerCounts[n];
+        colorSum[2] += centers[n][2] * centerCounts[n];
+        countSum += centerCounts[n];
+        used[n] = true;
+      }
+      if (!countSum) continue;
+      merged.push({
+        color: [colorSum[0] / countSum, colorSum[1] / countSum, colorSum[2] / countSum],
+        count: countSum,
+      });
+    }
+    if (!merged.length) return;
+
+    var best = null;
+    var fallback = merged[0];
+    merged.forEach(function (item) {
+      if (item.count > fallback.count) fallback = item;
+      var sat = saturation(item.color);
+      var bright = brightness(item.color);
+      if (bright > 0.93 || bright < 0.05 || sat < 0.08) return;
+      var areaRatio = item.count / pixels.length;
+      var brightnessScore = 1 - Math.abs(bright - 0.55) * 2;
+      var score = 0.60 * areaRatio + 0.25 * sat + 0.15 * Math.max(0, brightnessScore);
+      if (!best || score > best.score) best = { color: item.color, score: score };
+    });
+    var result = (best || fallback).color.map(function (value) { return Math.round(value); });
+    done(rgbToHex(result));
+  }
+
   function drawCoverImage(image, x, y, w, h, settings) {
     if (!image || !image.naturalWidth || !image.naturalHeight) return false;
     var imageRatio = image.naturalWidth / image.naturalHeight;
@@ -130,6 +297,11 @@
       ctx.restore();
     }
 
+    if (maskSettings.mode === 'custom') {
+      drawCustomMask();
+      return;
+    }
+
     var veil = ctx.createLinearGradient(0, 0, W, H);
     veil.addColorStop(0, 'rgba(5, 14, 31, 0.46)');
     veil.addColorStop(0.34, 'rgba(4, 11, 24, 0.66)');
@@ -151,6 +323,37 @@
     spotlight.addColorStop(0.48, 'rgba(247, 200, 75, 0.05)');
     spotlight.addColorStop(1, 'rgba(247, 200, 75, 0)');
     ctx.fillStyle = spotlight;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function customMaskCurve(t, curve) {
+    var x = clamp(t, 0, 1);
+    if (curve === 's') return x * x * x * (x * (x * 6 - 15) + 10);
+    if (curve === 'exponential') return (Math.exp(3 * x) - 1) / (Math.exp(3) - 1);
+    if (curve === 'power') return x * x;
+    return x;
+  }
+
+  function drawCustomMask() {
+    var high = clamp(Number(maskSettings.maxOpacity), 0, 1);
+    var low = clamp(Number(maskSettings.minOpacity), 0, 1);
+    if (low > high) {
+      var temp = high;
+      high = low;
+      low = temp;
+    }
+    var angle = (Number(maskSettings.angle) || 0) * Math.PI / 180;
+    var radius = Math.sqrt(W * W + H * H) / 2;
+    var dx = Math.cos(angle) * radius;
+    var dy = Math.sin(angle) * radius;
+    var gradient = ctx.createLinearGradient(W / 2 - dx, H / 2 - dy, W / 2 + dx, H / 2 + dy);
+    var steps = 16;
+    for (var i = 0; i <= steps; i++) {
+      var t = i / steps;
+      var opacity = high + (low - high) * customMaskCurve(t, maskSettings.curve);
+      gradient.addColorStop(t, rgbaFromHex(maskSettings.color, opacity));
+    }
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, W, H);
   }
 
@@ -856,7 +1059,10 @@
       if (customBgUrl) URL.revokeObjectURL(customBgUrl);
       customBgUrl = URL.createObjectURL(file);
       customBg = new Image();
-      customBg.onload = drawPoster;
+      customBg.onload = function () {
+        updateMaskColorFromImage(customBg);
+        drawPoster();
+      };
       customBg.onerror = function () {
         customBg = null;
         drawPoster();
@@ -883,10 +1089,121 @@
     }
   }
 
+  function updateMaskColorFromImage(image) {
+    var colorInput = document.getElementById('poster-mask-color');
+    if (!colorInput) return;
+    extractDominantColor(image, function (hex) {
+      colorInput.value = hex;
+      maskSettings.color = hex;
+      drawPoster();
+    });
+  }
+
+  function initMaskControls() {
+    var modeInput = document.getElementById('poster-mask-mode');
+    var colorInput = document.getElementById('poster-mask-color');
+    var colorFileInput = document.getElementById('poster-mask-color-file');
+    var angleRangeInput = document.getElementById('poster-mask-angle');
+    var angleNumberInput = document.getElementById('poster-mask-angle-number');
+    var maxInput = document.getElementById('poster-mask-max');
+    var minInput = document.getElementById('poster-mask-min');
+    var curveInput = document.getElementById('poster-mask-curve');
+    var resetButton = document.getElementById('poster-mask-reset');
+    var autoColorButton = document.getElementById('poster-mask-auto-color');
+    if (!modeInput || !colorInput || !angleRangeInput || !angleNumberInput || !maxInput || !minInput || !curveInput) return;
+
+    function setCustomMode() {
+      modeInput.value = 'custom';
+      maskSettings.mode = 'custom';
+    }
+
+    function syncMaskSettings(changedInput) {
+      if (changedInput === angleRangeInput) angleNumberInput.value = angleRangeInput.value;
+      if (changedInput === angleNumberInput) {
+        var angleValue = clamp(Number(angleNumberInput.value) || 0, 0, 360);
+        angleRangeInput.value = angleValue;
+        angleNumberInput.value = angleValue;
+      }
+
+      maskSettings.mode = modeInput.value === 'custom' ? 'custom' : 'default';
+      maskSettings.color = colorInput.value || maskSettings.color;
+      maskSettings.angle = clamp(Number(angleRangeInput.value) || 0, 0, 360);
+      maskSettings.maxOpacity = clamp(Number(maxInput.value) / 100, 0, 1);
+      maskSettings.minOpacity = clamp(Number(minInput.value) / 100, 0, 1);
+      maskSettings.curve = curveInput.value || 'linear';
+      drawPoster();
+    }
+
+    modeInput.addEventListener('change', function () {
+      syncMaskSettings(modeInput);
+    });
+
+    [colorInput, angleRangeInput, angleNumberInput, maxInput, minInput, curveInput].forEach(function (input) {
+      input.addEventListener('input', function () {
+        if (input !== modeInput) setCustomMode();
+        syncMaskSettings(input);
+      });
+      input.addEventListener('change', function () {
+        if (input !== modeInput) setCustomMode();
+        syncMaskSettings(input);
+      });
+    });
+
+    if (colorFileInput) {
+      colorFileInput.addEventListener('change', function () {
+        var file = colorFileInput.files && colorFileInput.files[0];
+        if (!file) return;
+        var url = URL.createObjectURL(file);
+        var image = new Image();
+        image.onload = function () {
+          var cleanup = function () { URL.revokeObjectURL(url); };
+          setCustomMode();
+          extractDominantColor(image, function (hex) {
+            cleanup();
+            colorInput.value = hex;
+            maskSettings.color = hex;
+            syncMaskSettings(colorInput);
+          });
+          window.setTimeout(cleanup, 0);
+        };
+        image.onerror = function () {
+          URL.revokeObjectURL(url);
+        };
+        image.src = url;
+      });
+    }
+
+    if (autoColorButton) {
+      autoColorButton.addEventListener('click', function () {
+        if (!customBg || !customBg.naturalWidth) return;
+        setCustomMode();
+        updateMaskColorFromImage(customBg);
+        syncMaskSettings(colorInput);
+      });
+    }
+
+    if (resetButton) {
+      resetButton.addEventListener('click', function () {
+        modeInput.value = 'default';
+        colorInput.value = '#071426';
+        angleRangeInput.value = '45';
+        angleNumberInput.value = '45';
+        maxInput.value = '84';
+        minInput.value = '18';
+        curveInput.value = 'linear';
+        syncMaskSettings(modeInput);
+      });
+    }
+
+    syncMaskSettings(modeInput);
+  }
+
   initBackgroundControls();
+  initMaskControls();
 
   window.__fermatPoster = {
     drawPoster: drawPoster,
     formatAmount: formatAmount,
+    extractDominantColor: extractDominantColor,
   };
 })();

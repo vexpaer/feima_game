@@ -58,11 +58,12 @@ def register_user(username, password):
         negative_name = f"negative-{username}"
         if negative_name in data["users"]:
             raise AppError("对应反向账户已经存在，请换一个用户名。")
-        data["users"][username] = normal_user(username, password, approved=False)
+        auto_approved = bool(data.get("meta", {}).get("auto_approve_registration"))
+        data["users"][username] = normal_user(username, password, approved=auto_approved)
         data["users"][negative_name] = negative_user(username)
-        return True
+        return auto_approved
 
-    write_db(mutate)
+    return write_db(mutate)
 
 
 def login_user(username, password):
@@ -465,6 +466,17 @@ def demote_admin(admin_username, target_username):
 
     write_db(mutate)
     return f"已将 {target_username} 降为普通用户。"
+
+
+def set_auto_approve_registration(admin_username, enabled):
+    def mutate(data):
+        require_super_admin_user(data, admin_username)
+        value = bool(enabled)
+        data.setdefault("meta", {})["auto_approve_registration"] = value
+        return value
+
+    enabled = write_db(mutate)
+    return "已开启注册自动审核。" if enabled else "已关闭注册自动审核。"
 
 
 def create_custom_leaderboard(admin_username, name, metric):
