@@ -19,10 +19,13 @@
   var maskSettings = {
     mode: 'default',
     color: '#071426',
-    angle: 45,
-    maxOpacity: 0.84,
-    minOpacity: 0.18,
-    curve: 'linear',
+    angle: 325,
+    maxOpacity: 1,
+    minOpacity: 0.5,
+    curve: 'power',
+  };
+  var chartSettings = {
+    mode: posterData.chartMode === 'log' ? 'log' : 'default',
   };
 
   var palette = {
@@ -697,6 +700,20 @@
     };
   }
 
+  function chartScaleValue(value, positiveLog) {
+    if (chartSettings.mode !== 'log') return value;
+    if (positiveLog) return Math.log10(Math.max(value, 1e-9));
+    if (value === 0) return 0;
+    return (value < 0 ? -1 : 1) * Math.log10(Math.abs(value) + 1);
+  }
+
+  function chartUnscaleValue(value, positiveLog) {
+    if (chartSettings.mode !== 'log') return value;
+    if (positiveLog) return Math.pow(10, value);
+    if (value === 0) return 0;
+    return (value < 0 ? -1 : 1) * (Math.pow(10, Math.abs(value)) - 1);
+  }
+
   function rectsOverlap(a, b, gap) {
     return !(
       a.x + a.w + gap < b.x ||
@@ -818,11 +835,17 @@
     var values = history.map(function (item) { return Number(item.amount) || 0; });
     var minVal = Math.min.apply(null, values);
     var maxVal = Math.max.apply(null, values);
-    var range = Math.max(1, maxVal - minVal);
-    var pad = Math.max(range * 0.14, Math.abs(maxVal || minVal || 1) * 0.03, 1);
-    var yMin = minVal - pad;
-    var yMax = maxVal + pad;
-    var yRange = Math.max(1, yMax - yMin);
+    var positiveLog = chartSettings.mode === 'log' && values.every(function (value) { return value > 0; });
+    var scaledValues = values.map(function (value) { return chartScaleValue(value, positiveLog); });
+    var scaledMinVal = Math.min.apply(null, scaledValues);
+    var scaledMaxVal = Math.max.apply(null, scaledValues);
+    var range = chartSettings.mode === 'log' ? Math.max(1e-6, scaledMaxVal - scaledMinVal) : Math.max(1, maxVal - minVal);
+    var pad = chartSettings.mode === 'log'
+      ? Math.max(range * 0.14, 0.08)
+      : Math.max(range * 0.14, Math.abs(maxVal || minVal || 1) * 0.03, 1);
+    var yMin = scaledMinVal - pad;
+    var yMax = scaledMaxVal + pad;
+    var yRange = Math.max(chartSettings.mode === 'log' ? 1e-6 : 1, yMax - yMin);
     var plot = {
       x: x + 92,
       y: y + 74,
@@ -831,6 +854,7 @@
       yMin: yMin,
       yMax: yMax,
       yRange: yRange,
+      positiveLog: positiveLog,
     };
 
     ctx.save();
@@ -854,7 +878,7 @@
     ctx.setLineDash([]);
     ctx.restore();
 
-    if (yMin < 0 && yMax > 0) {
+    if (!positiveLog && yMin < 0 && yMax > 0) {
       var zeroY = plot.y + plot.h - ((0 - yMin) / yRange) * plot.h;
       ctx.strokeStyle = 'rgba(247, 200, 75, 0.32)';
       ctx.lineWidth = 1.5;
@@ -871,7 +895,15 @@
     for (var labelRow = 0; labelRow <= 4; labelRow++) {
       var labelValue = yMax - (yRange / 4) * labelRow;
       var labelY = plot.y + (plot.h / 4) * labelRow;
-      ctx.fillText(formatAmount(labelValue), plot.x - 12, labelY);
+      ctx.fillText(formatAmount(chartUnscaleValue(labelValue, plot.positiveLog)), plot.x - 12, labelY);
+    }
+
+    if (chartSettings.mode === 'log') {
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = 'rgba(247, 200, 75, 0.72)';
+      ctx.font = font('800', 12);
+      ctx.fillText(positiveLog ? 'LOG10' : 'SIGNED LOG10', plot.x + plot.w, y + 28);
     }
 
     var areaGrad = ctx.createLinearGradient(0, plot.y, 0, plot.y + plot.h);
@@ -880,13 +912,13 @@
     areaGrad.addColorStop(1, 'rgba(255, 65, 109, 0.01)');
     ctx.fillStyle = areaGrad;
     ctx.beginPath();
-    var first = pointAt(history, values, 0, plot);
+    var first = pointAt(history, scaledValues, 0, plot);
     ctx.moveTo(first.x, plot.y + plot.h);
     for (var i = 0; i < history.length; i++) {
-      var areaPoint = pointAt(history, values, i, plot);
+      var areaPoint = pointAt(history, scaledValues, i, plot);
       ctx.lineTo(areaPoint.x, areaPoint.y);
     }
-    var last = pointAt(history, values, history.length - 1, plot);
+    var last = pointAt(history, scaledValues, history.length - 1, plot);
     ctx.lineTo(last.x, plot.y + plot.h);
     ctx.closePath();
     ctx.fill();
@@ -904,7 +936,7 @@
     ctx.shadowBlur = 16;
     ctx.beginPath();
     for (var lineIndex = 0; lineIndex < history.length; lineIndex++) {
-      var linePoint = pointAt(history, values, lineIndex, plot);
+      var linePoint = pointAt(history, scaledValues, lineIndex, plot);
       if (lineIndex === 0) ctx.moveTo(linePoint.x, linePoint.y);
       else ctx.lineTo(linePoint.x, linePoint.y);
     }
@@ -912,7 +944,7 @@
     ctx.restore();
 
     for (var dotIndex = 0; dotIndex < history.length; dotIndex++) {
-      var dot = pointAt(history, values, dotIndex, plot);
+      var dot = pointAt(history, scaledValues, dotIndex, plot);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
       ctx.beginPath();
       ctx.arc(dot.x, dot.y, 3.2, 0, Math.PI * 2);
@@ -926,9 +958,9 @@
     var highIndex = values.indexOf(maxVal);
     var lowIndex = values.indexOf(minVal);
     var currentIndex = history.length - 1;
-    var highPoint = pointAt(history, values, highIndex, plot);
-    var lowPoint = pointAt(history, values, lowIndex, plot);
-    var currentPoint = pointAt(history, values, currentIndex, plot);
+    var highPoint = pointAt(history, scaledValues, highIndex, plot);
+    var lowPoint = pointAt(history, scaledValues, lowIndex, plot);
+    var currentPoint = pointAt(history, scaledValues, currentIndex, plot);
     var occupied = [];
     var labelBounds = { x: x, y: y + 6, w: w, h: h - 12 };
 
@@ -1186,11 +1218,11 @@
       resetButton.addEventListener('click', function () {
         modeInput.value = 'default';
         colorInput.value = '#071426';
-        angleRangeInput.value = '45';
-        angleNumberInput.value = '45';
-        maxInput.value = '84';
-        minInput.value = '18';
-        curveInput.value = 'linear';
+        angleRangeInput.value = '325';
+        angleNumberInput.value = '325';
+        maxInput.value = '100';
+        minInput.value = '50';
+        curveInput.value = 'power';
         syncMaskSettings(modeInput);
       });
     }
@@ -1198,8 +1230,20 @@
     syncMaskSettings(modeInput);
   }
 
+  function initChartModeControls() {
+    var modeInput = document.getElementById('poster-chart-mode');
+    if (!modeInput) return;
+    modeInput.value = chartSettings.mode;
+    modeInput.addEventListener('change', function () {
+      chartSettings.mode = modeInput.value === 'log' ? 'log' : 'default';
+      posterData.chartMode = chartSettings.mode;
+      drawPoster();
+    });
+  }
+
   initBackgroundControls();
   initMaskControls();
+  initChartModeControls();
 
   window.__fermatPoster = {
     drawPoster: drawPoster,

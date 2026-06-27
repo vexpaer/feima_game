@@ -524,12 +524,19 @@ class FermatHandler(BaseHTTPRequestHandler):
         )
         requested_username = first_query(query, "username").strip()
         selected_username = requested_username if requested_username in poster_users else user["username"]
+        selected_mode = first_query(query, "mode").strip().lower()
+        selected_mode = "log" if selected_mode == "log" else "default"
         data = service.get_poster_data(selected_username)
+        data["chartMode"] = selected_mode
         poster_json = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
         options = []
         for username in poster_users:
             selected = " selected" if username == selected_username else ""
             options.append(f'<option value="{e(username)}"{selected}>{e(username)}</option>')
+        mode_options = [
+            f'<option value="default"{" selected" if selected_mode == "default" else ""}>默认模式</option>',
+            f'<option value="log"{" selected" if selected_mode == "log" else ""}>Log10 模式</option>',
+        ]
 
         body = f"""
         <section class="page-head">
@@ -547,6 +554,11 @@ class FermatHandler(BaseHTTPRequestHandler):
             <label>查看玩家
               <select name="username">
                 {''.join(options)}
+              </select>
+            </label>
+            <label>海报模式
+              <select id="poster-chart-mode" name="mode">
+                {''.join(mode_options)}
               </select>
             </label>
             <button type="submit">查看海报</button>
@@ -569,16 +581,16 @@ class FermatHandler(BaseHTTPRequestHandler):
             <label>主色<input id="poster-mask-color" type="color" value="#071426"></label>
             <label>取主色图片<input id="poster-mask-color-file" type="file" accept="image/*"></label>
             <button class="secondary" id="poster-mask-auto-color" type="button">使用背景主色</button>
-            <label>角度<input id="poster-mask-angle" type="range" min="0" max="360" value="45"></label>
-            <label>角度值<input id="poster-mask-angle-number" type="number" min="0" max="360" value="45"></label>
-            <label>最高透明度<input id="poster-mask-max" type="range" min="0" max="100" value="84"></label>
-            <label>最低透明度<input id="poster-mask-min" type="range" min="0" max="100" value="18"></label>
+            <label>角度<input id="poster-mask-angle" type="range" min="0" max="360" value="325"></label>
+            <label>角度值<input id="poster-mask-angle-number" type="number" min="0" max="360" value="325"></label>
+            <label>最高透明度<input id="poster-mask-max" type="range" min="0" max="100" value="100"></label>
+            <label>最低透明度<input id="poster-mask-min" type="range" min="0" max="100" value="50"></label>
             <label>变化曲线
               <select id="poster-mask-curve">
-                <option value="linear" selected>线性</option>
+                <option value="linear">线性</option>
                 <option value="s">S 型</option>
                 <option value="exponential">指数</option>
-                <option value="power">幂函数</option>
+                <option value="power" selected>幂函数</option>
               </select>
             </label>
             <button class="secondary" id="poster-mask-reset" type="button">重置蒙版</button>

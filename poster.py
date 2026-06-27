@@ -19,7 +19,12 @@ BACKGROUND_IMAGE_URL = "https://i1.hdslb.com/bfs/new_dyn/a646cb7f5af320998220e54
 POSTER_SIZE = (1200, 675)
 
 
-def load_ranked_poster_data():
+def normalize_poster_mode(mode):
+    return "log" if str(mode).lower() == "log" else "default"
+
+
+def load_ranked_poster_data(mode="default"):
+    chart_mode = normalize_poster_mode(mode)
     data = store.read_db()
     players = []
     for username, user in data.get("users", {}).items():
@@ -32,6 +37,7 @@ def load_ranked_poster_data():
     posters = []
     for index, (username, net_asset) in enumerate(players, start=1):
         item = service.build_poster_data(username, data, net_asset)
+        item["chartMode"] = chart_mode
         item["safeFilename"] = f"{index:03d}_{safe_filename(username)}.png"
         posters.append(item)
     return posters
@@ -135,9 +141,9 @@ def write_pdfs(image_paths, pdf_path, small_pdf_path):
     write_small_pdf(image_paths, small_pdf_path)
 
 
-def generate_posters(out_dir=DEFAULT_OUT):
+def generate_posters(out_dir=DEFAULT_OUT, mode="default"):
     out_dir = Path(out_dir)
-    posters = load_ranked_poster_data()
+    posters = load_ranked_poster_data(mode)
     image_paths = render_pngs(posters, out_dir)
     pdf_path = out_dir / "ranking_posters.pdf"
     small_pdf_path = out_dir / "ranking_posters_small.pdf"
@@ -148,10 +154,12 @@ def generate_posters(out_dir=DEFAULT_OUT):
 def main():
     parser = argparse.ArgumentParser(description="Generate ranked Fermat posters from the app database.")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help="Output directory. Defaults to ./poster.")
+    parser.add_argument("--mode", choices=("default", "log"), default="default", help="Poster chart mode. Defaults to default.")
     args = parser.parse_args()
 
-    images, pdf_path, small_pdf_path = generate_posters(args.out)
+    images, pdf_path, small_pdf_path = generate_posters(args.out, args.mode)
     print(f"Generated {len(images)} poster images in {Path(args.out).resolve()}")
+    print(f"Poster mode: {args.mode}")
     print(f"Generated PDF: {pdf_path.resolve()}")
     print(f"Generated small PDF: {small_pdf_path.resolve()}")
 
