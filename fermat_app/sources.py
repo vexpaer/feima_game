@@ -26,7 +26,7 @@ SPORT_KEYS = [
 REQUEST_TIMEOUT_SECONDS = 15
 REQUEST_RETRIES = 3
 RETRY_DELAY_SECONDS = 1.0
-_SSL_CONTEXT = None
+_SSL_CONTEXTS = None
 
 DEMO_TEAMS = [
     ("阿森纳", "利物浦", "英超"),
@@ -41,16 +41,40 @@ DEMO_TEAMS = [
 
 
 def _ssl_context():
-    global _SSL_CONTEXT
-    if _SSL_CONTEXT is not None:
-        return _SSL_CONTEXT
+    return _ssl_contexts()[0][1]
+
+
+def _ssl_contexts():
+    global _SSL_CONTEXTS
+    if _SSL_CONTEXTS is not None:
+        return _SSL_CONTEXTS
+
+    contexts = []
     try:
         import certifi
 
-        _SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+        contexts.append(("certifi", ssl.create_default_context(cafile=certifi.where())))
     except Exception:
-        _SSL_CONTEXT = ssl.create_default_context()
-    return _SSL_CONTEXT
+        pass
+    contexts.append(("system", ssl.create_default_context()))
+    _SSL_CONTEXTS = contexts
+    return _SSL_CONTEXTS
+
+
+def _is_ssl_cert_error(exc):
+    reason = getattr(exc, "reason", exc)
+    return isinstance(reason, ssl.SSLCertVerificationError) or (
+        isinstance(reason, ssl.SSLError) and "CERTIFICATE_VERIFY_FAILED" in str(reason)
+    )
+
+
+def _certifi_hint():
+    try:
+        import certifi
+
+        return certifi.where()
+    except Exception:
+        return "未安装"
 
 
 def _retryable_url_error(exc):
@@ -146,21 +170,26 @@ class MatchSource:
         req = urllib.request.Request(url, headers={"User-Agent": "fermat-coin-football/1.0"})
         last_error = None
         for attempt in range(REQUEST_RETRIES):
-            try:
-                with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT_SECONDS, context=_ssl_context()) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
-            except urllib.error.HTTPError:
-                raise
-            except urllib.error.URLError as exc:
-                last_error = exc
-                if attempt >= REQUEST_RETRIES - 1 or not _retryable_url_error(exc):
+            for context_index, (_, ssl_context) in enumerate(_ssl_contexts()):
+                try:
+                    with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT_SECONDS, context=ssl_context) as resp:
+                        return json.loads(resp.read().decode("utf-8"))
+                except urllib.error.HTTPError:
                     raise
-                time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
-            except TimeoutError as exc:
-                last_error = exc
-                if attempt >= REQUEST_RETRIES - 1:
-                    raise
-                time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
+                except urllib.error.URLError as exc:
+                    last_error = exc
+                    if _is_ssl_cert_error(exc) and context_index < len(_ssl_contexts()) - 1:
+                        continue
+                    if attempt >= REQUEST_RETRIES - 1 or not _retryable_url_error(exc):
+                        raise
+                    time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
+                    break
+                except TimeoutError as exc:
+                    last_error = exc
+                    if attempt >= REQUEST_RETRIES - 1:
+                        raise
+                    time.sleep(RETRY_DELAY_SECONDS * (attempt + 1))
+                    break
         raise last_error
 
     def _fetch_odds_api_io(self, existing_matches):
@@ -518,8 +547,8 @@ def _format_fetch_error(exc):
         return f"HTTP {exc.code} {exc.reason}"
     if isinstance(exc, urllib.error.URLError):
         reason = getattr(exc, "reason", None)
-        if isinstance(reason, ssl.SSLCertVerificationError):
-            return "SSL 证书校验失败，请确认 Python/certifi 证书包可用"
+        if _is_ssl_cert_error(exc):
+            return f"SSL 证书校验失败，请重启服务并确认 Python/certifi 证书包可用（certifi: {_certifi_hint()}）"
         if isinstance(reason, socket.gaierror):
             return "域名解析失败，已重试仍无法连接，请检查 DNS/代理"
     return str(exc)
