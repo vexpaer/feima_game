@@ -25,7 +25,7 @@
     curve: 'power',
   };
   var chartSettings = {
-    mode: posterData.chartMode === 'log' ? 'log' : 'default',
+    mode: normalizeChartMode(posterData.chartMode),
   };
 
   var palette = {
@@ -85,6 +85,13 @@
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
+  }
+
+  function normalizeChartMode(mode) {
+    if (mode === 'log' || mode === 'luoshen' || mode === '雒神推荐') {
+      return mode === 'log' ? 'log' : 'luoshen';
+    }
+    return 'default';
   }
 
   function componentToHex(value) {
@@ -700,18 +707,48 @@
     };
   }
 
-  function chartScaleValue(value, positiveLog) {
-    if (chartSettings.mode !== 'log') return value;
-    if (positiveLog) return Math.log10(Math.max(value, 1e-9));
+  function chartScaleForValues(values) {
+    var maxAbs = values.reduce(function (best, value) {
+      return Math.max(best, Math.abs(value));
+    }, 0);
+    return {
+      mode: chartSettings.mode,
+      positiveLog: chartSettings.mode === 'log' && values.every(function (value) { return value > 0; }),
+      luoshenExponent: luoshenExponent(maxAbs),
+    };
+  }
+
+  function luoshenExponent(maxAbs) {
+    var exponent = Math.log10(Math.max(Number(maxAbs) || 0, 1)) - 6;
+    return exponent > 0 ? exponent : 1;
+  }
+
+  function chartScaleValue(value, scale) {
+    if (scale.mode === 'luoshen') return luoshenScaleValue(value, scale.luoshenExponent);
+    if (scale.mode !== 'log') return value;
+    if (scale.positiveLog) return Math.log10(Math.max(value, 1e-9));
     if (value === 0) return 0;
     return (value < 0 ? -1 : 1) * Math.log10(Math.abs(value) + 1);
   }
 
-  function chartUnscaleValue(value, positiveLog) {
-    if (chartSettings.mode !== 'log') return value;
-    if (positiveLog) return Math.pow(10, value);
+  function chartUnscaleValue(value, scale) {
+    if (scale.mode === 'luoshen') return luoshenUnscaleValue(value, scale.luoshenExponent);
+    if (scale.mode !== 'log') return value;
+    if (scale.positiveLog) return Math.pow(10, value);
     if (value === 0) return 0;
     return (value < 0 ? -1 : 1) * (Math.pow(10, Math.abs(value)) - 1);
+  }
+
+  function luoshenScaleValue(value, exponent) {
+    if (value === 0) return 0;
+    var base = Math.log10(Math.abs(value) / 1000000 + 1);
+    return (value < 0 ? -1 : 1) * Math.pow(base, exponent);
+  }
+
+  function luoshenUnscaleValue(value, exponent) {
+    if (value === 0) return 0;
+    var base = Math.pow(Math.abs(value), 1 / exponent);
+    return (value < 0 ? -1 : 1) * (Math.pow(10, base) - 1) * 1000000;
   }
 
   function rectsOverlap(a, b, gap) {
@@ -835,17 +872,18 @@
     var values = history.map(function (item) { return Number(item.amount) || 0; });
     var minVal = Math.min.apply(null, values);
     var maxVal = Math.max.apply(null, values);
-    var positiveLog = chartSettings.mode === 'log' && values.every(function (value) { return value > 0; });
-    var scaledValues = values.map(function (value) { return chartScaleValue(value, positiveLog); });
+    var scale = chartScaleForValues(values);
+    var scaledValues = values.map(function (value) { return chartScaleValue(value, scale); });
     var scaledMinVal = Math.min.apply(null, scaledValues);
     var scaledMaxVal = Math.max.apply(null, scaledValues);
-    var range = chartSettings.mode === 'log' ? Math.max(1e-6, scaledMaxVal - scaledMinVal) : Math.max(1, maxVal - minVal);
-    var pad = chartSettings.mode === 'log'
+    var nonlinearMode = scale.mode !== 'default';
+    var range = nonlinearMode ? Math.max(1e-6, scaledMaxVal - scaledMinVal) : Math.max(1, maxVal - minVal);
+    var pad = nonlinearMode
       ? Math.max(range * 0.14, 0.08)
       : Math.max(range * 0.14, Math.abs(maxVal || minVal || 1) * 0.03, 1);
     var yMin = scaledMinVal - pad;
     var yMax = scaledMaxVal + pad;
-    var yRange = Math.max(chartSettings.mode === 'log' ? 1e-6 : 1, yMax - yMin);
+    var yRange = Math.max(nonlinearMode ? 1e-6 : 1, yMax - yMin);
     var plot = {
       x: x + 92,
       y: y + 74,
@@ -854,7 +892,7 @@
       yMin: yMin,
       yMax: yMax,
       yRange: yRange,
-      positiveLog: positiveLog,
+      scale: scale,
     };
 
     ctx.save();
@@ -878,7 +916,7 @@
     ctx.setLineDash([]);
     ctx.restore();
 
-    if (!positiveLog && yMin < 0 && yMax > 0) {
+    if (yMin < 0 && yMax > 0) {
       var zeroY = plot.y + plot.h - ((0 - yMin) / yRange) * plot.h;
       ctx.strokeStyle = 'rgba(247, 200, 75, 0.32)';
       ctx.lineWidth = 1.5;
@@ -895,15 +933,15 @@
     for (var labelRow = 0; labelRow <= 4; labelRow++) {
       var labelValue = yMax - (yRange / 4) * labelRow;
       var labelY = plot.y + (plot.h / 4) * labelRow;
-      ctx.fillText(formatAmount(chartUnscaleValue(labelValue, plot.positiveLog)), plot.x - 12, labelY);
+      ctx.fillText(formatAmount(chartUnscaleValue(labelValue, plot.scale)), plot.x - 12, labelY);
     }
 
-    if (chartSettings.mode === 'log') {
+    if (nonlinearMode) {
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
       ctx.fillStyle = 'rgba(247, 200, 75, 0.72)';
       ctx.font = font('800', 12);
-      ctx.fillText(positiveLog ? 'LOG10' : 'SIGNED LOG10', plot.x + plot.w, y + 28);
+      ctx.fillText(scale.mode === 'luoshen' ? '雒神推荐' : (scale.positiveLog ? 'LOG10' : 'SIGNED LOG10'), plot.x + plot.w, y + 28);
     }
 
     var areaGrad = ctx.createLinearGradient(0, plot.y, 0, plot.y + plot.h);
@@ -1235,7 +1273,7 @@
     if (!modeInput) return;
     modeInput.value = chartSettings.mode;
     modeInput.addEventListener('change', function () {
-      chartSettings.mode = modeInput.value === 'log' ? 'log' : 'default';
+      chartSettings.mode = normalizeChartMode(modeInput.value);
       posterData.chartMode = chartSettings.mode;
       drawPoster();
     });

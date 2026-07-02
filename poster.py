@@ -20,7 +20,10 @@ POSTER_SIZE = (1200, 675)
 
 
 def normalize_poster_mode(mode):
-    return "log" if str(mode).lower() == "log" else "default"
+    value = str(mode).strip().lower()
+    if value in {"log", "luoshen", "雒神推荐"}:
+        return "luoshen" if value != "log" else "log"
+    return "default"
 
 
 def load_ranked_poster_data(mode="default"):
@@ -154,12 +157,18 @@ def generate_posters(out_dir=DEFAULT_OUT, mode="default"):
 def main():
     parser = argparse.ArgumentParser(description="Generate ranked Fermat posters from the app database.")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help="Output directory. Defaults to ./poster.")
-    parser.add_argument("--mode", choices=("default", "log"), default="default", help="Poster chart mode. Defaults to default.")
+    parser.add_argument(
+        "--mode",
+        choices=("default", "log", "luoshen", "雒神推荐"),
+        default="default",
+        help="Poster chart mode. Defaults to default.",
+    )
     args = parser.parse_args()
 
-    images, pdf_path, small_pdf_path = generate_posters(args.out, args.mode)
+    chart_mode = normalize_poster_mode(args.mode)
+    images, pdf_path, small_pdf_path = generate_posters(args.out, chart_mode)
     print(f"Generated {len(images)} poster images in {Path(args.out).resolve()}")
-    print(f"Poster mode: {args.mode}")
+    print(f"Poster mode: {chart_mode}")
     print(f"Generated PDF: {pdf_path.resolve()}")
     print(f"Generated small PDF: {small_pdf_path.resolve()}")
 

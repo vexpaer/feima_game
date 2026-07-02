@@ -6,5 +6,6 @@
     "soccer_epl",
     "soccer_fifa_world_cup"
   ],
-  "update_minutes": 60
+  "update_minutes": 60,
+  "server_api_updates_enabled": false
 }

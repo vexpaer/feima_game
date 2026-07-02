@@ -16,7 +16,16 @@ DEFAULT_CONFIG = {
     "region": "eu",
     "sports": ["soccer_epl", "soccer_fifa_world_cup"],
     "update_minutes": 120,
+    "server_api_updates_enabled": True,
 }
+
+
+def _config_bool(value, default=True):
+    if value is None:
+        return default
+    if isinstance(value, str):
+        return value.lower() not in {"0", "false", "no", "off"}
+    return bool(value)
 
 
 def load_config():
@@ -48,6 +57,8 @@ def load_config():
         config["sports"] = [item.strip() for item in os.environ["THE_ODDS_API_SPORTS"].split(",") if item.strip()]
     if os.environ.get("THE_ODDS_API_UPDATE_MINUTES"):
         config["update_minutes"] = max(10, int(os.environ["THE_ODDS_API_UPDATE_MINUTES"]))
+    if os.environ.get("SERVER_API_UPDATES_ENABLED"):
+        config["server_api_updates_enabled"] = _config_bool(os.environ["SERVER_API_UPDATES_ENABLED"])
 
     config["sports"] = [item for item in config.get("sports", []) if str(item).startswith("soccer_")]
     if not config["sports"]:
@@ -62,4 +73,5 @@ def load_config():
     config["odds_api_io_future_days"] = max(1, int(config.get("odds_api_io_future_days", 30)))
     config["odds_api_io_page_limit"] = max(1, min(100, int(config.get("odds_api_io_page_limit", 100))))
     config["update_minutes"] = max(10, int(config.get("update_minutes", DEFAULT_CONFIG["update_minutes"])))
+    config["server_api_updates_enabled"] = _config_bool(config.get("server_api_updates_enabled"), True)
     return config

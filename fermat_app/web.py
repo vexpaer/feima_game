@@ -49,6 +49,8 @@ class FermatHandler(BaseHTTPRequestHandler):
         user = self.current_user()
         if path.startswith("/static/"):
             return self.serve_static(path)
+        if path == "/api/matches/update-state":
+            return self.api_match_update_state()
         if path == "/admin/download-db":
             self.require_admin(user)
             return self.download_db()
@@ -86,6 +88,8 @@ class FermatHandler(BaseHTTPRequestHandler):
 
     def route_post(self):
         path, _ = split_url(self.path)
+        if path == "/api/matches/import":
+            return self.api_import_matches()
         form = self.read_form()
         user = self.current_user()
         if path == "/login":
@@ -525,7 +529,10 @@ class FermatHandler(BaseHTTPRequestHandler):
         requested_username = first_query(query, "username").strip()
         selected_username = requested_username if requested_username in poster_users else user["username"]
         selected_mode = first_query(query, "mode").strip().lower()
-        selected_mode = "log" if selected_mode == "log" else "default"
+        if selected_mode in {"luoshen", "雒神推荐"}:
+            selected_mode = "luoshen"
+        else:
+            selected_mode = "log" if selected_mode == "log" else "default"
         data = service.get_poster_data(selected_username)
         data["chartMode"] = selected_mode
         poster_json = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
@@ -536,6 +543,7 @@ class FermatHandler(BaseHTTPRequestHandler):
         mode_options = [
             f'<option value="default"{" selected" if selected_mode == "default" else ""}>默认模式</option>',
             f'<option value="log"{" selected" if selected_mode == "log" else ""}>Log10 模式</option>',
+            f'<option value="luoshen"{" selected" if selected_mode == "luoshen" else ""}>雒神推荐</option>',
         ]
 
         body = f"""
@@ -716,6 +724,35 @@ class FermatHandler(BaseHTTPRequestHandler):
         """
         self.send_html(layout("管理后台", body, user, query))
 
+    def api_match_update_state(self):
+        if not self.require_match_update_key():
+            return
+        payload = service.match_update_state()
+        payload["ok"] = True
+        self.send_json(payload)
+
+    def api_import_matches(self):
+        if not self.require_match_update_key():
+            return
+        try:
+            payload = self.read_json()
+            if not isinstance(payload, dict):
+                raise service.AppError("请求数据格式不正确。")
+            count = service.import_remote_matches(
+                payload.get("matches", {}),
+                payload.get("source_label", ""),
+            )
+        except (json.JSONDecodeError, service.AppError) as exc:
+            self.send_json({"ok": False, "error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            return
+        self.send_json({"ok": True, "count": count, "message": f"已导入 {count} 场比赛。"})
+
+    def require_match_update_key(self):
+        if service.valid_match_update_key(self.headers.get("X-Fermat-Update-Key", "")):
+            return True
+        self.send_json({"ok": False, "error": "更新密钥无效。"}, HTTPStatus.FORBIDDEN)
+        return False
+
     def current_user(self):
         cookie = SimpleCookie(self.headers.get("Cookie"))
         morsel = cookie.get("session")
@@ -763,6 +800,19 @@ class FermatHandler(BaseHTTPRequestHandler):
         raw = self.rfile.read(length).decode("utf-8")
         parsed = urllib.parse.parse_qs(raw)
         return {key: values[0] for key, values in parsed.items()}
+
+    def read_json(self):
+        length = int(self.headers.get("Content-Length", "0") or 0)
+        raw = self.rfile.read(length).decode("utf-8")
+        return json.loads(raw or "{}")
+
+    def send_json(self, data, status=HTTPStatus.OK):
+        payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
 
     def send_html(self, html_text, status=HTTPStatus.OK):
         payload = html_text.encode("utf-8")

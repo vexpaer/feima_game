@@ -1,3 +1,4 @@
+import hmac
 import re
 import secrets
 import threading
@@ -258,6 +259,10 @@ def _place_negative_bets(data, user, match, choice, stake, source_bet_id, now):
 
 
 def update_matches(force=False):
+    if not load_config().get("server_api_updates_enabled", True):
+        if force:
+            raise AppError("服务器端 API 更新已关闭，请使用 update_server_matches.bat。")
+        return
     if not force and not _update_due():
         return
     if not _UPDATE_LOCK.acquire(blocking=False):
@@ -268,29 +273,72 @@ def update_matches(force=False):
         source = MatchSource()
         snapshot = read_db()
         fetched, source_label = source.fetch(snapshot["matches"], _score_sports_for_open_bets(snapshot))
-
-        def mutate(data):
-            now = utc_now()
-            for match_id, match in fetched.items():
-                old = data["matches"].get(match_id, {})
-                merged = dict(old)
-                merged.update(match)
-                if not match.get("odds") and old.get("odds"):
-                    merged["odds"] = old["odds"]
-                data["matches"][match_id] = merged
-            for match in data["matches"].values():
-                if match.get("status") != "completed" and parse_iso(match.get("start_time")) <= now:
-                    match["status"] = "in_progress"
-            data["meta"]["last_match_update"] = to_iso(now)
-            data["meta"]["match_source"] = source_label
-            settle_open_bets(data)
-            audit_loans(data)
-            return True
-
-        write_db(mutate)
+        _write_fetched_matches(fetched, source_label)
         _record_all_nets()
     finally:
         _UPDATE_LOCK.release()
+
+
+def match_update_state():
+    data = read_db()
+    return {
+        "matches": data.get("matches", {}),
+        "score_sports": sorted(_score_sports_for_open_bets(data)),
+    }
+
+
+def valid_match_update_key(value):
+    supplied = str(value or "")
+    if not supplied:
+        return False
+    config = load_config()
+    for key_name in ("odds_api_io_key", "the_odds_api_key"):
+        configured = str(config.get(key_name) or "")
+        if configured and hmac.compare_digest(supplied, configured):
+            return True
+    return False
+
+
+def import_remote_matches(matches, source_label):
+    if not isinstance(matches, dict):
+        raise AppError("比赛数据格式不正确。")
+    normalized = {}
+    for match_id, match in matches.items():
+        if not isinstance(match, dict):
+            raise AppError("比赛数据格式不正确。")
+        normalized[str(match_id)] = dict(match)
+    label = str(source_label or "远程客户端更新")
+    if not _UPDATE_LOCK.acquire(blocking=False):
+        raise AppError("已有比赛更新正在进行，请稍后再试。")
+    try:
+        count = _write_fetched_matches(normalized, label)
+        _record_all_nets()
+        return count
+    finally:
+        _UPDATE_LOCK.release()
+
+
+def _write_fetched_matches(fetched, source_label):
+    def mutate(data):
+        now = utc_now()
+        for match_id, match in fetched.items():
+            old = data["matches"].get(match_id, {})
+            merged = dict(old)
+            merged.update(match)
+            if not match.get("odds") and old.get("odds"):
+                merged["odds"] = old["odds"]
+            data["matches"][match_id] = merged
+        for match in data["matches"].values():
+            start = parse_iso(match.get("start_time"))
+            if match.get("status") != "completed" and start and start <= now:
+                match["status"] = "in_progress"
+        data["meta"]["last_match_update"] = to_iso(now)
+        data["meta"]["match_source"] = source_label
+        settle_open_bets(data)
+        audit_loans(data)
+        return len(fetched)
+
+    return write_db(mutate)
 
 
 def update_matches_if_due():
